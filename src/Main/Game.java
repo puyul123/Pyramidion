@@ -1,5 +1,9 @@
 package Main;
 
+import java.awt.Graphics;
+
+import Entity.Player;
+
 public class Game implements Runnable{
 	
 	private Window window;
@@ -8,19 +12,34 @@ public class Game implements Runnable{
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
 	
+	private Player player;
+	
 	public Game() {
-		gp = new GamePanel();
+		init();
+		
+		gp = new GamePanel(this);
 		window = new Window(gp);
 		gp.requestFocus();
+		
+		startGameThread();
 	}
 	
+	protected void init() {
+		player = new Player(50, 50);
+		
+	}
+
 	public void startGameThread() {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
 	
 	public void Update() {
-		gp.Update();
+		player.Update();
+	}
+	
+	public void render(Graphics g) {
+		player.render(g);
 	}
 
 	@Override
@@ -54,28 +73,11 @@ public class Game implements Runnable{
         }
 	}
 	
-//	public void run() {
-//		double timePerFrame = 1000000000.0/FPS_SET;
-//		long lastFrame = System.nanoTime();
-//		long currentFrame = System.nanoTime();
-//		int frames = 0;
-//		long lastCheck = System.currentTimeMillis();
-//		
-//		while(true) {
-//			currentFrame = System.nanoTime();
-//			if(currentFrame - lastFrame >= timePerFrame) {
-//				gp.repaint();
-//				lastFrame = currentFrame;
-//				frames++;
-//			}
-//			
-//			if(System.currentTimeMillis() - lastCheck >= 1000) {
-//				lastCheck = System.currentTimeMillis();
-//				//System.out.println("FPS : " + frames);
-//				frames = 0;
-//			}
-//			
-//		}
-//		
-//	}
+	public void windowFocusLost() {
+		player.resetDirBool();
+		
+	}
+	
+	public Player getPlayer() {return player;}
+
 }

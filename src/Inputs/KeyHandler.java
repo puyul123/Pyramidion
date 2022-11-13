@@ -25,33 +25,21 @@ public class KeyHandler implements KeyListener{
 		
 		switch(key) {
 		case KeyEvent.VK_W:
-			gp.setDirect(UP);
+			gp.getGame().getPlayer().setUp(true);
 			break;
 		case KeyEvent.VK_A:
-			gp.setDirect(LEFT);
+			gp.getGame().getPlayer().setLeft(true);
 			break;
 		case KeyEvent.VK_S:
-			gp.setDirect(DOWN);
+			gp.getGame().getPlayer().setDown(true);
 			break;
 		case KeyEvent.VK_D:
-			gp.setDirect(RIGHT);
+			gp.getGame().getPlayer().setRight(true);
+			break;
+		case KeyEvent.VK_ENTER:
+			gp.getGame().getPlayer().setAttack(true);
 			break;
 		}
-		
-//		if(key == KeyEvent.VK_W || key == KeyEvent.VK_SPACE) {
-//			gp.setDirect(UP);
-//			
-//		}
-//		if(key == KeyEvent.VK_A) {
-//			gp.setDirect(LEFT);
-//		}
-//		if(key == KeyEvent.VK_S) {
-//			gp.setDirect(DOWN);
-//			
-//		}
-//		if(key == KeyEvent.VK_D) {
-//			gp.setDirect(RIGHT);
-//		}		
 	}
 
 	@Override
@@ -60,27 +48,18 @@ public class KeyHandler implements KeyListener{
 		
 		switch(key) {
 		case KeyEvent.VK_W:
+			gp.getGame().getPlayer().setUp(false);
+			break;
 		case KeyEvent.VK_A:
+			gp.getGame().getPlayer().setLeft(false);
+			break;
 		case KeyEvent.VK_S:
+			gp.getGame().getPlayer().setDown(false);
+			break;
 		case KeyEvent.VK_D:
-			gp.setMove(false);
+			gp.getGame().getPlayer().setRight(false);
 			break;
 		}
-		
-//		if(key == KeyEvent.VK_W || key == KeyEvent.VK_SPACE) {
-//			gp.setDirect(UP);
-//			
-//		}
-//		if(key == KeyEvent.VK_A) {
-//			gp.setDirect(LEFT);
-//		}
-//		if(key == KeyEvent.VK_S) {
-//			gp.setDirect(DOWN);
-//			
-//		}
-//		if(key == KeyEvent.VK_D) {
-//			gp.setDirect(RIGHT);
-//		}	
 	}
 
 }
