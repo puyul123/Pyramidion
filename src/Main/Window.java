@@ -7,7 +7,6 @@ public class Window {
 	private JFrame window = new JFrame();
 	
 	public Window(GamePanel gp) {
-		window.setSize(400, 400);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		window.setTitle("Pyramidion");
@@ -15,6 +14,7 @@ public class Window {
 		
 		window.add(gp);
 		window.setLocationRelativeTo(null);
+		window.pack();
 		window.setVisible(true);
 	}
 	
