@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -11,6 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import Inputs.KeyHandler;
 import Inputs.MouseHandler;
+import static Util.Constants.PlayerConstants.*;
+import static Util.Constants.Direction.*;
 
 public class GamePanel extends JPanel{
 	
@@ -19,6 +22,10 @@ public class GamePanel extends JPanel{
 	private float velX = 0, velY = 0;
 	private BufferedImage[][] anim;
 	private int aniTick, aniIndex, aniSpeed = 25;
+	private int playerAction = IDLE;
+	private int playerDirect = -1;
+	private boolean move = false;
+	
 	
 	public GamePanel() {
 		
@@ -76,27 +83,59 @@ public class GamePanel extends JPanel{
 		if(aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
-			if(aniIndex >= anim.length) {
+			if(aniIndex >= GetSpriteAmount(playerAction)) {
 				aniIndex = 0;
 			}
 		}
 	}
 
-	public void changePosX(int val) {
-		this.velX += val;
-		repaint();
+	public void setDirect(int direct) {
+		this.playerDirect = direct;
+		move = true;
 	}
-	public void changePosY(int val) {
-		this.velY += val;
-		repaint();
+	
+	public void setMove(boolean move) {
+		this.move = move;
+	}
+	
+	private void setAnimation() {
+		if(move) {
+			playerAction = RUNNING;
+		}else {
+			playerAction = IDLE;
+		}
+	}
+	
+	private void updatePlayerPos() {
+		if(move) {
+			switch(playerDirect) {
+			case LEFT:
+				velX -= 5;
+				break;
+			case RIGHT:
+				velX += 5;
+				break;
+			case UP:
+				velY -= 5;
+				break;
+			case DOWN:
+				velY += 5;
+				break;
+			}
+		}
+	}
+	
+	public void Update() {
+		updateAnimationTick();
+		setAnimation();
+		updatePlayerPos();
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);		
 		
-		updateAnimationTick();
-		
-		g.drawImage(anim[1][aniIndex], (int)velX, (int)velY, null);
+//		g.drawRect((int)velX, (int)velY, 96, 96);
+		g.drawImage(anim[playerAction][aniIndex], (int)velX, (int)velY, 96, 96 ,null);
 	}
 
 }
