@@ -14,9 +14,9 @@ public class Window {
 		window.setResizable(false);
 		window.setTitle("Pyramidion");
 		
-		
-		window.add(gp);
+
 		window.setLocationRelativeTo(null);
+		window.add(gp);
 		window.pack();
 		window.setVisible(true);
 		

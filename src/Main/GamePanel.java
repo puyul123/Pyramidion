@@ -19,30 +19,27 @@ import static Util.Constants.Direction.*;
 
 public class GamePanel extends JPanel{
 	
-	private KeyHandler KeyH;
-	private MouseHandler MouseH;
 	private Game game;
-	
 	
 	public GamePanel(Game game) {
 		
 		//init Input
-		KeyH = new KeyHandler(this);
-		MouseH = new MouseHandler(this);
+		KeyHandler KeyH = new KeyHandler(this);
+		MouseHandler MouseH = new MouseHandler(this);
 		this.game = game;
-
+		
 		
 		//Frame Game
-		setPanelSize();
+		this.setPanelSize();
 		
-		addKeyListener(KeyH);
-		addMouseListener(MouseH);
-		addMouseMotionListener(MouseH);
-		
+		this.addKeyListener(KeyH);
+		this.addMouseListener(MouseH);
+		this.addMouseMotionListener(MouseH);
+		this.setFocusable(true);
 	}
 
 	private void setPanelSize() {
-		Dimension size = new Dimension(1280, 720);
+		Dimension size = new Dimension(game.WIDTH, game.HEIGHT);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);

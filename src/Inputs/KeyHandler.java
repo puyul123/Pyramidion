@@ -22,7 +22,7 @@ public class KeyHandler implements KeyListener{
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		
+		System.out.println("W");
 		switch(key) {
 		case KeyEvent.VK_W:
 			gp.getGame().getPlayer().setUp(true);
@@ -49,6 +49,7 @@ public class KeyHandler implements KeyListener{
 		switch(key) {
 		case KeyEvent.VK_W:
 			gp.getGame().getPlayer().setUp(false);
+			System.out.println("W");
 			break;
 		case KeyEvent.VK_A:
 			gp.getGame().getPlayer().setLeft(false);

@@ -1,16 +1,22 @@
 package Entity;
 
 import static Util.Constants.Direction.DOWN;
+
 import static Util.Constants.Direction.LEFT;
 import static Util.Constants.Direction.RIGHT;
 import static Util.Constants.Direction.UP;
 import static Util.Constants.PlayerConstants.*;
+import static Util.HelpMethods.*;
+
+import static Util.HelpMethods.CanMoveHere;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import Main.Game;
 
 public class Player extends Entity{
 	
@@ -21,12 +27,16 @@ public class Player extends Entity{
 	private boolean attack = false;
 	
 	private boolean left, right, up, down;
+	private int[][] lvlData;
+	private float xDrawOffset = 20 * Game.SCALE;
+	private float yDrawOffset = 12 * Game.SCALE;
 
-	public Player(float x, float y) {
-		super(x, y);
+	public Player(float x, float y, int height, int width) {
+		super(x, y, height, width);
 		
 		//Player Image Import
 		importImg();
+		initCollision(x, y, 2 * 14 * Game.SCALE-5, 2 * 20 * Game.SCALE);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -42,7 +52,6 @@ public class Player extends Entity{
 			//anim for attack [3]
 			//anim for hit [2]
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -88,36 +97,50 @@ public class Player extends Entity{
 	private void updatePlayerPos() {
 		
 		move = false;
+		if (!left && !right && !up && !down)
+			return;
+		
+		float xSpeed = 0, ySpeed = 0;
 		
 		if(left) {
-			x -= 3;
-			move = true;
+			xSpeed = -3;
+
 		}
 		if(right) {
-			x += 3;
-			move = true;
+			xSpeed = 3;
+			
 		}
 		if(up) {
-			y -= 3;
-			move = true;
+			ySpeed = -3;
+			
 		}
 		if(down) {
-			y += 3;
+			ySpeed = 3;
+			
+		}
+		
+		if (CanMoveHere(collision.x + xSpeed, collision.y + ySpeed, collision.width, collision.height, lvlData)) {
+			collision.x += xSpeed;
+			collision.y += ySpeed;
 			move = true;
 		}
 	}
 	
 	public void Update() {
+		updatePlayerPos();
 		updateAnimationTick();
 		setAnimation();
-		updatePlayerPos();
+	}
+	
+	public void loadLvlData(int[][] lvlData) {
+		this.lvlData = lvlData;
 	}
 	
 	public void render(Graphics g) {
 
-		
+		drawCollision(g);
 //		g.drawRect((int)x, (int)y, 96, 96);
-		g.drawImage(anim[playerAction][aniIndex], (int)x, (int)y, 96, 96 ,null);
+		g.drawImage(anim[playerAction][aniIndex], (int)(collision.x - xDrawOffset), (int)(collision.y - yDrawOffset), width , height ,null);
 	}
 	
 	public void resetDirBool() {
