@@ -22,23 +22,20 @@ public class KeyHandler implements KeyListener{
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		System.out.println("W");
+
 		switch(key) {
-		case KeyEvent.VK_W:
-			gp.getGame().getPlayer().setUp(true);
-			break;
-		case KeyEvent.VK_A:
-			gp.getGame().getPlayer().setLeft(true);
-			break;
-		case KeyEvent.VK_S:
-			gp.getGame().getPlayer().setDown(true);
-			break;
-		case KeyEvent.VK_D:
-			gp.getGame().getPlayer().setRight(true);
-			break;
-		case KeyEvent.VK_ENTER:
-			gp.getGame().getPlayer().setAttack(true);
-			break;
+			case KeyEvent.VK_W -> {
+				gp.getGame().getPlayer().setJump(true);
+			}
+			case KeyEvent.VK_A ->{
+				gp.getGame().getPlayer().setLeft(true);
+			}
+			case KeyEvent.VK_D ->{
+				gp.getGame().getPlayer().setRight(true);
+			}
+			case KeyEvent.VK_ENTER ->{
+				gp.getGame().getPlayer().setAttack(true);
+			}
 		}
 	}
 
@@ -47,19 +44,18 @@ public class KeyHandler implements KeyListener{
 		int key = e.getKeyCode();
 		
 		switch(key) {
-		case KeyEvent.VK_W:
-			gp.getGame().getPlayer().setUp(false);
-			System.out.println("W");
-			break;
-		case KeyEvent.VK_A:
-			gp.getGame().getPlayer().setLeft(false);
-			break;
-		case KeyEvent.VK_S:
-			gp.getGame().getPlayer().setDown(false);
-			break;
-		case KeyEvent.VK_D:
-			gp.getGame().getPlayer().setRight(false);
-			break;
+			case KeyEvent.VK_W -> {
+				gp.getGame().getPlayer().setJump(false);
+			}
+			case KeyEvent.VK_A -> {
+				gp.getGame().getPlayer().setLeft(false);
+			}
+			case KeyEvent.VK_D -> {
+				gp.getGame().getPlayer().setRight(false);
+			}
+			case KeyEvent.VK_ENTER ->{
+				gp.getGame().getPlayer().setAttack(false);
+			}
 		}
 	}
 

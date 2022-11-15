@@ -61,14 +61,14 @@ public class Game implements Runnable{
 	@Override
 	public void run() {
 		
-		double drawInterval = 8333333.333333333D; // 10^9 ns (1s) divided by FPS (120)
-        double deltaU = 0;
-        double deltaF = 0;
-        long previousTime = System.nanoTime();
-        long currentTime;
-        
-        int frames = 0;
-        int updates = 0;
+//		double drawInterval = 8333333.333333333D; // 10^9 ns (1s) divided by FPS (120)
+//        double deltaU = 0;
+//        double deltaF = 0;
+//        long previousTime = System.nanoTime();
+//        long currentTime;
+//        
+//        int frames = 0;
+//        int updates = 0;
         
         while (gameThread != null)
         {

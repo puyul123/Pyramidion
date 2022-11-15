@@ -37,7 +37,10 @@ public class LoadSave {
 	public static int[][] GetLevelData() {
 		int[][] lvlData = new int[Game.HEIGHT][Game.WIDTH];
 		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
-
+		
+		System.out.println("height = " + img.getHeight());
+		System.out.println(" width = " + img.getWidth());
+		
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
@@ -45,8 +48,16 @@ public class LoadSave {
 				if (value >= 48)
 					value = 0;
 				lvlData[j][i] = value;
+				
 			}
+		
+		for (int j = 0; j < img.getHeight(); j++) {
+			for (int i = 0; i < img.getWidth(); i++) {
+				System.out.println(lvlData[j][i]);
+			}
+			System.out.print("\n");
+		}
+		
 		return lvlData;
-
 	}
 }
