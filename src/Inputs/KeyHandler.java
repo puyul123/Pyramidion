@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import java.awt.event.KeyListener;
 
+import GameState.Gamestate;
 import Main.GamePanel;
 import static Util.Constants.Direction.*;
 
@@ -21,40 +22,24 @@ public class KeyHandler implements KeyListener{
 	}
 
 	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-
-		switch(key) {
-			case KeyEvent.VK_W -> {
-				gp.getGame().getPlayer().setJump(true);
+		switch(Gamestate.state) {
+			case MENU -> {
+				gp.getGame().getMenu().keyPressed(e);
 			}
-			case KeyEvent.VK_A ->{
-				gp.getGame().getPlayer().setLeft(true);
-			}
-			case KeyEvent.VK_D ->{
-				gp.getGame().getPlayer().setRight(true);
-			}
-			case KeyEvent.VK_ENTER ->{
-				gp.getGame().getPlayer().setAttack(true);
+			case PLAYING ->{
+				gp.getGame().getPlaying().keyPressed(e);
 			}
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
-		
-		switch(key) {
-			case KeyEvent.VK_W -> {
-				gp.getGame().getPlayer().setJump(false);
+		switch(Gamestate.state) {
+			case MENU -> {
+				gp.getGame().getMenu().keyReleased(e);
 			}
-			case KeyEvent.VK_A -> {
-				gp.getGame().getPlayer().setLeft(false);
-			}
-			case KeyEvent.VK_D -> {
-				gp.getGame().getPlayer().setRight(false);
-			}
-			case KeyEvent.VK_ENTER ->{
-				gp.getGame().getPlayer().setAttack(false);
+			case PLAYING ->{
+				gp.getGame().getPlaying().keyReleased(e);
 			}
 		}
 	}

@@ -21,7 +21,6 @@ import Main.Game;
 public class Player extends Entity{
 	
 	private BufferedImage[][] anim;
-	private BufferedImage door;
 	private int aniTick, aniIndex, aniSpeed = 25;
 	private int playerAction = IDLE;
 	private boolean move = false;
@@ -59,7 +58,6 @@ public class Player extends Entity{
 			anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-3.png"));
 			anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-2.png"));
 			
-			door = ImageIO.read(getClass().getResourceAsStream("/Door_test.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -186,12 +184,14 @@ public class Player extends Entity{
 	
 	public void loadLvlData(int[][] lvlData) {
 		this.lvlData = lvlData;
+		if(!IsEntityOnFloor(collision, lvlData)) {
+			inAir = true;
+		}
 	}
 	
 	public void render(Graphics g) {
 
 		drawCollision(g);
-//		g.drawImage(door, 500, 367,(int) (32*Game.SCALE*2.5),(int) (32 * Game.SCALE*2.5), null);
 //		g.drawRect((int)x, (int)y, 96, 96);
 		g.drawImage(anim[playerAction][aniIndex], (int)(collision.x - xDrawOffset), (int)(collision.y - yDrawOffset), width , height ,null);
 	}

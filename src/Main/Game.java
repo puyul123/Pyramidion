@@ -2,8 +2,11 @@ package Main;
 
 import java.awt.Graphics;
 
-import Entity.Player;
-import levels.LevelManager;
+
+import GameState.Gamestate;
+import GameState.MainMenu;
+import GameState.Playing;
+import GameState.Gamestate;
 
 public class Game implements Runnable{
 	
@@ -13,8 +16,8 @@ public class Game implements Runnable{
 	private final int FPS_SET = 120;
 	private final int UPS_SET = 200;
 	
-	private Player player;
-	private LevelManager lvlManager;
+	private Playing playing;
+	private MainMenu menu;
 	
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
@@ -38,9 +41,8 @@ public class Game implements Runnable{
 	}
 	
 	protected void init() {
-		lvlManager = new LevelManager(this);
-		player = new Player(100, 200, (int)(64*SCALE), (int)(64*SCALE));
-		player.loadLvlData(lvlManager.getCurrentLevel().getLevelData());
+		menu = new MainMenu(this);
+		playing = new Playing(this);
 	}
 
 	public void startGameThread() {
@@ -49,13 +51,27 @@ public class Game implements Runnable{
 	}
 	
 	public void Update() {
-		lvlManager.Update();
-		player.Update();
+	
+		switch(Gamestate.state) {
+			case MENU ->{
+				menu.update();
+			}
+			case PLAYING ->{
+				playing.update();
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
-		lvlManager.draw(g);
-		player.render(g);
+		
+		switch(Gamestate.state) {
+			case MENU ->{
+				menu.draw(g);
+			}
+			case PLAYING ->{
+				playing.draw(g);
+			}
+		}
 	}
 
 	@Override
@@ -86,27 +102,32 @@ public class Game implements Runnable{
 	}
 	
 	public void windowFocusLost() {
-		player.resetDirBool();
-		
+		if (Gamestate.state == Gamestate.PLAYING)
+			playing.getPlayer().resetDirBool();
 	}
 	
-	public Player getPlayer() {return player;}
-	
+	public MainMenu getMenu() {
+		return menu;
+	}
 
-// RUNN
-//  currentTime = System.nanoTime();
-//  deltaU += (currentTime - previousTime) / drawInterval;
-//  deltaF += (currentTime - previousTime) / drawInterval;
-//  previousTime = currentTime;
-//  if(deltaU >= 1)
-//  {
-//      Update();
-//      deltaU--;
-//  }
-//  if(deltaF >= 1) {
-//  	gp.repaint();
-//		frames++;
-//		deltaF--;
-//  }
+	public Playing getPlaying() {
+		return playing;
+	}
 
 }
+
+//RUNN
+//currentTime = System.nanoTime();
+//deltaU += (currentTime - previousTime) / drawInterval;
+//deltaF += (currentTime - previousTime) / drawInterval;
+//previousTime = currentTime;
+//if(deltaU >= 1)
+//{
+//  Update();
+//  deltaU--;
+//}
+//if(deltaF >= 1) {
+//	gp.repaint();
+//	frames++;
+//	deltaF--;
+//}
