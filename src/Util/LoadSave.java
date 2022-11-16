@@ -41,7 +41,7 @@ public class LoadSave {
 		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 		
 		System.out.println("height = " + img.getHeight());
-		System.out.println(" width = " + img.getWidth());
+		System.out.println("width = " + img.getWidth());
 		
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {

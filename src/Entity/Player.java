@@ -21,7 +21,7 @@ import Main.Game;
 public class Player extends Entity{
 	
 	private BufferedImage[][] anim;
-	private int aniTick, aniIndex, aniSpeed = 25;
+	private int aniTick, aniIndex, aniSpeed = 20;
 	private int playerAction = IDLE;
 	private boolean move = false;
 	private boolean attack = false;
@@ -52,11 +52,11 @@ public class Player extends Entity{
 		try {
 			anim = new BufferedImage[8][5];
 			
-			anim[0][0] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-0.png"));
-			anim[1][0] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-1.png"));
-			anim[1][1] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-2.png"));
-			anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-3.png"));
-			anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-2.png"));
+			anim[0][0] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
+			anim[1][0] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
+			anim[1][1] = ImageIO.read(getClass().getResourceAsStream("/char_2.png"));
+		//	anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
+		//	anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-2.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -189,11 +189,11 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void render(Graphics g) {
+	public void render(Graphics g, int lvlOffset) {
 
-		drawCollision(g);
+//		drawCollision(g);
 //		g.drawRect((int)x, (int)y, 96, 96);
-		g.drawImage(anim[playerAction][aniIndex], (int)(collision.x - xDrawOffset), (int)(collision.y - yDrawOffset), width , height ,null);
+		g.drawImage(anim[playerAction][aniIndex], (int)(collision.x - xDrawOffset)-lvlOffset, (int)(collision.y - yDrawOffset), width , height ,null);
 	}
 	
 	public void resetDirBool() {

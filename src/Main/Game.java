@@ -1,5 +1,6 @@
 package Main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 
@@ -69,7 +70,9 @@ public class Game implements Runnable{
 				menu.draw(g);
 			}
 			case PLAYING ->{
+
 				playing.draw(g);
+				g.setColor(Color.BLACK);
 			}
 		}
 	}

@@ -6,13 +6,21 @@ import java.awt.event.MouseEvent;
 
 import Entity.Player;
 import Main.Game;
+import Util.LoadSave;
 import levels.LevelManager;
 
 public class Playing extends State implements StateMethods{
 	
 	private Player player;
 	private LevelManager lvlManager;
-
+	
+	//CAMERA
+	private int xLvlOffset = 0;
+	private int border = (int) (Game.WIDTH/2);
+	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
+	private int maxTilesOffset = lvlTilesWide - Game.TILES_WIDTH;
+	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
+	
 	public Playing(Game game) {
 		super(game);
 		init();
@@ -28,13 +36,29 @@ public class Playing extends State implements StateMethods{
 	public void update() {
 		lvlManager.Update();
 		player.Update();
-
+		checkCloseToBorder();
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		lvlManager.draw(g);
-		player.render(g);
+		lvlManager.draw(g, xLvlOffset);
+		player.render(g, xLvlOffset);
+
+	}
+	
+	private void checkCloseToBorder() {
+		int playerX = (int) player.getCollision().x;
+		int diff = playerX - xLvlOffset;
+		
+		//MIDDLE FOLLOW CAMERA
+		if (diff > border || diff < border)
+			xLvlOffset += diff - border;
+
+		if (xLvlOffset > maxLvlOffsetX)
+			xLvlOffset = maxLvlOffsetX;
+		
+		else if (xLvlOffset < 0)
+			xLvlOffset = 0;
 
 	}
 
