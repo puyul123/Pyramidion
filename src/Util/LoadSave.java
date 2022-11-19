@@ -16,7 +16,9 @@ public class LoadSave {
 	public static final String LEVEL_ATLAS = "test_outside_sprites.png";
 	public static final String LEVEL_ONE_DATA = "test_level_one_data.png";
 	public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
-
+	public static final String MENU_BUTTON = "test_menu_button.png";
+	public static final String MENU_BACKGROUND = "test_menu_background.png";
+	
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
 		InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
@@ -36,7 +38,7 @@ public class LoadSave {
 	}
 
 	public static int[][] GetLevelData() {
-//		int[][] lvlData = new int[Game.HEIGHT][Game.WIDTH];
+//		int[][] lvlData = new int[Game.TILES_HEIGHT][Game.TILES_WIDTH];
 		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA_LONG);
 		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 		

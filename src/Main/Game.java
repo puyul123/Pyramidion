@@ -60,6 +60,12 @@ public class Game implements Runnable{
 			case PLAYING ->{
 				playing.update();
 			}
+			case OPTION -> {
+				
+			}
+			case QUIT -> {
+				
+			}
 		}
 	}
 	

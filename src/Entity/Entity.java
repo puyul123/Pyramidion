@@ -30,6 +30,8 @@ public abstract class Entity {
 //		collision.x = (int)x;
 //		collision.y = (int)y;
 //	}
-	public Rectangle2D.Float getCollision() {return collision;}
+	public Rectangle2D.Float getCollision() {
+		return collision;
+	}
 	
 }
