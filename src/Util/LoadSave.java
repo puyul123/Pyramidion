@@ -2,9 +2,10 @@ package Util;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -18,6 +19,8 @@ public class LoadSave {
 	public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
 	public static final String MENU_BUTTON = "test_menu_button.png";
 	public static final String MENU_BACKGROUND = "test_menu_background.png";
+	public static final String TEST_MAP = "test_outside_sprite_2.png";
+	public static final String LEVEL_0 = "level0.txt";	
 	
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
@@ -37,31 +40,38 @@ public class LoadSave {
 		return img;
 	}
 
+	public static BufferedReader GetMapTxt(String txtName) {
+		BufferedReader br = null;
+		InputStream is = LoadSave.class.getResourceAsStream("/maps/" + txtName);
+		br = new BufferedReader(new InputStreamReader(is));
+		return br;
+	}
+	
 	public static int[][] GetLevelData() {
-//		int[][] lvlData = new int[Game.TILES_HEIGHT][Game.TILES_WIDTH];
-		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA_LONG);
-		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
-		
-		System.out.println("height = " + img.getHeight());
-		System.out.println("width = " + img.getWidth());
-		
-		for (int j = 0; j < img.getHeight(); j++)
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getRed();
-				if (value >= 48)
-					value = 0;
-				lvlData[j][i] = value;
-				
+		int[][] lvlData = new int[14][50];
+		BufferedReader br = GetMapTxt(LEVEL_0);
+			
+			try {
+
+				int col = 0;
+				int row = 0;
+				while(col < 50 && row < Game.TILES_HEIGHT) {
+					String line = br.readLine();
+					
+					while(col < 50) {
+						String numbers[] = line.split(" ");
+						int num = Integer.parseInt(numbers[col]);
+						lvlData[row][col] = num;
+						col++;
+					}
+					if(col == Game.TILES_HEIGHT);
+						col = 0;
+						row++;
+				}
+				br.close();
+			}catch(IOException e) {
+				e.printStackTrace();
 			}
-		
-		for (int j = 0; j < img.getHeight(); j++) {
-			for (int i = 0; i < img.getWidth(); i++) {
-				System.out.println(lvlData[j][i]);
-			}
-			System.out.print("\n");
-		}
-		
-		return lvlData;
+			return lvlData;
 	}
 }
