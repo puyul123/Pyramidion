@@ -14,10 +14,9 @@ public class Window {
 		window.setResizable(false);
 		window.setTitle("Pyramidion");
 		
-
-		window.setLocationRelativeTo(null);
 		window.add(gp);
 		window.pack();
+		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		
 		window.addWindowFocusListener(new WindowFocusListener() {

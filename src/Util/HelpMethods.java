@@ -2,6 +2,7 @@ package Util;
 
 import java.awt.geom.Rectangle2D;
 
+
 import Main.Game;
 
 public class HelpMethods {
@@ -27,7 +28,9 @@ public class HelpMethods {
 
 		int value = lvlData[(int) yIndex][(int) xIndex];
 
-		if (value >= 48 || value < 0 || value != 0)
+		if (value >= 48 || value < 0)
+			return true;
+		if(value != 0 && value != 1)
 			return true;
 		return false;
 	}
@@ -50,6 +53,7 @@ public class HelpMethods {
 			// Falling - touching floor
 			int tileYPos = currentTile * Game.TILES_SIZE;
 			int yOffset = (int) (Game.TILES_SIZE - collision.height);
+
 			return tileYPos + yOffset + 47;
 		} else
 			// Jumping
@@ -63,5 +67,10 @@ public class HelpMethods {
 				return false;
 
 		return true;
+	}
+	
+	//DEBUGGGG
+	public static boolean IsFloor(Rectangle2D.Float collision, float xSpeed, int[][] lvlData) {
+		return IsSolid(collision.x + xSpeed, collision.y + collision.height + 1, lvlData);
 	}
 }

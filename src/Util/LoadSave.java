@@ -1,15 +1,19 @@
 package Util;
 
 import java.awt.Color;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import Entity.Mummy;
 import Main.Game;
+import static Util.Constants.EnemyConstants.*;
 
 public class LoadSave {
 	
@@ -45,6 +49,36 @@ public class LoadSave {
 		InputStream is = LoadSave.class.getResourceAsStream("/maps/" + txtName);
 		br = new BufferedReader(new InputStreamReader(is));
 		return br;
+	}
+	
+	public static ArrayList<Mummy> GetMummy(){
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Mummy> mummy = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 50 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 50) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == MUMMY) 
+						mummy.add(new Mummy((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30)));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return mummy;
 	}
 	
 	public static int[][] GetLevelData() {
