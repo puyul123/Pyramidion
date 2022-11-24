@@ -2,6 +2,7 @@ package Entity;
 
 import static Util.Constants.Direction.DOWN;
 
+
 import static Util.Constants.Direction.LEFT;
 import static Util.Constants.Direction.RIGHT;
 import static Util.Constants.Direction.UP;
@@ -15,13 +16,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
 import Main.Game;
 
 public class Player extends Entity{
 	
 	private BufferedImage[][] anim;
-	private int aniTick, aniIndex, aniSpeed = 20;
+	private int aniTick, aniIndex, aniSpeed = 10;
 	private int playerAction = IDLE;
 	private boolean move = false;
 	private boolean attack = false;
@@ -33,7 +33,6 @@ public class Player extends Entity{
 	
 	private int playerSpeed = (int) (2.5 * Game.SCALE);
 	private float airSpeed = 0f;
-	private float gravity = 0.05f * Game.SCALE;
 	private float jumpSpeed = -2.75f * Game.SCALE;
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
@@ -54,7 +53,9 @@ public class Player extends Entity{
 			
 			anim[0][0] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
 			anim[1][0] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
-			anim[1][1] = ImageIO.read(getClass().getResourceAsStream("/char_2.png"));
+			anim[1][1] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
+			anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/char_2.png"));
+			anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
 		//	anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
 		//	anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-2.png"));
 			
@@ -191,7 +192,7 @@ public class Player extends Entity{
 	
 	public void render(Graphics g, int lvlOffset) {
 
-//		drawCollision(g);
+		drawCollision(g, lvlOffset);
 //		g.drawRect((int)x, (int)y, 96, 96);
 		g.drawImage(anim[playerAction][aniIndex], (int)(collision.x - xDrawOffset)-lvlOffset, (int)(collision.y - yDrawOffset), width , height ,null);
 	}

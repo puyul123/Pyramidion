@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import Entity.EnemyManager;
+import Entity.Mummy;
 import Entity.Player;
 import Main.Game;
 import Util.LoadSave;
@@ -13,9 +15,11 @@ public class Playing extends State implements StateMethods{
 	
 	private Player player;
 	private LevelManager lvlManager;
+	private EnemyManager enemyMan;
+	private Mummy mummy;
 	
 	//CAMERA
-	private int xLvlOffset = 0;
+	public int xLvlOffset = 0;
 	private int border = (int) (Game.WIDTH/2);
 	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
 	private int maxTilesOffset = lvlTilesWide - Game.TILES_WIDTH;
@@ -28,6 +32,7 @@ public class Playing extends State implements StateMethods{
 
 	private void init() {
 		lvlManager = new LevelManager(game);
+		enemyMan = new EnemyManager(this);
 		player = new Player(150, 200, (int)(64*Game.SCALE), (int)(64*Game.SCALE));
 		player.loadLvlData(lvlManager.getCurrentLevel().getLevelData());
 	}
@@ -36,14 +41,17 @@ public class Playing extends State implements StateMethods{
 	public void update() {
 		lvlManager.Update();
 		player.Update();
+		enemyMan.update(lvlManager.getCurrentLevel().getLevelData());
 		checkCloseToBorder();
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		lvlManager.draw(g, xLvlOffset);
+		enemyMan.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
-
+	//	mummy.draw(g);
+		
 	}
 	
 	private void checkCloseToBorder() {
