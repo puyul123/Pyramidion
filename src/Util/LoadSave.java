@@ -22,7 +22,7 @@ public class LoadSave {
 	public static final String MENU_BUTTON = "mainMenuButton.png";
 	public static final String MENU_BACKGROUND = "mainMenuBackground.png";
 	public static final String TEST_MAP = "test_outside_sprite_2.png";
-	public static final String LEVEL_0 = "level0.txt";	
+	public static final String LEVEL_0 = "level1.txt";	
 	
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
