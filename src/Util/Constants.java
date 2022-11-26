@@ -3,8 +3,16 @@ package Util;
 import Main.Game;
 
 public class Constants {	
+	 
+	public static class ObjectConstants {
+		public static final int TRAP = 4;
+		public static final int TRAP_WIDTH_DEFAULT = 32;
+		public static final int TRAP_HEIGHT_DEFAULT = 32;
+		public static final int TRAP_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);
+		public static final int TRAP_HEIGHT = (int) (Game.SCALE * TRAP_HEIGHT_DEFAULT);
+	}
 	
-	public static class EnemyConstants{
+	public static class EnemyConstants {
 		public static final int MUMMY = 1;
 		
 		public static final int MUMMY_SIZE = 64;

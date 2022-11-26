@@ -1,13 +1,13 @@
 package Entity;
 
 import static Util.Constants.Direction.DOWN;
-
+import static Util.HelpMethods.*;
+import static Util.Constants.*;
 
 import static Util.Constants.Direction.LEFT;
 import static Util.Constants.Direction.RIGHT;
 import static Util.Constants.Direction.UP;
 import static Util.Constants.PlayerConstants.*;
-import static Util.HelpMethods.*;
 
 import static Util.HelpMethods.CanMoveHere;
 
@@ -16,7 +16,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import GameState.Playing;
 import Main.Game;
+import Util.LoadSave;
 
 public class Player extends Entity{
 	
@@ -36,6 +39,8 @@ public class Player extends Entity{
 	private float jumpSpeed = -2.75f * Game.SCALE;
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
+	
+	private Playing playing;
 	
 
 	public Player(float x, float y, int height, int width) {
@@ -181,6 +186,11 @@ public class Player extends Entity{
 		updatePlayerPos();
 		updateAnimationTick();
 		setAnimation();
+		
+		//if() { // if (moving)
+		//	checkTrapTouched();
+		//}
+		
 	}
 	
 	public void loadLvlData(int[][] lvlData) {
@@ -200,6 +210,15 @@ public class Player extends Entity{
 	public void resetDirBool() {
 		left = false;
 		right = false;
+	}
+	
+	public void die() {
+		System.out.println("trap touched");
+		// currentHealth = 0;
+	}
+	
+	private void checkTrapTouched() {
+		playing.trapTouched(this);
 	}
 
 	public boolean isLeft() {return left;}

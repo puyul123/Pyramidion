@@ -10,9 +10,11 @@ import Entity.Player;
 import Main.Game;
 import Util.LoadSave;
 import levels.LevelManager;
+import Object.ObjectManager;
 
 public class Playing extends State implements StateMethods{
 	
+	private ObjectManager objectManager;
 	private Player player;
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
@@ -145,6 +147,14 @@ public class Playing extends State implements StateMethods{
 	
 	public Player getPlayer() {
 		return player;
+	}
+
+	public void trapTouched(Player player) {
+		objectManager.trapTouched(player);
+	}
+	
+	public ObjectManager getObjectManager() {
+		return objectManager;
 	}
 
 }

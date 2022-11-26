@@ -1,9 +1,14 @@
 package Util;
 
 import java.awt.geom.Rectangle2D;
-
+import java.awt.Color;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 import Main.Game;
+import Object.Trap;
+
+import static Util.Constants.ObjectConstants.*;
 
 public class HelpMethods {
 	
@@ -73,4 +78,18 @@ public class HelpMethods {
 	public static boolean IsFloor(Rectangle2D.Float collision, float xSpeed, int[][] lvlData) {
 		return IsSolid(collision.x + xSpeed, collision.y + collision.height + 1, lvlData);
 	}
-}
+	
+	public static ArrayList<Trap> setTraps(BufferedImage image){
+		ArrayList<Trap> list = new ArrayList<>();
+//		
+//		for (int j = 0; j < image.getHeight(); j++)
+//			for (int i = 0; i < image.getWidth(); i++) {
+//				Color color = new Color(image.getRGB(i, j));
+//				int value = color.getBlue();
+//				if (value == TRAP)
+//					list.add(new Trap(i * Game.TILES_SIZE, j * Game.TILES_SIZE, TRAP));
+//			}
+//		
+		return list;
+	}
+} 
