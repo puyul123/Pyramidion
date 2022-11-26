@@ -57,10 +57,10 @@ public class LoadSave {
 			
 			int col = 0;
 			int row = 0;
-			while(col < 50 && row < Game.TILES_HEIGHT) {
+			while(col < 60 && row < Game.TILES_HEIGHT) {
 				String line = br.readLine();
 				
-				while(col < 50) {
+				while(col < 60) {
 					String numbers[] = line.split(" ");
 					int num = Integer.parseInt(numbers[col]);
 					if(num == MUMMY) 
@@ -80,17 +80,17 @@ public class LoadSave {
 	}
 	
 	public static int[][] GetLevelData() {
-		int[][] lvlData = new int[14][50];
+		int[][] lvlData = new int[14][60];
 		BufferedReader br = GetMapTxt(LEVEL_0);
 			
 			try {
 
 				int col = 0;
 				int row = 0;
-				while(col < 50 && row < Game.TILES_HEIGHT) {
+				while(col < 60 && row < Game.TILES_HEIGHT) {
 					String line = br.readLine();
 					
-					while(col < 50) {
+					while(col < 60) {
 						String numbers[] = line.split(" ");
 						int num = Integer.parseInt(numbers[col]);
 						lvlData[row][col] = num;
