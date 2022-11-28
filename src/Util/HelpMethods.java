@@ -3,12 +3,21 @@ package Util;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
 import java.util.ArrayList;
+
+import Entity.Mummy;
+
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 import Main.Game;
 import Object.Trap;
+import static Util.LoadSave.GetMapTxt;
 
+import static Util.LoadSave.LEVEL_0;
+import static Util.Constants.EnemyConstants.MUMMY;
 import static Util.Constants.ObjectConstants.*;
+
 
 public class HelpMethods {
 	
@@ -79,17 +88,48 @@ public class HelpMethods {
 		return IsSolid(collision.x + xSpeed, collision.y + collision.height + 1, lvlData);
 	}
 	
-	public static ArrayList<Trap> setTraps(BufferedImage image){
-		ArrayList<Trap> list = new ArrayList<>();
+//	public static ArrayList<Trap> setTraps(BufferedReader txt){
+//		BufferedReader br = GetMapTxt(LEVEL_0);
+//		ArrayList<Trap> list = new ArrayList<>();
 //		
-//		for (int j = 0; j < image.getHeight(); j++)
-//			for (int i = 0; i < image.getWidth(); i++) {
-//				Color color = new Color(image.getRGB(i, j));
+//		for (int j = 0; j < 60; j++)
+//			for (int i = 0; i < 14; i++) {
+//				Color color = new Color(txt.getRGB(i, j));
 //				int value = color.getBlue();
 //				if (value == TRAP)
 //					list.add(new Trap(i * Game.TILES_SIZE, j * Game.TILES_SIZE, TRAP));
 //			}
 //		
-		return list;
+//		return list;
+//	}
+	
+	public static ArrayList<Trap> setTraps(){
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Trap> tr = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == TRAP) 
+						tr.add(new Trap((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), TRAP));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return tr;
 	}
 } 

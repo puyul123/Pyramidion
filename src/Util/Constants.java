@@ -5,7 +5,7 @@ import Main.Game;
 public class Constants {	
 	 
 	public static class ObjectConstants {
-		public static final int TRAP = 4;
+		public static final int TRAP = 101;
 		public static final int TRAP_WIDTH_DEFAULT = 32;
 		public static final int TRAP_HEIGHT_DEFAULT = 32;
 		public static final int TRAP_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);

@@ -3,13 +3,14 @@ package levels;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 
 import Object.Trap;
 import Util.HelpMethods;
 
 public class Level {
 	
-	private BufferedImage image;
+	private BufferedReader txt;
 	private int[][] lvlData;
 	private ArrayList<Trap> traps;
 	
@@ -19,7 +20,7 @@ public class Level {
 	}
 	
 	private void createTraps() {
-		traps = HelpMethods.setTraps(image);	
+		traps = HelpMethods.setTraps();	
 	}
 	
 	public ArrayList<Trap> getTraps() {

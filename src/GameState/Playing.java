@@ -11,6 +11,7 @@ import Main.Game;
 import Util.LoadSave;
 import levels.LevelManager;
 import Object.ObjectManager;
+import Object.Trap;
 
 public class Playing extends State implements StateMethods{
 	
@@ -19,6 +20,8 @@ public class Playing extends State implements StateMethods{
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
 	private Mummy mummy;
+	private ObjectManager objMan;
+	private Trap trap;
 	
 	//CAMERA
 	public int xLvlOffset = 0;
@@ -35,6 +38,7 @@ public class Playing extends State implements StateMethods{
 	private void init() {
 		lvlManager = new LevelManager(game);
 		enemyMan = new EnemyManager(this);
+		objMan = new ObjectManager(this);
 		player = new Player(150, 200, (int)(64*Game.SCALE), (int)(64*Game.SCALE));
 		player.loadLvlData(lvlManager.getCurrentLevel().getLevelData());
 	}
@@ -43,7 +47,7 @@ public class Playing extends State implements StateMethods{
 	public void update() {
 		lvlManager.Update();
 		player.Update();
-		enemyMan.update(lvlManager.getCurrentLevel().getLevelData());
+		//enemyMan.update(lvlManager.getCurrentLevel().getLevelData());
 		checkCloseToBorder();
 	}
 
@@ -52,6 +56,7 @@ public class Playing extends State implements StateMethods{
 		lvlManager.draw(g, xLvlOffset);
 		enemyMan.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
+		objMan.draw(g, xLvlOffset);
 	//	mummy.draw(g);
 		
 	}
