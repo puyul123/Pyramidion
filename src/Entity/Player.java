@@ -26,6 +26,7 @@ public class Player extends Entity{
 	private BufferedImage[][] anim;
 	private int aniTick, aniIndex, aniSpeed = 10;
 	private int playerAction = IDLE;
+	private boolean onSword = false;
 	private boolean move = false;
 	private boolean attack = false;
 	
@@ -56,13 +57,28 @@ public class Player extends Entity{
 		try {
 			anim = new BufferedImage[8][5];
 			
+			//IDLE NO SWORD
 			anim[0][0] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
+			
+			//RUNNING NO SWORD
 			anim[1][0] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
 			anim[1][1] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
 			anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/char_2.png"));
 			anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
-		//	anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
-		//	anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/pixil-frame-2.png"));
+			
+			//ATTACK WITH SWORD
+			anim[3][0] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Attack_1.png"));
+			anim[3][1] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Attack_2.png"));
+			anim[3][2] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Attack_3.png"));
+			
+			//IDLE WITH SWORD
+			anim[4][0] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Sword_1.png"));
+			
+			//RUNNING WITH SWORD
+			anim[5][0] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_3.png"));
+			anim[5][1] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_1.png"));
+			anim[5][2] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_2.png"));
+			anim[5][3] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_1.png"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -86,15 +102,22 @@ public class Player extends Entity{
 	
 	private void setAnimation() {
 		int startAni = playerAction;
-		
-		if(move) {
-			playerAction = RUNNING;
-		}else {
-			playerAction = IDLE;
+		if(onSword) {
+			if(move) {
+				playerAction = RUNNING_SWORD;
+			}else {
+				playerAction = IDLE_SWORD;
+			}
+			if(attack) {
+				playerAction = ATTACK;
+			}
 		}
-		
-		if(attack) {
-			playerAction = ATTACK;
+		else {
+			if(move) {
+				playerAction = RUNNING;
+			}else {
+				playerAction = IDLE;
+			}
 		}
 		
 		if(startAni != playerAction) {
@@ -149,13 +172,7 @@ public class Player extends Entity{
 		} else
 			updateXPos(xSpeed);
 			move = true;
-		
-		
-		/*
-		 * if (CanMoveHere(collision.x + xSpeed, collision.y + ySpeed, collision.width,
-		 * collision.height, lvlData)) { collision.x += xSpeed; collision.y += ySpeed;
-		 * move = true; }
-		 */
+	
 	}
 	
 	private void Jump() {
@@ -229,6 +246,8 @@ public class Player extends Entity{
 	public void setJump(boolean jump) {this.jump = jump;}
 	public boolean isAttack() {return attack;}
 	public void setAttack(boolean attack) {this.attack = attack;}
+	public boolean isOnSword() {return onSword;}
+	public void setOnSword(boolean onSword) {this.onSword = onSword;}
 	
 	
 }

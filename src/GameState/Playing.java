@@ -19,7 +19,6 @@ public class Playing extends State implements StateMethods{
 	private Player player;
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
-	private Mummy mummy;
 	private ObjectManager objMan;
 	private Trap trap;
 	
@@ -47,7 +46,7 @@ public class Playing extends State implements StateMethods{
 	public void update() {
 		lvlManager.Update();
 		player.Update();
-		//enemyMan.update(lvlManager.getCurrentLevel().getLevelData());
+		enemyMan.update(lvlManager.getCurrentLevel().getLevelData());
 		checkCloseToBorder();
 	}
 
@@ -99,7 +98,8 @@ public class Playing extends State implements StateMethods{
 				player.setRight(true);
 			}
 			case KeyEvent.VK_ENTER ->{
-				player.setAttack(true);
+				if(player.isOnSword() == true) player.setOnSword(false);
+				else player.setOnSword(true);
 			}
 			case KeyEvent.VK_ESCAPE ->{
 				Gamestate.state = Gamestate.MENU;
@@ -120,10 +120,7 @@ public class Playing extends State implements StateMethods{
 			}
 			case KeyEvent.VK_D ->{
 				player.setRight(false);
-			}
-			case KeyEvent.VK_ENTER ->{
-				player.setAttack(false);
-			}
+			}			
 		}
 	}
 

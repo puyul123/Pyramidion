@@ -17,5 +17,7 @@ public class Mummy extends Enemy{
 	public void draw(Graphics g, int xLvlOffset) {
 		drawCollision(g, xLvlOffset);
 	}
+	
+	
 
 }

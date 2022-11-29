@@ -67,7 +67,8 @@ public class Constants {
 		public static final int RUNNING = 1;
 		public static final int HIT = 2;
 		public static final int ATTACK = 3;
-		public static final int ATTACK_JUMP = 4;
+		public static final int IDLE_SWORD = 4;
+		public static final int RUNNING_SWORD = 5;
 		
 		public static int GetSpriteAmount(int player_act) {
 			
@@ -78,9 +79,11 @@ public class Constants {
 			case RUNNING:
 				return 4;
 			case ATTACK: 
-				return 2;
-			case ATTACK_JUMP: 
-				return 2;
+				return 3;
+			case IDLE_SWORD: 
+				return 1;
+			case RUNNING_SWORD:
+				return 4;
 			default:
 				return 1;
 			}
