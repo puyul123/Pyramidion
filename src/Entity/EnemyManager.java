@@ -44,14 +44,19 @@ public class EnemyManager {
 			mummy[1][2] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_2.png"));
 			mummy[1][3] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
 			
+			//ATTACK
+			mummy[2][0] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_1.png"));
+			mummy[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_2.png"));
+			mummy[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_3.png"));
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 		}
 	}
 	
-	public void update(int[][] lvlData) {
-		for(Mummy m : mummies) m.update(lvlData);
+	public void update(int[][] lvlData, Player player) {
+		for(Mummy m : mummies) 
+			m.update(lvlData, player);
 	}
 	
 	public void draw(Graphics g, int xLvlOffset) {
@@ -61,8 +66,10 @@ public class EnemyManager {
 
 	private void drawMummy(Graphics g, int xLvlOffset) {
 		for(Mummy m : mummies) {
-			g.drawImage(mummy[m.getEnemyState()][m.getAniIndex()],(int) (m.getCollision().x-25) - xLvlOffset, 
-					(int) (m.getCollision().y-13),(int) (64 * Game.SCALE),(int) (64 *Game.SCALE), null);
+			g.drawImage(mummy[m.getEnemyState()][m.getAniIndex()],
+					(int) (m.getCollision().x-25) - xLvlOffset + m.flipX(), 
+					(int) (m.getCollision().y-13),
+					(int) (64 * Game.SCALE) / m.flipW(),(int) (64 *Game.SCALE), null);
 			m.draw(g, xLvlOffset);
 		}
 	}

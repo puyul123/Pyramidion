@@ -11,7 +11,9 @@ import static Util.Constants.PlayerConstants.*;
 
 import static Util.HelpMethods.CanMoveHere;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -43,16 +45,28 @@ public class Player extends Entity{
 	
 	private Playing playing;
 	
-
+	
+	//ATTACK COLLISION
+	private Rectangle2D.Float attackCol;
+	
+	//mirror
+	private int flipX = 0;
+	private int flipW = 1;
+	
 	public Player(float x, float y, int height, int width) {
 		super(x, y, height, width);
 		
 		//Player Image Import
 		importImg();
 		initCollision(x, y, 2 * 14 * Game.SCALE-5, 2 * 20 * Game.SCALE);
-		// TODO Auto-generated constructor stub
+		initAttackColl();
 	}
 	
+	private void initAttackColl() {
+		attackCol = new Rectangle2D.Float(x, y, (int) (20*Game.SCALE), (int) (27*Game.SCALE));
+		
+	}
+
 	private void importImg() {	
 		try {
 			anim = new BufferedImage[8][5];
@@ -143,11 +157,13 @@ public class Player extends Entity{
 		
 		if(left) {
 			xSpeed -= playerSpeed;
-
+			flipX = this.width;
+			flipW = -1;
 		}
 		if(right) {
 			xSpeed += playerSpeed;
-			
+			flipX = 0;
+			flipW = 1;
 		}
 		
 		if (!inAir)
@@ -204,12 +220,24 @@ public class Player extends Entity{
 		updateAnimationTick();
 		setAnimation();
 		
+		updateAttackBox();
+		
 		//if() { // if (moving)
 		//	checkTrapTouched();
 		//}
 		
 	}
 	
+	private void updateAttackBox() {
+		if(right) {
+			attackCol.x = collision.x + collision.width + (int)(Game.SCALE * 10);
+		}
+		else if(left) {
+			attackCol.x = collision.x - collision.width - (int)(Game.SCALE * 10);
+		}
+		attackCol.y = collision.y + (Game.SCALE * 10);
+	}
+
 	public void loadLvlData(int[][] lvlData) {
 		this.lvlData = lvlData;
 		if(!IsEntityOnFloor(collision, lvlData)) {
@@ -220,10 +248,19 @@ public class Player extends Entity{
 	public void render(Graphics g, int lvlOffset) {
 
 		drawCollision(g, lvlOffset);
-//		g.drawRect((int)x, (int)y, 96, 96);
-		g.drawImage(anim[playerAction][aniIndex], (int)(collision.x - xDrawOffset)-lvlOffset, (int)(collision.y - yDrawOffset), width , height ,null);
+		g.drawImage(anim[playerAction][aniIndex], 
+				(int)(collision.x - xDrawOffset)-lvlOffset + flipX, 
+				(int)(collision.y - yDrawOffset), 
+				width * flipW, height ,null);
+		drawAttackBox(g, lvlOffset);
 	}
 	
+	private void drawAttackBox(Graphics g, int lvlOffset) {
+		g.setColor(Color.green);
+		g.drawRect((int) attackCol.x - lvlOffset,(int) attackCol.y,(int) attackCol.height,(int) attackCol.width);
+		
+	}
+
 	public void resetDirBool() {
 		left = false;
 		right = false;

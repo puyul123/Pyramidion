@@ -12,13 +12,15 @@ import Main.Game;
 
 public abstract class Enemy extends Entity{
 
-	private int aniIndex, aniTick, aniSpeed = 25;
-	private int enemyState = IDLE, enemyType;
-	private boolean firstUpdate = true;
-	private boolean inAir;
-	private float fallSpeed;
-	private float mummySpeed = 1.0f * Game.SCALE;
-	private int walkDir = LEFT;
+	protected int aniIndex, aniTick, aniSpeed = 25;
+	protected int enemyState = IDLE, enemyType;
+	protected boolean firstUpdate = true;
+	protected boolean inAir;
+	protected float fallSpeed;
+	protected float mummySpeed = 0.3f * Game.SCALE;
+	protected int walkDir = LEFT;
+	protected int tileY;
+	protected float attackDistance = Game.TILES_SIZE;
 	
 	public Enemy(float x, float y, int height, int width, int enemyType) {
 		super(x, y, height, width);
@@ -27,67 +29,90 @@ public abstract class Enemy extends Entity{
 		
 	}
 	
-	private void updateAnimationTick() {
+	protected void updateAnimationTick() {
 		aniTick++;
 		if(aniTick >= aniSpeed) {
 			aniTick = 0;
 			aniIndex++;
 			if(aniIndex >= GetSpriteAmount(enemyType, enemyState)){
 				aniIndex = 0;
+				if(enemyState == ATTACK)
+					enemyState = IDLE;
 			}
 		}
 	}
 	
-	public void update(int[][] lvlData) {
-		updateAnimationTick();
-		updateMove(lvlData);
+	protected void firstUpdateCheck(int[][]lvlData) {
+		if(!IsEntityOnFloor(collision, lvlData)) {
+			inAir = true;
+		}
+		firstUpdate = false;
 	}
 	
-	private void updateMove(int[][] lvlData) {
-		if(firstUpdate) {
-			if(!IsEntityOnFloor(collision, lvlData)) {
-				inAir = true;
-			}
-			firstUpdate = false;
-		}
-		
-		if(inAir) {
-			if(CanMoveHere(collision.x, collision.y + fallSpeed, collision.height, collision.width, lvlData)) {
-				collision.y += fallSpeed;
-				fallSpeed += gravity;
-			}
-			else {
-				inAir = false;
-				collision.y = GetEntityYPosUnderRoofOrAboveFloor(collision, fallSpeed);
-			}
+	protected void updateInAir(int[][]lvlData) {
+		if(CanMoveHere(collision.x, collision.y + fallSpeed, collision.height, collision.width, lvlData)) {
+			collision.y += fallSpeed;
+			fallSpeed += gravity;
 		}
 		else {
-			switch(enemyState) {
-			case IDLE:
-				enemyState = RUNNING;
-			case RUNNING:
-				float xSpeed = 0;
-				if(walkDir == LEFT) 
-					xSpeed = -mummySpeed;
-				else 
-					xSpeed = mummySpeed;
-				
-				if(CanMoveHere(collision.x, collision.y, collision.width, collision.height, lvlData)) {
-					if(IsFloor(collision, xSpeed, lvlData)) {
-						collision.x += xSpeed;
-						return;
-					}
-				}
-				
-				changeWalkDir();
-				break;
+			inAir = false;
+			collision.y = GetEntityYPosUnderRoofOrAboveFloor(collision, fallSpeed);
+			tileY = (int) (collision.y / Game.TILES_SIZE);
+		}
+	}
+	
+	protected void move(int[][]lvlData) {
+		float xSpeed = 0;
+		if(walkDir == LEFT) 
+			xSpeed = -mummySpeed;
+		else 
+			xSpeed = mummySpeed;
+		
+		if(CanMoveHere(collision.x, collision.y, collision.width, collision.height, lvlData)) {
+			if(IsFloor(collision, xSpeed, lvlData)) {
+				collision.x += xSpeed;
+				return;
 			}
 		}
 		
+		changeWalkDir();
+	}
+	
+	protected void turnTowardsPlayer(Player player) {
+		if (player.collision.x > collision.x)
+			walkDir = RIGHT;
+		else
+			walkDir = LEFT;
 	}
 
+	protected boolean canSeePlayer(int[][] lvlData, Player player) {
+		int playerTileY = (int) (player.getCollision().y / Game.TILES_SIZE);
+		if (playerTileY == tileY)
+			if (isPlayerInRange(player)) {			
+				if (IsSightClear(lvlData, collision, player.collision, tileY))
+					return true;
+			}
 
-	private void changeWalkDir() {
+		return false;
+	}
+
+	protected boolean isPlayerInRange(Player player) {
+		int absValue = (int) Math.abs(player.collision.x - collision.x);
+		return absValue <= attackDistance * 5;
+	}
+
+	protected boolean isPlayerCloseForAttack(Player player) {
+		int absValue = (int) Math.abs(player.collision.x - collision.x);
+		return absValue <= attackDistance;
+	}
+	
+	protected void newState(int enemyState) {
+		this.enemyState = enemyState;
+		aniTick = 0;
+		aniIndex = 0;
+	}
+	
+	protected void changeWalkDir() {
 		if(walkDir == LEFT) {
 			walkDir = RIGHT;
 		}else
