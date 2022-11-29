@@ -34,8 +34,8 @@ public class Constants {
 				case MUMMY ->{
 					switch(enemyState) {
 					case IDLE: return 1;
-					case RUNNING: return 2;
-					case ATTACK: return 2;
+					case RUNNING: return 4;
+					case ATTACK: return 3;
 					case HIT: return 1;
 					case DEAD: return 3;
 					default: return 1;
