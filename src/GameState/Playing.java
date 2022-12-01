@@ -3,6 +3,7 @@ package GameState;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 
 import Entity.EnemyManager;
 import Entity.Mummy;
@@ -38,7 +39,7 @@ public class Playing extends State implements StateMethods{
 		lvlManager = new LevelManager(game);
 		enemyMan = new EnemyManager(this);
 		objMan = new ObjectManager(this);
-		player = new Player(150, 200, (int)(64*Game.SCALE), (int)(64*Game.SCALE));
+		player = new Player(150, 200, (int)(64*Game.SCALE), (int)(64*Game.SCALE), this);
 		player.loadLvlData(lvlManager.getCurrentLevel().getLevelData());
 	}
 
@@ -60,6 +61,15 @@ public class Playing extends State implements StateMethods{
 		
 	}
 	
+	public void resetAll() {
+		//todo
+	}
+	
+	public void checkEnemyHit(Rectangle2D.Float attackCol) {
+//		System.out.println("Yes Hit");
+		enemyMan.checkEnemyHit(attackCol);
+	}
+	
 	private void checkCloseToBorder() {
 		int playerX = (int) player.getCollision().x;
 		int diff = playerX - xLvlOffset;
@@ -78,7 +88,7 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("mouse clicked");
+	//	System.out.println("mouse clicked");
 		if(e.getButton() == MouseEvent.BUTTON1)
 			player.setAttack(true);
 	}
@@ -126,7 +136,7 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("mouse pressed");
+	//	System.out.println("mouse pressed");
 
 	}
 

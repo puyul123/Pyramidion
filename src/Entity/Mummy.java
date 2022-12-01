@@ -41,8 +41,8 @@ public class Mummy extends Enemy{
 	}
 	
 	public void update(int[][] lvlData, Player player) {
+		updateBehavior(lvlData, player);
 		updateAnimationTick();
-		updateMove(lvlData, player);
 		updateAttackBox();
 	}
 	
@@ -52,7 +52,7 @@ public class Mummy extends Enemy{
 	}
 
 
-	private void updateMove(int[][] lvlData, Player player) {
+	private void updateBehavior(int[][] lvlData, Player player) {
 		if(firstUpdate) 
 			firstUpdateCheck(lvlData);
 		if(inAir) 
@@ -71,11 +71,22 @@ public class Mummy extends Enemy{
 					newState(ATTACK);
 				move(lvlData);
 				break;
+			case ATTACK:
+				if(aniIndex == 0)
+					attackChecked = false;
+				//CHECK BOSQ
+				if(aniIndex == 2 && !attackChecked)
+					checkPlayerHit(attackBox, player);
+				break;
+			case HIT:
+				break;
+			case DEAD:
+				
 			}
 		}
 		
 	}
-	
+
 	public int flipX() {
 		if(walkDir == RIGHT) 
 			return 0;

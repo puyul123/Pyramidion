@@ -7,13 +7,14 @@ import static Util.Constants.Direction.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 
 import Main.Game;
 
 public abstract class Enemy extends Entity{
 
 	protected int aniIndex, aniTick, aniSpeed = 25;
-	protected int enemyState = IDLE, enemyType;
+	protected int enemyState, enemyType;
 	protected boolean firstUpdate = true;
 	protected boolean inAir;
 	protected float fallSpeed;
@@ -22,11 +23,32 @@ public abstract class Enemy extends Entity{
 	protected int tileY;
 	protected float attackDistance = Game.TILES_SIZE;
 	
+	protected int maxHealth;
+	protected int currentHealth;
+	protected boolean active = true;
+	protected boolean attackChecked;
+	
 	public Enemy(float x, float y, int height, int width, int enemyType) {
 		super(x, y, height, width);
 		this.enemyType = enemyType;
 		initCollision(x, y, width, height);
-		
+		maxHealth = GetMaxHealth(enemyType);
+		currentHealth = maxHealth;
+	}
+	
+	public void hurt(int amount) {
+		currentHealth -= amount;
+		if (currentHealth <= 0) {
+			newState(DEAD);
+		}
+		else
+			newState(HIT);
+	}
+	
+	protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
+		if(attackBox.intersects(player.collision))
+			player.changeHealth(-GetEnemyDmg(enemyType));
+		attackChecked = true;
 	}
 	
 	protected void updateAnimationTick() {
@@ -36,9 +58,15 @@ public abstract class Enemy extends Entity{
 			aniIndex++;
 			if(aniIndex >= GetSpriteAmount(enemyType, enemyState)){
 				aniIndex = 0;
-				if(enemyState == ATTACK)
-					enemyState = IDLE;
-			}
+				
+				switch(enemyState) {
+					case ATTACK, HIT -> 
+						enemyState = IDLE;
+					case DEAD -> 
+						active = false;
+					
+				}
+			}	
 		}
 	}
 	
@@ -124,5 +152,7 @@ public abstract class Enemy extends Entity{
 	public void setAniIndex(int aniIndex) {this.aniIndex = aniIndex;}
 	public int getEnemyState() {return enemyState;}
 	public void setEnemyState(int enemyState) {this.enemyState = enemyState;}
+	public boolean isActive() {return active;}
+	public void setActive(boolean active) {this.active = active;}
 	
 }

@@ -18,8 +18,6 @@ public class Constants {
 		public static final int MUMMY_SIZE = 64;
 		
 		//DEVELOP
-		public static final int MUMMY_DRAWOFFSET_X = (int) (7 * Game.SCALE);
-		public static final int MUMMY_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
 		
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
@@ -37,12 +35,31 @@ public class Constants {
 					case RUNNING: return 4;
 					case ATTACK: return 3;
 					case HIT: return 1;
-					case DEAD: return 3;
+					case DEAD: return 5;
 					default: return 1;
 					}
 				}
 			}
 			return 0;
+		}
+		
+		public static int GetMaxHealth(int enemy_type) {
+			switch (enemy_type) {
+			case MUMMY:
+				return 20;
+			default:
+				return 1;
+			}
+		}
+
+		public static int GetEnemyDmg(int enemy_type) {
+			switch (enemy_type) {
+			case MUMMY:
+				return 10;
+			default:
+				return 0;
+			}
+
 		}
 	}
 	

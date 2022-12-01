@@ -39,12 +39,12 @@ public class LevelManager {
 			}
 		
 		//CHECK PER-TILES
-		for(int j = 0; j < levelZero.getLevelData()[0].length; j++) {
-			for(int i = 0; i < Game.TILES_HEIGHT; i++) {
-				g.setColor(Color.MAGENTA);
-				g.drawRect((int) (j*32*Game.SCALE)-lvlOffset,(int) (i*32*Game.SCALE), Game.TILES_SIZE, Game.TILES_SIZE);
-			}
-		}
+//		for(int j = 0; j < levelZero.getLevelData()[0].length; j++) {
+//			for(int i = 0; i < Game.TILES_HEIGHT; i++) {
+//				g.setColor(Color.MAGENTA);
+//				g.drawRect((int) (j*32*Game.SCALE)-lvlOffset,(int) (i*32*Game.SCALE), Game.TILES_SIZE, Game.TILES_SIZE);
+//			}
+//		}
 	}
 	
 	public void Update() {
