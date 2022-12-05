@@ -19,8 +19,14 @@ public class LoadSave {
 	public static final String LEVEL_ATLAS = "test_outside_sprites.png";
 	public static final String LEVEL_ONE_DATA = "test_level_one_data.png";
 	public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
+	
 	public static final String MENU_BUTTON = "mainMenuButton.png";
 	public static final String MENU_BACKGROUND = "mainMenuBackground.png";
+	public static final String PAUSE_BACKGROUND = "pause_menu.png";
+	public static final String SOUND_BUTTONS = "sound_button.png";
+	public static final String URM_BUTTONS = "urm_buttons.png";
+	public static final String VOLUME_BUTTONS = "volume_buttons.png";
+	
 	public static final String TEST_MAP = "test_outside_sprite_2.png";
 	public static final String LEVEL_0 = "level0.txt";	
 	public static final String TRAP_IMAGE = "trap_2.png";

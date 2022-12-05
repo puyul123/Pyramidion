@@ -18,14 +18,29 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 	
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch (Gamestate.state) {
+		case PLAYING:
+			gp.getGame().getPlaying().mouseDragged(e);
+			break;
+		default:
+			break;
+
+		}
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch (Gamestate.state) {
+		case MENU:
+			gp.getGame().getMenu().mouseMoved(e);
+			break;
+		case PLAYING:
+			gp.getGame().getPlaying().mouseMoved(e);
+			break;
+		default:
+			break;
+
+		}
 	}
 
 	@Override
@@ -56,7 +71,18 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		switch (Gamestate.state) {
+		case MENU:
+			gp.getGame().getMenu().mouseReleased(e);
+			break;
+		case PLAYING:
+			gp.getGame().getPlaying().mouseReleased(e);
+			break;
+		default:
+			break;
+
+		}
+
 		
 	}
 

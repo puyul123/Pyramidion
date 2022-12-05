@@ -11,11 +11,13 @@ import Entity.Player;
 import Main.Game;
 import Util.LoadSave;
 import levels.LevelManager;
+import ui.PauseOverlay;
 import Object.ObjectManager;
 import Object.Trap;
 
 public class Playing extends State implements StateMethods{
 	
+	private PauseOverlay pauseOverlay;
 	private ObjectManager objectManager;
 	private Player player;
 	private LevelManager lvlManager;
@@ -30,12 +32,15 @@ public class Playing extends State implements StateMethods{
 	private int maxTilesOffset = lvlTilesWide - Game.TILES_WIDTH;
 	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 	
+	private boolean paused = false;
+	
 	public Playing(Game game) {
 		super(game);
 		init();
 	}
 
 	private void init() {
+		pauseOverlay = new PauseOverlay(this);
 		lvlManager = new LevelManager(game);
 		enemyMan = new EnemyManager(this);
 		objMan = new ObjectManager(this);
@@ -45,10 +50,15 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void update() {
-		lvlManager.Update();
-		player.Update();
-		enemyMan.update(lvlManager.getCurrentLevel().getLevelData(), player);
-		checkCloseToBorder();
+		if(!paused) {
+			lvlManager.Update();
+			player.Update();
+			enemyMan.update(lvlManager.getCurrentLevel().getLevelData(), player);
+			checkCloseToBorder();
+		}
+		else {
+			pauseOverlay.update();
+		}
 	}
 
 	@Override
@@ -57,6 +67,9 @@ public class Playing extends State implements StateMethods{
 		enemyMan.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		objMan.draw(g, xLvlOffset);
+		
+		if(paused)
+			pauseOverlay.draw(g);
 	//	mummy.draw(g);
 		
 	}
@@ -112,7 +125,7 @@ public class Playing extends State implements StateMethods{
 				else player.setOnSword(true);
 			}
 			case KeyEvent.VK_ESCAPE ->{
-				Gamestate.state = Gamestate.MENU;
+				paused = !paused;
 			}
 		}
 	}
@@ -133,28 +146,39 @@ public class Playing extends State implements StateMethods{
 			}			
 		}
 	}
-
+	
+	public void mouseDragged(MouseEvent e) {
+		if (paused)
+			pauseOverlay.mouseDragged(e);
+	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-	//	System.out.println("mouse pressed");
+		if (paused)
+			pauseOverlay.mousePressed(e);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		if (paused)
+			pauseOverlay.mouseReleased(e);
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pauseOverlay.mouseMoved(e);
 
 	}
 
 	public void windowFocusLost() {
 		player.resetDirBool();
 		
+	}
+	
+	public void unpauseGame() {
+		paused = false;
 	}
 	
 	public Player getPlayer() {
