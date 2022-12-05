@@ -36,6 +36,7 @@ public class Player extends Entity{
 	private int[][] lvlData;
 	private float xDrawOffset = 20 * Game.SCALE;
 	private float yDrawOffset = 12 * Game.SCALE;
+	private int playerDir = RIGHT;
 	
 	private int playerSpeed = (int) (2.5 * Game.SCALE);
 	private float airSpeed = 0f;
@@ -191,11 +192,13 @@ public class Player extends Entity{
 			xSpeed -= playerSpeed;
 			flipX = this.width;
 			flipW = -1;
+			playerDir = LEFT;
 		}
 		if(right) {
 			xSpeed += playerSpeed;
 			flipX = 0;
 			flipW = 1;
+			playerDir = RIGHT;
 		}
 		
 		if (!inAir)
@@ -275,7 +278,6 @@ public class Player extends Entity{
 	
 	private void checkAttack() {
 		if(attackChecked || aniIndex != 1) {
-			System.out.println("Hit");
 			return;
 		}
 		attackChecked = true;
@@ -306,10 +308,23 @@ public class Player extends Entity{
 	public void render(Graphics g, int lvlOffset) {
 
 		drawCollision(g, lvlOffset);
+		if(playerAction == 0 || playerAction == 1)
 		g.drawImage(anim[playerAction][aniIndex], 
 				(int)(collision.x - xDrawOffset)-lvlOffset + flipX, 
 				(int)(collision.y - yDrawOffset), 
 				width * flipW, height ,null);
+		else if(playerAction >= 3) {
+			if(playerDir == RIGHT)	
+				g.drawImage(anim[playerAction][aniIndex], 
+						(int)(collision.x - xDrawOffset - 25)-lvlOffset + flipX, 
+						(int)(collision.y - yDrawOffset), 
+						(width + 50) * flipW, height ,null);
+			else if(playerDir == LEFT)
+				g.drawImage(anim[playerAction][aniIndex], 
+						(int)(collision.x - xDrawOffset + 25)-lvlOffset + flipX, 
+						(int)(collision.y - yDrawOffset), 
+						(width + 50) * flipW, height ,null);
+		}
 		drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}

@@ -96,12 +96,11 @@ public abstract class Enemy extends Entity{
 		else 
 			xSpeed = mummySpeed;
 		
-		if(CanMoveHere(collision.x, collision.y, collision.width, collision.height, lvlData)) {
+		if(CanMoveHere(collision.x, collision.y, collision.width, collision.height, lvlData)) 
 			if(IsFloor(collision, xSpeed, lvlData)) {
 				collision.x += xSpeed;
 				return;
 			}
-		}
 		
 		changeWalkDir();
 	}
