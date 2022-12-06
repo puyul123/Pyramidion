@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import GameState.Gamestate;
 import GameState.MainMenu;
 import GameState.Playing;
+import Util.LoadSave;
 import GameState.Gamestate;
 
 public class Game implements Runnable{
@@ -31,7 +32,7 @@ public class Game implements Runnable{
 	
 	
 	
-	public Game() {
+	public Game() {	
 		init();
 		
 		gp = new GamePanel(this);

@@ -2,9 +2,14 @@ package Util;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -16,9 +21,11 @@ import static Util.Constants.EnemyConstants.*;
 public class LoadSave {
 	
 	
+	public static BufferedReader[] mapReader;
+	
 	public static final String LEVEL_ATLAS = "test_outside_sprites.png";
-	public static final String LEVEL_ONE_DATA = "test_level_one_data.png";
-	public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
+//	public static final String LEVEL_ONE_DATA = "test_level_one_data.png";
+//	public static final String LEVEL_ONE_DATA_LONG = "level_one_data_long.png";
 	
 	public static final String MENU_BUTTON = "mainMenuButton.png";
 	public static final String MENU_BACKGROUND = "mainMenuBackground.png";
@@ -26,9 +33,13 @@ public class LoadSave {
 	public static final String SOUND_BUTTONS = "sound_button.png";
 	public static final String URM_BUTTONS = "urm_buttons.png";
 	public static final String VOLUME_BUTTONS = "volume_buttons.png";
+	public static final String COMPLETED_IMG = "completed_sprite.png";
 	
 	public static final String TEST_MAP = "test_outside_sprite_2.png";
-	public static final String LEVEL_0 = "level0.txt";	
+	public static final String LEVEL_0 = "level0.txt";
+	public static final String LEVEL_1 = "level1.txt";	
+	public static final String LEVEL_2 = "level2.txt";	
+	
 	public static final String TRAP_IMAGE = "trap_2.png";
 	public static final String STATUS_BAR = "health_power_bar.png";
 	
@@ -50,7 +61,7 @@ public class LoadSave {
 		}
 		return img;
 	}
-
+	
 	public static BufferedReader GetMapTxt(String txtName) {
 		BufferedReader br = null;
 		InputStream is = LoadSave.class.getResourceAsStream("/maps/" + txtName);
@@ -58,61 +69,22 @@ public class LoadSave {
 		return br;
 	}
 	
-	public static ArrayList<Mummy> GetMummy(){
-		BufferedReader br = GetMapTxt(LEVEL_0);
-		ArrayList<Mummy> mummy = new ArrayList<>();
+	public static BufferedReader[] importAllMap() {
 		
-		try {
+		mapReader = new BufferedReader[3];
+		
+		try {	
 			
-			int col = 0;
-			int row = 0;
-			while(col < 60 && row < Game.TILES_HEIGHT) {
-				String line = br.readLine();
-				
-				while(col < 60) {
-					String numbers[] = line.split(" ");
-					int num = Integer.parseInt(numbers[col]);
-					if(num == MUMMY) 
-						mummy.add(new Mummy((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30)));
-					col++;
-				}
-				if(col == Game.TILES_HEIGHT);
-					col = 0;
-					row++;
-			}
-			br.close();
-		}
-		catch(IOException e) {
+			mapReader[0] = GetMapTxt(LEVEL_0);
+			mapReader[1] = GetMapTxt(LEVEL_1);
+			mapReader[2] = GetMapTxt(LEVEL_2);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return mummy;
+		
+		return mapReader;
 	}
 	
-	public static int[][] GetLevelData() {
-		int[][] lvlData = new int[14][60];
-		BufferedReader br = GetMapTxt(LEVEL_0);
-			
-			try {
-
-				int col = 0;
-				int row = 0;
-				while(col < 60 && row < Game.TILES_HEIGHT) {
-					String line = br.readLine();
-					
-					while(col < 60) {
-						String numbers[] = line.split(" ");
-						int num = Integer.parseInt(numbers[col]);
-						lvlData[row][col] = num;
-						col++;
-					}
-					if(col == Game.TILES_HEIGHT);
-						col = 0;
-						row++;
-				}
-				br.close();
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			return lvlData;
-	}
 }

@@ -260,8 +260,12 @@ public class Player extends Entity{
 	}
 	
 	public void Update() {
-		updateHealthBar();
+		if(currentHealth <= 0) {
+			playing.setGameOver(true);
+			return;
+		}
 		
+		updateHealthBar();
 		updatePlayerPos();
 		
 		if(attack) checkAttack();
@@ -365,6 +369,21 @@ public class Player extends Entity{
 	public void setAttack(boolean attack) {this.attack = attack;}
 	public boolean isOnSword() {return onSword;}
 	public void setOnSword(boolean onSword) {this.onSword = onSword;}
+
+	public void resetAll() {
+		resetDirBool();
+		inAir = false;
+		attack = false;
+		move = false;
+		playerAction = IDLE;
+		currentHealth = maxHealth;
+		
+		collision.x = x;
+		collision.y = y;
+		
+		if(!IsEntityOnFloor(collision, lvlData))
+			inAir = true;
+	}
 	
 	
 }

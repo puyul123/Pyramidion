@@ -1,6 +1,7 @@
 package Util;
 
 import java.awt.geom.Rectangle2D;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -15,6 +16,8 @@ import Object.Trap;
 import static Util.LoadSave.GetMapTxt;
 
 import static Util.LoadSave.LEVEL_0;
+import static Util.LoadSave.LEVEL_1;
+import static Util.LoadSave.LEVEL_2;
 import static Util.Constants.EnemyConstants.MUMMY;
 import static Util.Constants.ObjectConstants.*;
 
@@ -111,6 +114,67 @@ public class HelpMethods {
 			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 
 	}
+	
+	
+	public static int[][] GetLevelData(BufferedReader br) {
+		int[][] lvlData = new int[14][60];
+			
+			try {
+				int col = 0;
+				int row = 0;
+				while(col < 60 && row < Game.TILES_HEIGHT) {
+					String line = br.readLine();
+					
+					while(col < 60) {
+						String numbers[] = line.split(" ");
+						int num = Integer.parseInt(numbers[col]);
+						lvlData[row][col] = num;
+						col++;
+					}
+					if(col == Game.TILES_HEIGHT);
+						col = 0;
+						row++;
+				}
+				br.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		return lvlData;
+	}
+	
+	public static ArrayList<Mummy> GetMummy(BufferedReader br, int lvlIndex){
+		
+		if(lvlIndex == 0) br = GetMapTxt(LEVEL_0);
+		else if(lvlIndex == 1) br = GetMapTxt(LEVEL_1);
+		else if(lvlIndex == 2) br = GetMapTxt(LEVEL_2);
+		
+		ArrayList<Mummy> mummy = new ArrayList<>();
+		
+		try {
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == MUMMY) 
+						mummy.add(new Mummy((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30)));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+		//	br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return mummy;
+	}
+	
 	
 	public static ArrayList<Trap> setTraps(){
 		BufferedReader br = GetMapTxt(LEVEL_0);

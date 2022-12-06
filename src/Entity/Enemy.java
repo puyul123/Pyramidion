@@ -101,7 +101,7 @@ public abstract class Enemy extends Entity{
 				collision.x += xSpeed;
 				return;
 			}
-		
+			
 		changeWalkDir();
 	}
 	
@@ -153,5 +153,16 @@ public abstract class Enemy extends Entity{
 	public void setEnemyState(int enemyState) {this.enemyState = enemyState;}
 	public boolean isActive() {return active;}
 	public void setActive(boolean active) {this.active = active;}
+	
+	public void resetEnemy() {
+		inAir = true;
+		collision.x = x;
+		collision.y = y;
+		firstUpdate = false;
+		currentHealth = maxHealth;
+		newState(IDLE);
+		active = true;
+		fallSpeed = 0;
+	}
 	
 }

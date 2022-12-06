@@ -97,4 +97,5 @@ public class Mummy extends Enemy{
 			return 1;
 		else return -1;
 	}
+
 }

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import GameState.Playing;
 import Main.Game;
 import Util.LoadSave;
+import levels.Level;
 
 import static Util.Constants.EnemyConstants.*;
 
@@ -23,11 +24,10 @@ public class EnemyManager {
 	public EnemyManager(Playing playing) {
 		this.playing = playing;
 		loadEnemyImgs();
-		addEnemies();
 	}
 
-	private void addEnemies() {
-		mummies = LoadSave.GetMummy();
+	public void loadEnemies(Level level) {
+		mummies = level.getMummy();
 		System.out.println("size of mum = " + mummies.size());
 	}
 
@@ -58,9 +58,15 @@ public class EnemyManager {
 	}
 	
 	public void update(int[][] lvlData, Player player) {
+		boolean isAnyActive = false;
+		
 		for(Mummy m : mummies) 
-			if(m.isActive())
+			if(m.isActive()) {
 				m.update(lvlData, player);
+				isAnyActive = true;
+			}
+		if(!isAnyActive)
+			playing.setLevelCompleted(true);
 	}
 	
 	public void draw(Graphics g, int xLvlOffset) {
@@ -86,6 +92,11 @@ public class EnemyManager {
 					m.hurt(10);
 					return;
 				}
+	}
+
+	public void resetAllEnemies() {
+		for(Mummy m: mummies)
+			m.resetEnemy();
 	}
 	
 }
