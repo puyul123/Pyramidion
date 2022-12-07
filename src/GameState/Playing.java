@@ -22,7 +22,7 @@ public class Playing extends State implements StateMethods{
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay lvlCompletedOverlay;
 	private GameOverOverlay gameoverOverlay;
-	private ObjectManager objectManager;
+	//private ObjectManager objectManager;
 	private Player player;
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
@@ -252,9 +252,9 @@ public class Playing extends State implements StateMethods{
 	}
 
 	public void trapTouched(Player player) {
-		objectManager.trapTouched(player);
+		objMan.trapTouched(player);
 	}
 	
-	public ObjectManager getObjectManager() {return objectManager;}
+	public ObjectManager getObjectManager() {return objMan;}
 	public EnemyManager getEnemyManager() {return enemyMan;}
 }

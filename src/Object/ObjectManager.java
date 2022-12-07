@@ -39,8 +39,8 @@ public class ObjectManager {
 		addObjects();
 		
 		potions = new ArrayList<>();
-//		potions.add(new Potion(300, 100, POTION));
-//		potions.add(new Potion(400, 100, POTION));
+		potions.add(new Potion(300, 100, POTION));
+		potions.add(new Potion(400, 100, POTION));
 		
 		containers = new ArrayList<>();
 		containers.add(new Container(600, 100, CONTAINER));
@@ -156,9 +156,9 @@ public class ObjectManager {
 		for(Potion p : potions)
 			if(p.isActive())
 				p.updatePotion();
-		for(Gem g : gems)
-			if(g.isActive())
-				g.updateGem();
+//		for(Gem g : gems)
+//			if(g.isActive())
+//				g.updateGem();
 		for(Container c : containers)
 			if(c.isActive())
 				c.updateObject();
