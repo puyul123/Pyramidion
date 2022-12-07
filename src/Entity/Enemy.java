@@ -1,6 +1,7 @@
 package Entity;
 
 import static Util.Constants.EnemyConstants.*;
+import static Util.Constants.aniSpeed;
 
 import static Util.HelpMethods.*;
 import static Util.Constants.Direction.*;
@@ -13,7 +14,7 @@ import Main.Game;
 
 public abstract class Enemy extends Entity{
 
-	protected int aniIndex, aniTick, aniSpeed = 25;
+	protected int aniIndex, aniTick;
 	protected int enemyState, enemyType;
 	protected boolean firstUpdate = true;
 	protected boolean inAir;

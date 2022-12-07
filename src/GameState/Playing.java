@@ -82,6 +82,7 @@ public class Playing extends State implements StateMethods{
 		else if(!gameOver){
 			lvlManager.Update();
 			player.Update();
+			objMan.update();
 			enemyMan.update(lvlManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBorder();
 		}
