@@ -10,6 +10,7 @@ import Entity.Player;
 import GameState.Playing;
 
 import java.awt.Graphics;
+import java.awt.Event.*;
 
 import Util.HelpMethods;
 import Util.LoadSave;
@@ -23,9 +24,9 @@ import java.io.IOException;
 public class ObjectManager {
 
 	private Playing playing;
-	private BufferedImage trapImage, potionImage;
+	private BufferedImage trapImage;
 	private ArrayList<Trap> traps;
-	private BufferedImage[] containerImage;
+	private BufferedImage[] containerImage, potionImage;
 	private BufferedImage[][] gemImage;
 	private ArrayList<Potion> potions;
 	private ArrayList<Gem> gems;
@@ -41,6 +42,11 @@ public class ObjectManager {
 		potions = new ArrayList<>();
 		potions.add(new Potion(300, 100, POTION));
 		potions.add(new Potion(400, 100, POTION));
+		
+		gems = new ArrayList<>();
+		gems.add(new Gem(300, 150, RED_GEM));
+		gems.add(new Gem(400, 150, BLUE_GEM));
+		gems.add(new Gem(350, 150, GREEN_GEM));
 		
 		containers = new ArrayList<>();
 		containers.add(new Container(600, 100, CONTAINER));
@@ -64,33 +70,51 @@ public class ObjectManager {
 	}
 	
 	private void loadObjectImgs() {
+		potionImage = new BufferedImage[7];
+		gemImage = new BufferedImage[3][4];
+		containerImage = new BufferedImage[8];
+		
 		try {
-//			BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE);
-//			potionImage = new BufferedImage;
-//			
-//			//potion image
-//			//potionImage[0][0] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
-//			
-//			potionImage = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE).getSubimage(12, 32, 12, 16); 
-			//BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE);
-			//potionImage = potionSprite.getSubimage(12, 32, 12, 16);
-		  	potionImage = ImageIO.read(getClass().getResourceAsStream("/potions_sprite.png"));
-//			
+		  	potionImage[0] = ImageIO.read(getClass().getResourceAsStream("/potion/01.png"));
+		  	potionImage[1] = ImageIO.read(getClass().getResourceAsStream("/potion/02.png"));
+		  	potionImage[2] = ImageIO.read(getClass().getResourceAsStream("/potion/03.png"));
+		  	potionImage[3] = ImageIO.read(getClass().getResourceAsStream("/potion/04.png"));
+		  	potionImage[4] = ImageIO.read(getClass().getResourceAsStream("/potion/05.png"));
+		  	potionImage[5] = ImageIO.read(getClass().getResourceAsStream("/potion/06.png"));
+		  	potionImage[6] = ImageIO.read(getClass().getResourceAsStream("/potion/07.png"));
+		
+		  	gemImage[0][0] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/01.png"));
+		  	gemImage[0][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/02.png"));
+		  	gemImage[0][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/03.png"));
+		  	gemImage[0][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/04.png"));
+		  	
+		  	gemImage[1][0] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/01.png"));
+		  	gemImage[1][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/02.png"));
+		  	gemImage[1][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/03.png"));
+		  	gemImage[1][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/04.png"));
+		  	
+		  	gemImage[2][0] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/01.png"));
+		  	gemImage[2][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/02.png"));
+		  	gemImage[2][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/03.png"));
+		  	gemImage[2][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/04.png"));
+		  	
+			BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE);
+			potionImage = new BufferedImage[7];
+			for(int i = 0; i < potionImage.length; i++) {
+				potionImage[i] = potionSprite.getSubimage(12*i, 0, 12, 16);
+			}
+
 			BufferedImage containerSprite = LoadSave.GetSpriteAtlas(LoadSave.CONTAINER_IMAGE);
 			containerImage = new BufferedImage[8];
 			for(int i = 0; i < containerImage.length; i++) {
 				containerImage[i] = containerSprite.getSubimage(40*i, 0, 40, 30);
 			}
-//			
-//			//BufferedImage gemSprite = LoadSave.GetSpriteAtlas(LoadSave.GEM_IMAGE);
-//			//gemImage = new BufferedImage[3][5];
-//			//masukin asset game nya satusatu
-//			
+			
 			}
 			catch (IOException e) {
 				e.printStackTrace();
 			}
-//		
+		
 	}
 	
 	private void addTraps() {
@@ -125,15 +149,33 @@ public class ObjectManager {
 	}
 
 	private void drawGems(Graphics graphic, int xLvlOffset) {
-		// TODO Auto-generated method stub
+		for(Gem g : gems) {
+			if(g.isActive()) {
+				int type;
+				if(g.getObjType() == GREEN_GEM) 
+					type = 0;
+				else if(g.getObjType() == BLUE_GEM) 
+					type = 1;
+				else
+					type = 2;
+				
+				graphic.drawImage(gemImage[type][g.getAniIndex()], 
+						(int)(g.getArea().x - g.getxDrawOffset() - xLvlOffset), 
+						(int)(g.getArea().y - g.getxDrawOffset()), 
+						GEM_WIDTH, 
+						GEM_HEIGHT, 
+						null);
+				
+			}
+		}
 		
 	}
 
 	private void drawPotions(Graphics graphic, int xLvlOffset) {
-		for(Potion p : potions)
+		for(Potion p : potions) {
 			if(p.isActive()) {
 				if(p.getObjType() == POTION) {
-					graphic.drawImage(potionImage, 
+					graphic.drawImage(potionImage[p.getAniIndex()], 
 							(int)(p.getArea().x - p.getxDrawOffset() - xLvlOffset), 
 							(int)(p.getArea().y - p.getxDrawOffset()), 
 							POTION_WIDTH, 
@@ -141,7 +183,7 @@ public class ObjectManager {
 							null);
 				}
 			}
-		
+		}
 	}
 
 	private void drawTrap(Graphics graphic, int xLvlOffset) {
@@ -156,9 +198,9 @@ public class ObjectManager {
 		for(Potion p : potions)
 			if(p.isActive())
 				p.updatePotion();
-//		for(Gem g : gems)
-//			if(g.isActive())
-//				g.updateGem();
+		for(Gem g : gems)
+			if(g.isActive())
+				g.updateGem();
 		for(Container c : containers)
 			if(c.isActive())
 				c.updateObject();

@@ -4,7 +4,7 @@ import Main.Game;
 
 public class Constants {	
 	
-	public static final int aniSpeed = 25;
+	public static final int aniSpeed = 20;
 	 
 	public static class ObjectConstants {
 		public static final int POTION = 0;
@@ -19,11 +19,16 @@ public class Constants {
 		public static final int BLUE_GEM_VALUE = 30;
 		public static final int RED_GEM_VALUE = 40;
 		
-		public static final int POTION_WIDTH_DEFAULT = 12;
-		public static final int POTION_HEIGHT_DEFAULT = 16;
+		public static final int POTION_WIDTH_DEFAULT = 13;
+		public static final int POTION_HEIGHT_DEFAULT = 17;
 		public static final int POTION_WIDTH = (int) (Game.SCALE * POTION_WIDTH_DEFAULT);
 		public static final int POTION_HEIGHT = (int) (Game.SCALE * POTION_HEIGHT_DEFAULT);
 
+		public static final int GEM_WIDTH_DEFAULT = 12;
+		public static final int GEN_HEIGHT_DEFAULT = 12;
+		public static final int GEM_WIDTH = (int) (Game.SCALE * POTION_WIDTH_DEFAULT);
+		public static final int GEM_HEIGHT = (int) (Game.SCALE * POTION_HEIGHT_DEFAULT);
+		
 		public static final int CONTAINER_WIDTH_DEFAULT = 40;
 		public static final int CONTAINER_HEIGHT_DEFAULT = 30;
 		public static final int CONTAINER_WIDTH = (int) (Game.SCALE * CONTAINER_WIDTH_DEFAULT);
@@ -37,8 +42,10 @@ public class Constants {
 	
 		public static int GetSpriteAmount(int objectType) {
 			switch (objectType) {
-			case POTION, RED_GEM, GREEN_GEM, BLUE_GEM:
+			case POTION:
 				return 7;
+			case RED_GEM, GREEN_GEM, BLUE_GEM:
+				return 4;
 			case CONTAINER:
 				return 8;
 			}
