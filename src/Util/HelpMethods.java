@@ -12,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import Main.Game;
+import Object.Container;
+import Object.Gem;
+import Object.Potion;
 import Object.Trap;
 import static Util.LoadSave.GetMapTxt;
 
@@ -204,6 +207,101 @@ public class HelpMethods {
 			e.printStackTrace();
 		}
 		return tr;
+	}
+	
+	public static ArrayList<Potion> setPotions(){
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Potion> po = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == POTION) 
+						po.add(new Potion((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), POTION));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return po;
+	}
+
+	public static ArrayList<Gem> setGems() {
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Gem> gem = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == RED_GEM) 
+						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), RED_GEM));
+					else if(num == BLUE_GEM)
+						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), BLUE_GEM));
+					else if(num == GREEN_GEM)
+						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), GREEN_GEM));
+					
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return gem;
+	}
+
+	public static ArrayList<Container> setContainers() {
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Container> con = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == CONTAINER) 
+						con.add(new Container((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), CONTAINER));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return con;
 	}
 	
 } 

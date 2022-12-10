@@ -53,6 +53,7 @@ public class Playing extends State implements StateMethods{
 	
 	private void loadStartLevel() {
 		enemyMan.loadEnemies(lvlManager.getCurrentLevel());
+		objMan.loadObjects(lvlManager.getCurrentLevel());
 	}
 
 	private void calcLvlOffset() {
@@ -115,6 +116,7 @@ public class Playing extends State implements StateMethods{
 		isLvlCompleted = false;
 		player.resetAll();
 		enemyMan.resetAllEnemies();
+		objMan.resetAllObjects();
 	}
 	
 	public void setGameOver(boolean gameOver) {
@@ -124,6 +126,19 @@ public class Playing extends State implements StateMethods{
 	public void checkEnemyHit(Rectangle2D.Float attackCol) {
 //		System.out.println("Yes Hit");
 		enemyMan.checkEnemyHit(attackCol);
+	}
+	
+	public void checkObjectHit(Rectangle2D.Float attackCol) {
+		System.out.println("mukul kotak");
+		objMan.checkObjectHit(attackCol);
+	}
+	
+	public void checkPotionTouched(Rectangle2D.Float area) {
+		objMan.checkObjectTouched(area);
+	}
+	
+	public void checkGemTouched(Rectangle2D.Float area) {
+		objMan.checkObjectTouched(area);
 	}
 	
 	private void checkCloseToBorder() {

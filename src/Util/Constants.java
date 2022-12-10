@@ -7,11 +7,11 @@ public class Constants {
 	public static final int aniSpeed = 20;
 	 
 	public static class ObjectConstants {
-		public static final int POTION = 0;
-		public static final int GREEN_GEM = 1;
-		public static final int BLUE_GEM = 2;
-		public static final int RED_GEM = 3;
-		public static final int CONTAINER = 4;
+		public static final int POTION = 99;
+		public static final int GREEN_GEM = 104;
+		public static final int BLUE_GEM = 132;
+		public static final int RED_GEM = 131;
+		public static final int CONTAINER = 95;
 		//public static final int BOX = 3;
 		
 		public static final int POTION_VALUE = 20;

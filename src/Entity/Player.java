@@ -72,6 +72,15 @@ public class Player extends Entity{
 	private int currentHealth = maxHealth;
 	private int healthWidth = healthBarWidth;
 	
+	private int pointBarWidth = (int) (150 * Game.SCALE);
+	private int pointBarHeight = (int) (4 * Game.SCALE);
+	private int pointBarXStart = (int) (34 * Game.SCALE);
+	private int pointBarYStart = (int) (14 * Game.SCALE);
+
+	private int minPoint = 0;
+	private int currentPoint = minPoint;
+	private int pointWidth = pointBarWidth;
+	
 	//COMBAT
 	private boolean attackChecked;
 	
@@ -259,6 +268,11 @@ public class Player extends Entity{
 			currentHealth = maxHealth;
 	}
 	
+	public void changePoint(int value) {
+		//currentPoint += value;
+		System.out.println("Added point");
+	}
+	
 	public void Update() {
 		if(currentHealth <= 0) {
 			playing.setGameOver(true);
@@ -269,6 +283,11 @@ public class Player extends Entity{
 		updatePlayerPos();
 		
 		if(attack) checkAttack();
+		
+		if(move) {
+			checkPotionTouched();
+			checkGemTouched();
+		}
 		
 		updateAnimationTick();
 		setAnimation();
@@ -286,8 +305,17 @@ public class Player extends Entity{
 		}
 		attackChecked = true;
 		playing.checkEnemyHit(attackCol);
+		playing.checkObjectHit(attackCol);
+	}
+	
+	private void checkPotionTouched() {
+		playing.checkPotionTouched(collision);
 	}
 
+	private void checkGemTouched() {
+		playing.checkGemTouched(collision);
+	}
+	
 	private void updateHealthBar() {
 		healthWidth = (int) ((currentHealth / (float) maxHealth) * healthBarWidth);
 	}
@@ -377,6 +405,7 @@ public class Player extends Entity{
 		move = false;
 		playerAction = IDLE;
 		currentHealth = maxHealth;
+		currentPoint = minPoint;
 		
 		collision.x = x;
 		collision.y = y;

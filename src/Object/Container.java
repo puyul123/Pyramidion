@@ -18,6 +18,9 @@ public class Container extends GameObject {
 			xDrawOffset = (int)(8 * Game.SCALE);
 			yDrawOffset = (int)(5 * Game.SCALE);
 		}
+		
+		area.y += yDrawOffset + (int)(Game.SCALE * 26);
+		area.x += xDrawOffset / 2;
 	}
 	
 	public void updateObject() {

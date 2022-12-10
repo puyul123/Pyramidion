@@ -39,17 +39,65 @@ public class ObjectManager {
 		loadObjectImgs();
 		addObjects();
 		
-		potions = new ArrayList<>();
-		potions.add(new Potion(300, 100, POTION));
-		potions.add(new Potion(400, 100, POTION));
-		
-		gems = new ArrayList<>();
-		gems.add(new Gem(300, 150, RED_GEM));
-		gems.add(new Gem(400, 150, BLUE_GEM));
-		gems.add(new Gem(350, 150, GREEN_GEM));
-		
-		containers = new ArrayList<>();
-		containers.add(new Container(600, 100, CONTAINER));
+		//potions = new ArrayList<>();
+//		potions.add(new Potion(300, 300, POTION));
+//		potions.add(new Potion(400, 300, POTION));
+//		
+		//gems = new ArrayList<>();
+//		gems.add(new Gem(500, 300, RED_GEM));
+//		gems.add(new Gem(600, 300, BLUE_GEM));
+//		gems.add(new Gem(700, 400, GREEN_GEM));
+//		
+		//containers = new ArrayList<>();
+		//containers.add(new Container(900, 400, CONTAINER));
+	}
+	
+	public void checkObjectTouched(Rectangle2D.Float area) {
+		for(Potion p : potions)
+			if(p.isActive()) {
+				if(area.intersects(p.getArea())) {
+					p.setActive(false);
+					applyPotionToPlayer(p);
+				}
+			}
+		for(Gem g : gems)
+			if(g.isActive()) {
+				if(area.intersects(g.getArea())) {
+					g.setActive(false);
+					addPoint(g);
+				}
+			}
+	}
+	
+	public void applyPotionToPlayer(Potion p) {
+		if(p.getObjType() == POTION)
+			playing.getPlayer().changeHealth(POTION_VALUE);
+	}
+	
+	public void addPoint(Gem g) {
+		if(g.getObjType() == GREEN_GEM)
+			playing.getPlayer().changePoint(GREEN_GEM_VALUE);
+		else if(g.getObjType() == BLUE_GEM)
+			playing.getPlayer().changePoint(BLUE_GEM_VALUE);
+		else if(g.getObjType() == RED_GEM)
+			playing.getPlayer().changePoint(RED_GEM_VALUE);
+	}
+	
+	public void checkObjectHit(Rectangle2D.Float area) {
+		for(Container c : containers)
+			if(c.isActive()) {
+				if(c.getArea().intersects(area)) {
+					c.setAnimation(true);
+					potions.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y + c.getArea().height/4), CONTAINER));
+					return;
+				}
+			}
+	}
+	
+	public void loadObjects(Level newLevel) {
+		potions = newLevel.getPotions();
+		containers = newLevel.getContainers();
+		gems = newLevel.getGems();
 	}
 	
 	public void trapTouched(Player player) {
@@ -66,7 +114,14 @@ public class ObjectManager {
 //	}
 	
 	private void addObjects() {
+		potions = HelpMethods.setPotions();
+		System.out.println("size of potion = " + potions.size());		
 		
+		gems = HelpMethods.setGems();
+		//System.out.println("size of gems = " + gems.size());
+		
+		containers = HelpMethods.setContainers();
+		System.out.println("size of container = " + containers.size());
 	}
 	
 	private void loadObjectImgs() {
@@ -205,6 +260,20 @@ public class ObjectManager {
 			if(c.isActive())
 				c.updateObject();
 	}
+
+	public void resetAllObjects() {
+		for (Potion p : potions)
+			p.resetObject();
+		
+		for (Gem g : gems)
+			g.resetObject();
+		
+		for (Container c : containers)
+			c.resetObject();
+		
+	}
+
+	
 	
 	
 }
