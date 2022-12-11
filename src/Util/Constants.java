@@ -12,9 +12,8 @@ public class Constants {
 		public static final int BLUE_GEM = 132;
 		public static final int RED_GEM = 131;
 		public static final int CONTAINER = 95;
-		//public static final int BOX = 3;
 		
-		public static final int POTION_VALUE = 20;
+		public static final int POTION_VALUE = 10;
 		public static final int GREEN_GEM_VALUE = 10;
 		public static final int BLUE_GEM_VALUE = 30;
 		public static final int RED_GEM_VALUE = 40;

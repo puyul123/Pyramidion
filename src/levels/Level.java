@@ -62,19 +62,19 @@ public class Level {
 	}
 
 	private void createTraps() {
-		traps = HelpMethods.setTraps();	
+		traps = HelpMethods.GetTraps();	
 	}
 	
 	private void createPotions() {
-		potions = HelpMethods.setPotions();
+		potions = HelpMethods.GetPotions();
 	}
 	
 	private void createGems() {
-		gems = HelpMethods.setGems();
+		gems = HelpMethods.GetGems();
 	}
 	
 	private void createContainers() {
-		containers = HelpMethods.setContainers();
+		containers = HelpMethods.GetContainers();
 	}
 	
 	public ArrayList<Trap> getTraps() {

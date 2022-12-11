@@ -27,6 +27,8 @@ import static Util.Constants.ObjectConstants.*;
 
 public class HelpMethods {
 	
+	//public static ArrayList<Potion> po;
+	
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
 		if (!IsSolid(x, y, lvlData))
 			if (!IsSolid(x + width, y + height, lvlData))
@@ -52,7 +54,7 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != 1)
+		if (value >= 247 || value < 0 || value != 0 && value != 1 && value!=POTION && value != RED_GEM && value != GREEN_GEM && value != BLUE_GEM && value != CONTAINER)
 			return true;
 		return false;
 	}
@@ -179,7 +181,7 @@ public class HelpMethods {
 	}
 	
 	
-	public static ArrayList<Trap> setTraps(){
+	public static ArrayList<Trap> GetTraps(){
 		BufferedReader br = GetMapTxt(LEVEL_0);
 		ArrayList<Trap> tr = new ArrayList<>();
 		
@@ -209,8 +211,9 @@ public class HelpMethods {
 		return tr;
 	}
 	
-	public static ArrayList<Potion> setPotions(){
+	public static ArrayList<Potion> GetPotions(){
 		BufferedReader br = GetMapTxt(LEVEL_0);
+		//po = new ArrayList<>();
 		ArrayList<Potion> po = new ArrayList<>();
 		
 		try {
@@ -239,7 +242,7 @@ public class HelpMethods {
 		return po;
 	}
 
-	public static ArrayList<Gem> setGems() {
+	public static ArrayList<Gem> GetGems() {
 		BufferedReader br = GetMapTxt(LEVEL_0);
 		ArrayList<Gem> gem = new ArrayList<>();
 		
@@ -274,7 +277,7 @@ public class HelpMethods {
 		return gem;
 	}
 
-	public static ArrayList<Container> setContainers() {
+	public static ArrayList<Container> GetContainers() {
 		BufferedReader br = GetMapTxt(LEVEL_0);
 		ArrayList<Container> con = new ArrayList<>();
 		
@@ -303,5 +306,9 @@ public class HelpMethods {
 		}
 		return con;
 	}
+	
+//	public static ArrayList<Potion> getPotion(){
+//		return po;
+//	}
 	
 } 

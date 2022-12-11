@@ -38,18 +38,6 @@ public class ObjectManager {
 		addTraps();
 		loadObjectImgs();
 		addObjects();
-		
-		//potions = new ArrayList<>();
-//		potions.add(new Potion(300, 300, POTION));
-//		potions.add(new Potion(400, 300, POTION));
-//		
-		//gems = new ArrayList<>();
-//		gems.add(new Gem(500, 300, RED_GEM));
-//		gems.add(new Gem(600, 300, BLUE_GEM));
-//		gems.add(new Gem(700, 400, GREEN_GEM));
-//		
-		//containers = new ArrayList<>();
-		//containers.add(new Container(900, 400, CONTAINER));
 	}
 	
 	public void checkObjectTouched(Rectangle2D.Float area) {
@@ -88,7 +76,8 @@ public class ObjectManager {
 			if(c.isActive()) {
 				if(c.getArea().intersects(area)) {
 					c.setAnimation(true);
-					potions.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y + c.getArea().height/4), CONTAINER));
+					//potions = HelpMethods.po.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), CONTAINER));
+					potions.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), POTION));
 					return;
 				}
 			}
@@ -98,7 +87,7 @@ public class ObjectManager {
 		potions = newLevel.getPotions();
 		containers = newLevel.getContainers();
 		gems = newLevel.getGems();
-	}
+	}   
 	
 	public void trapTouched(Player player) {
 		for(Trap t : traps) {
@@ -109,18 +98,14 @@ public class ObjectManager {
 		}
 	}
 	
-//	public void loadObjects(Level newLvl) {
-//		traps = newLvl.getTraps();
-//	}
-	
 	private void addObjects() {
-		potions = HelpMethods.setPotions();
+		potions = HelpMethods.GetPotions();
 		System.out.println("size of potion = " + potions.size());		
 		
-		gems = HelpMethods.setGems();
+		gems = HelpMethods.GetGems();
 		//System.out.println("size of gems = " + gems.size());
 		
-		containers = HelpMethods.setContainers();
+		containers = HelpMethods.GetContainers();
 		System.out.println("size of container = " + containers.size());
 	}
 	
@@ -173,7 +158,7 @@ public class ObjectManager {
 	}
 	
 	private void addTraps() {
-		traps = HelpMethods.setTraps();
+		traps = HelpMethods.GetTraps();
 		System.out.println("size of trap = " + traps.size());
 	}
 	
