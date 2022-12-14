@@ -12,6 +12,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import Main.Game;
+import Object.Container;
+import Object.Gem;
+import Object.Potion;
 import Object.Trap;
 import static Util.LoadSave.GetMapTxt;
 
@@ -23,6 +26,8 @@ import static Util.Constants.ObjectConstants.*;
 
 
 public class HelpMethods {
+	
+	//public static ArrayList<Potion> po;
 	
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
 		if (!IsSolid(x, y, lvlData))
@@ -49,7 +54,7 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != 1)
+		if (value >= 247 || value < 0 || value != 0 && value != 1 && value!=POTION && value != RED_GEM && value != GREEN_GEM && value != BLUE_GEM && value != CONTAINER)
 			return true;
 		return false;
 	}
@@ -176,7 +181,7 @@ public class HelpMethods {
 	}
 	
 	
-	public static ArrayList<Trap> setTraps(){
+	public static ArrayList<Trap> GetTraps(){
 		BufferedReader br = GetMapTxt(LEVEL_0);
 		ArrayList<Trap> tr = new ArrayList<>();
 		
@@ -205,5 +210,105 @@ public class HelpMethods {
 		}
 		return tr;
 	}
+	
+	public static ArrayList<Potion> GetPotions(){
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		//po = new ArrayList<>();
+		ArrayList<Potion> po = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == POTION) 
+						po.add(new Potion((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), POTION));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return po;
+	}
+
+	public static ArrayList<Gem> GetGems() {
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Gem> gem = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == RED_GEM) 
+						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), RED_GEM));
+					else if(num == BLUE_GEM)
+						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), BLUE_GEM));
+					else if(num == GREEN_GEM)
+						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), GREEN_GEM));
+					
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return gem;
+	}
+
+	public static ArrayList<Container> GetContainers() {
+		BufferedReader br = GetMapTxt(LEVEL_0);
+		ArrayList<Container> con = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == CONTAINER) 
+						con.add(new Container((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), CONTAINER));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return con;
+	}
+	
+//	public static ArrayList<Potion> getPotion(){
+//		return po;
+//	}
 	
 } 

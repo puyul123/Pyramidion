@@ -43,6 +43,9 @@ public class LoadSave {
 	public static final String TRAP_IMAGE = "trap_2.png";
 	public static final String STATUS_BAR = "health_power_bar.png";
 	
+	public static final String POTION_IMAGE = "potions_sprites.png";
+	public static final String CONTAINER_IMAGE = "objects_sprites.png";
+	
 	
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

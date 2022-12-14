@@ -3,13 +3,54 @@ package Util;
 import Main.Game;
 
 public class Constants {	
+	
+	public static final int aniSpeed = 20;
 	 
 	public static class ObjectConstants {
+		public static final int POTION = 99;
+		public static final int GREEN_GEM = 104;
+		public static final int BLUE_GEM = 132;
+		public static final int RED_GEM = 131;
+		public static final int CONTAINER = 95;
+		
+		public static final int POTION_VALUE = 10;
+		public static final int GREEN_GEM_VALUE = 10;
+		public static final int BLUE_GEM_VALUE = 30;
+		public static final int RED_GEM_VALUE = 40;
+		
+		public static final int POTION_WIDTH_DEFAULT = 13;
+		public static final int POTION_HEIGHT_DEFAULT = 17;
+		public static final int POTION_WIDTH = (int) (Game.SCALE * POTION_WIDTH_DEFAULT);
+		public static final int POTION_HEIGHT = (int) (Game.SCALE * POTION_HEIGHT_DEFAULT);
+
+		public static final int GEM_WIDTH_DEFAULT = 12;
+		public static final int GEN_HEIGHT_DEFAULT = 12;
+		public static final int GEM_WIDTH = (int) (Game.SCALE * POTION_WIDTH_DEFAULT);
+		public static final int GEM_HEIGHT = (int) (Game.SCALE * POTION_HEIGHT_DEFAULT);
+		
+		public static final int CONTAINER_WIDTH_DEFAULT = 40;
+		public static final int CONTAINER_HEIGHT_DEFAULT = 30;
+		public static final int CONTAINER_WIDTH = (int) (Game.SCALE * CONTAINER_WIDTH_DEFAULT);
+		public static final int CONTAINER_HEIGHT = (int) (Game.SCALE * CONTAINER_HEIGHT_DEFAULT);
+		
 		public static final int TRAP = 101;
 		public static final int TRAP_WIDTH_DEFAULT = 32;
 		public static final int TRAP_HEIGHT_DEFAULT = 32;
 		public static final int TRAP_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);
 		public static final int TRAP_HEIGHT = (int) (Game.SCALE * TRAP_HEIGHT_DEFAULT);
+	
+		public static int GetSpriteAmount(int objectType) {
+			switch (objectType) {
+			case POTION:
+				return 7;
+			case RED_GEM, GREEN_GEM, BLUE_GEM:
+				return 4;
+			case CONTAINER:
+				return 8;
+			}
+			return 0;
+		}
+		
 	}
 	
 	public static class EnemyConstants {
@@ -40,8 +81,10 @@ public class Constants {
 					}
 				}
 			}
+			
 			return 0;
-		}
+		}		
+		
 		
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
