@@ -15,7 +15,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
-	private static int lvlIndex = 0;
+	private int lvlIndex = 0;
 	
 	public LevelManager(Game game) {
 		this.game = game;
@@ -32,6 +32,7 @@ public class LevelManager {
 			Gamestate.state = Gamestate.MENU;
 		}
 		Level newLevel = levels.get(lvlIndex);
+//		System.out.println(lvlIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
 		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());

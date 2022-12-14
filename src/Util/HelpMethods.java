@@ -54,7 +54,9 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != 1 && value!=POTION && value != RED_GEM && value != GREEN_GEM && value != BLUE_GEM && value != CONTAINER)
+		if (value >= 247 || value < 0 || value != 0 && value != 1 && value != 45 && value != 46 &&
+				value!=POTION && value != RED_GEM && value != GREEN_GEM 
+				&& value != BLUE_GEM && value != CONTAINER)
 			return true;
 		return false;
 	}
@@ -95,6 +97,8 @@ public class HelpMethods {
 	
 	//DEBUGGGG
 	public static boolean IsFloor(Rectangle2D.Float collision, float xSpeed, int[][] lvlData) {
+		if(xSpeed > 0)
+			return IsSolid(collision.x + collision.width + xSpeed, collision.y + collision.height + 1, lvlData);
 		return IsSolid(collision.x + xSpeed, collision.y + collision.height + 1, lvlData);
 	}
 	

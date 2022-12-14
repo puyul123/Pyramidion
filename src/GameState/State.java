@@ -24,7 +24,10 @@ public class State {
 	public void setGameState(Gamestate state) {
 		switch(state) {
 		case MENU -> game.getAudioPlayer().playSong(AudioPlayer.MAIN_MENU);
-		case PLAYING -> game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex());
+		case PLAYING -> {
+			System.out.println(game.getPlaying().getLevelManager().getLevelIndex());
+			game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex());
+		}
 		}
 		
 		Gamestate.state = state;

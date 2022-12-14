@@ -80,13 +80,13 @@ public class AudioPlayer {
 
 	public void stopSong() {
 		if (songs[currentSongId].isActive())
-			songs[currentSongId].stop();
+			songs[currentSongId].stop();;
 	}
 
 	public void setLevelSong(int lvlIndex) {
-		if (lvlIndex == 0)
+		if (lvlIndex % 2 == 0)
 			playSong(LEVEL_1);
-		else if (lvlIndex == 1)
+		else
 			playSong(LEVEL_2);
 	}
 
