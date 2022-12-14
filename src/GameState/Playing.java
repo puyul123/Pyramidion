@@ -272,4 +272,5 @@ public class Playing extends State implements StateMethods{
 	
 	public ObjectManager getObjectManager() {return objMan;}
 	public EnemyManager getEnemyManager() {return enemyMan;}
+	public LevelManager getLevelManager() {return lvlManager;}
 }

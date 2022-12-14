@@ -2,6 +2,7 @@ package levels;
 
 import java.util.ArrayList;
 
+
 import Entity.Mummy;
 import Main.Game;
 
@@ -18,10 +19,9 @@ import static Util.HelpMethods.GetLevelData;
 import static Util.HelpMethods.GetMummy;
 import levels.LevelManager;
 
-public class Level {
+public class Level{
 	
-	private LevelManager lvlManager;
-	private BufferedReader txt;
+	private String txt;
 	private int[][] lvlData;
 	private ArrayList<Mummy> mummy;
 	private ArrayList<Trap> traps;
@@ -32,7 +32,7 @@ public class Level {
 	private int maxTilesOffset; 
 	private int maxLvlOffsetX;
 	
-	public Level(BufferedReader txt) {
+	public Level(String txt) {
 		this.txt = txt;
 		
 		createLevelData();
@@ -53,7 +53,7 @@ public class Level {
 	}
 
 	private void createEnemies() {
-		mummy = GetMummy(txt, 0);
+		mummy = GetMummy(txt);
 		//HARUS DI DEBUGGGG
 	}
 
@@ -63,18 +63,18 @@ public class Level {
 
 	private void createTraps() {
 		traps = HelpMethods.GetTraps();	
-	}
+	}//DEBUG
 	
 	private void createPotions() {
-		potions = HelpMethods.GetPotions();
+		potions = HelpMethods.GetPotions(txt);
 	}
 	
 	private void createGems() {
-		gems = HelpMethods.GetGems();
+		gems = HelpMethods.GetGems(txt);
 	}
 	
 	private void createContainers() {
-		containers = HelpMethods.GetContainers();
+		containers = HelpMethods.GetContainers(txt);
 	}
 	
 	public ArrayList<Trap> getTraps() {

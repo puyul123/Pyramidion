@@ -72,15 +72,15 @@ public class LoadSave {
 		return br;
 	}
 	
-	public static BufferedReader[] importAllMap() {
+	public static String[] importAllMap() {
 		
-		mapReader = new BufferedReader[3];
+		String[] mapReader = new String[3];
 		
 		try {	
 			
-			mapReader[0] = GetMapTxt(LEVEL_0);
-			mapReader[1] = GetMapTxt(LEVEL_1);
-			mapReader[2] = GetMapTxt(LEVEL_2);
+			mapReader[0] = LEVEL_0;
+			mapReader[1] = LEVEL_1;
+			mapReader[2] = LEVEL_2;
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

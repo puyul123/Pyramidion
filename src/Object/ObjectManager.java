@@ -37,7 +37,7 @@ public class ObjectManager {
 		loadTrapImgs();
 		addTraps();
 		loadObjectImgs();
-		addObjects();
+//		addObjects();
 	}
 	
 	public void checkObjectTouched(Rectangle2D.Float area) {
@@ -98,16 +98,16 @@ public class ObjectManager {
 		}
 	}
 	
-	private void addObjects() {
-		potions = HelpMethods.GetPotions();
-		System.out.println("size of potion = " + potions.size());		
-		
-		gems = HelpMethods.GetGems();
-		//System.out.println("size of gems = " + gems.size());
-		
-		containers = HelpMethods.GetContainers();
-		System.out.println("size of container = " + containers.size());
-	}
+//	private void addObjects() {
+//		potions = HelpMethods.GetPotions();
+//		System.out.println("size of potion = " + potions.size());		
+//		
+//		gems = HelpMethods.GetGems();
+//		//System.out.println("size of gems = " + gems.size());
+//		
+//		containers = HelpMethods.GetContainers();
+//		System.out.println("size of container = " + containers.size());
+//	}
 	
 	private void loadObjectImgs() {
 		potionImage = new BufferedImage[7];

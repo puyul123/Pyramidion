@@ -15,7 +15,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
-	private int lvlIndex = 0;
+	private static int lvlIndex = 0;
 	
 	public LevelManager(Game game) {
 		this.game = game;
@@ -39,8 +39,8 @@ public class LevelManager {
 	}
 	
 	private void buildAllLevels() {
-		BufferedReader[] allLevels = LoadSave.importAllMap();
- 		for(BufferedReader txt : allLevels) {
+		String[] allLevels = LoadSave.importAllMap();
+ 		for(String txt : allLevels) {
  			levels.add(new Level(txt));
  		}
 	}
@@ -84,8 +84,11 @@ public class LevelManager {
 	public int getAmountOfLevels() {
 		return levels.size();
 	}
-	public int getLvlIndex() {
+	public int getLevelIndex() {
 		return lvlIndex;
+	}
+	public void setLevelIndex(int lvlIndex) {
+		this.lvlIndex = lvlIndex;
 	}
 	
 }
