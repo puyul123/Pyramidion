@@ -32,6 +32,7 @@ public class LevelManager {
 			Gamestate.state = Gamestate.MENU;
 		}
 		Level newLevel = levels.get(lvlIndex);
+//		System.out.println(lvlIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
 		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
@@ -39,8 +40,8 @@ public class LevelManager {
 	}
 	
 	private void buildAllLevels() {
-		BufferedReader[] allLevels = LoadSave.importAllMap();
- 		for(BufferedReader txt : allLevels) {
+		String[] allLevels = LoadSave.importAllMap();
+ 		for(String txt : allLevels) {
  			levels.add(new Level(txt));
  		}
 	}
@@ -84,8 +85,11 @@ public class LevelManager {
 	public int getAmountOfLevels() {
 		return levels.size();
 	}
-	public int getLvlIndex() {
+	public int getLevelIndex() {
 		return lvlIndex;
+	}
+	public void setLevelIndex(int lvlIndex) {
+		this.lvlIndex = lvlIndex;
 	}
 	
 }

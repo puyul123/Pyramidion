@@ -3,7 +3,7 @@ package Main;
 import java.awt.Color;
 import java.awt.Graphics;
 
-
+import Audio.AudioPlayer;
 import GameState.Gamestate;
 import GameState.MainMenu;
 import GameState.Playing;
@@ -20,6 +20,7 @@ public class Game implements Runnable{
 	
 	private Playing playing;
 	private MainMenu menu;
+	private AudioPlayer audioPlayer;
 	
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
@@ -45,6 +46,7 @@ public class Game implements Runnable{
 	protected void init() {
 		menu = new MainMenu(this);
 		playing = new Playing(this);
+		audioPlayer = new AudioPlayer();
 	}
 
 	public void startGameThread() {
@@ -122,6 +124,10 @@ public class Game implements Runnable{
 
 	public Playing getPlaying() {
 		return playing;
+	}
+	
+	public AudioPlayer getAudioPlayer() {
+		return audioPlayer;
 	}
 
 }

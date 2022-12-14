@@ -54,7 +54,9 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != 1 && value!=POTION && value != RED_GEM && value != GREEN_GEM && value != BLUE_GEM && value != CONTAINER)
+		if (value >= 247 || value < 0 || value != 0 && value != 1 && value != 45 && value != 46 &&
+				value!=POTION && value != RED_GEM && value != GREEN_GEM 
+				&& value != BLUE_GEM && value != CONTAINER)
 			return true;
 		return false;
 	}
@@ -95,6 +97,8 @@ public class HelpMethods {
 	
 	//DEBUGGGG
 	public static boolean IsFloor(Rectangle2D.Float collision, float xSpeed, int[][] lvlData) {
+		if(xSpeed > 0)
+			return IsSolid(collision.x + collision.width + xSpeed, collision.y + collision.height + 1, lvlData);
 		return IsSolid(collision.x + xSpeed, collision.y + collision.height + 1, lvlData);
 	}
 	
@@ -121,7 +125,8 @@ public class HelpMethods {
 	}
 	
 	
-	public static int[][] GetLevelData(BufferedReader br) {
+	public static int[][] GetLevelData(String txt) {
+		BufferedReader br = GetMapTxt(txt);
 		int[][] lvlData = new int[14][60];
 			
 			try {
@@ -140,19 +145,25 @@ public class HelpMethods {
 						col = 0;
 						row++;
 				}
-				br.close();
+		//		br.close();
 			}catch(IOException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					br.close();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
 			}
 		return lvlData;
 	}
 	
-	public static ArrayList<Mummy> GetMummy(BufferedReader br, int lvlIndex){
+	public static ArrayList<Mummy> GetMummy(String txt){
 		
-		if(lvlIndex == 0) br = GetMapTxt(LEVEL_0);
-		else if(lvlIndex == 1) br = GetMapTxt(LEVEL_1);
-		else if(lvlIndex == 2) br = GetMapTxt(LEVEL_2);
-		
+//		if(lvlIndex == 0) br = GetMapTxt(LEVEL_0);
+//		else if(lvlIndex == 1) br = GetMapTxt(LEVEL_1);
+//		else if(lvlIndex == 2) br = GetMapTxt(LEVEL_2);
+		BufferedReader br = GetMapTxt(txt);
 		ArrayList<Mummy> mummy = new ArrayList<>();
 		
 		try {
@@ -172,7 +183,7 @@ public class HelpMethods {
 					col = 0;
 					row++;
 			}
-		//	br.close();
+			br.close();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -211,8 +222,8 @@ public class HelpMethods {
 		return tr;
 	}
 	
-	public static ArrayList<Potion> GetPotions(){
-		BufferedReader br = GetMapTxt(LEVEL_0);
+	public static ArrayList<Potion> GetPotions(String txt){
+		BufferedReader br = GetMapTxt(txt);
 		//po = new ArrayList<>();
 		ArrayList<Potion> po = new ArrayList<>();
 		
@@ -242,8 +253,8 @@ public class HelpMethods {
 		return po;
 	}
 
-	public static ArrayList<Gem> GetGems() {
-		BufferedReader br = GetMapTxt(LEVEL_0);
+	public static ArrayList<Gem> GetGems(String txt) {
+		BufferedReader br = GetMapTxt(txt);
 		ArrayList<Gem> gem = new ArrayList<>();
 		
 		try {
@@ -277,8 +288,8 @@ public class HelpMethods {
 		return gem;
 	}
 
-	public static ArrayList<Container> GetContainers() {
-		BufferedReader br = GetMapTxt(LEVEL_0);
+	public static ArrayList<Container> GetContainers(String txt) {
+		BufferedReader br = GetMapTxt(txt);
 		ArrayList<Container> con = new ArrayList<>();
 		
 		try {

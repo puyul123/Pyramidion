@@ -32,7 +32,7 @@ public class EnemyManager {
 	}
 
 	private void loadEnemyImgs() {
-		mummy = new BufferedImage[5][5];
+		mummy = new BufferedImage[5][6];
 		
 		try {
 			//IDLE
@@ -48,9 +48,16 @@ public class EnemyManager {
 			mummy[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_2.png"));
 			mummy[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_3.png"));
 			
+			//HIT
+			mummy[3][0] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
+			
 			//DEADD
-			mummy[4][0] = ImageIO.read(getClass().getResourceAsStream("/deadtest.jpg"));
-			mummy[4][2] = ImageIO.read(getClass().getResourceAsStream("/deadtest.jpg"));
+			for(int i = 0; i < 6; i++) {
+				if(i % 2 == 0) mummy[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
+				else mummy[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
+			}
+//			mummy[4][0] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
+//			mummy[4][1] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
 		} catch (IOException e) {
 			
 			e.printStackTrace();
