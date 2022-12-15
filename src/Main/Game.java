@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Audio.AudioPlayer;
+import GameState.GameOption;
 import GameState.Gamestate;
 import GameState.MainMenu;
 import GameState.Playing;
 import Util.LoadSave;
+import ui.AudioOption;
 import GameState.Gamestate;
 
 public class Game implements Runnable{
@@ -20,7 +22,9 @@ public class Game implements Runnable{
 	
 	private Playing playing;
 	private MainMenu menu;
+	private GameOption gameOption;
 	private AudioPlayer audioPlayer;
+	private AudioOption audioOption;
 	
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
@@ -44,9 +48,11 @@ public class Game implements Runnable{
 	}
 	
 	protected void init() {
+		audioOption = new AudioOption();
 		menu = new MainMenu(this);
 		playing = new Playing(this);
 		audioPlayer = new AudioPlayer();
+		gameOption = new GameOption(this);
 	}
 
 	public void startGameThread() {
@@ -59,16 +65,22 @@ public class Game implements Runnable{
 		switch(Gamestate.state) {
 			case MENU ->{
 				menu.update();
+				//break;
 			}
 			case PLAYING ->{
 				playing.update();
+				//break;
 			}
 			case OPTION -> {
-				
+				gameOption.update();
 			}
 			case QUIT -> {
 				
 			}
+//			default -> {
+//				System.exit(0);
+//				break;
+//			}
 		}
 	}
 	
@@ -82,6 +94,9 @@ public class Game implements Runnable{
 
 				playing.draw(g);
 				g.setColor(Color.BLACK);
+			}
+			case OPTION ->{
+				gameOption.draw(g);
 			}
 		}
 	}
@@ -126,10 +141,17 @@ public class Game implements Runnable{
 		return playing;
 	}
 	
+	public GameOption getGameOption() {
+		return gameOption;
+	}
+	
 	public AudioPlayer getAudioPlayer() {
 		return audioPlayer;
 	}
 
+	public AudioOption getAudioOption() {
+		return audioOption;
+	}
 }
 
 //RUNN

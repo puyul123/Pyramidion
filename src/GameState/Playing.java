@@ -34,7 +34,7 @@ public class Playing extends State implements StateMethods{
 	private int border = (int) (Game.WIDTH/2);
 	private int maxLvlOffsetX;
 	
-	private boolean paused = false;
+	private boolean paused = true;
 	private boolean gameOver = false;
 	private boolean isLvlCompleted = false;
 	

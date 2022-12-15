@@ -29,6 +29,9 @@ public class KeyHandler implements KeyListener{
 			case PLAYING ->{
 				gp.getGame().getPlaying().keyPressed(e);
 			}
+			case OPTION ->{
+				gp.getGame().getGameOption().keyPressed(e);
+			}
 		}
 	}
 
