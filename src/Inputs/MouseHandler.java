@@ -22,6 +22,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 		case PLAYING:
 			gp.getGame().getPlaying().mouseDragged(e);
 			break;
+		case OPTION:
+			gp.getGame().getGameOption().mouseDragged(e);
 		default:
 			break;
 
@@ -37,6 +39,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 		case PLAYING:
 			gp.getGame().getPlaying().mouseMoved(e);
 			break;
+		case OPTION:
+			gp.getGame().getGameOption().mouseMoved(e);
 		default:
 			break;
 
@@ -46,9 +50,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		switch(Gamestate.state) {
-			case MENU -> {
-				gp.getGame().getMenu().mouseClicked(e);
-			}
+//			case MENU -> {
+//				gp.getGame().getMenu().mouseClicked(e);
+//			}
 			case PLAYING ->{
 				gp.getGame().getPlaying().mouseClicked(e);
 			}
@@ -65,6 +69,9 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 			case PLAYING ->{
 				gp.getGame().getPlaying().mousePressed(e);
 			}
+			case OPTION -> {
+				gp.getGame().getGameOption().mousePressed(e);
+			}
 		}
 		
 	}
@@ -78,6 +85,8 @@ public class MouseHandler implements MouseListener, MouseMotionListener{
 		case PLAYING:
 			gp.getGame().getPlaying().mouseReleased(e);
 			break;
+		case OPTION:
+			gp.getGame().getGameOption().mouseReleased(e);
 		default:
 			break;
 
