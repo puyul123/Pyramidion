@@ -35,7 +35,7 @@ public class ObjectManager {
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
 		loadTrapImgs();
-		addTraps();
+//		addTraps();
 		loadObjectImgs();
 //		addObjects();
 	}
@@ -57,6 +57,12 @@ public class ObjectManager {
 			}
 	}
 	
+	public void checkTrapTouched(Player player) {
+		for(Trap t : traps)
+			if(t.getArea().intersects(player.getCollision()))
+				player.die();
+	}
+	
 	public void applyPotionToPlayer(Potion p) {
 		if(p.getObjType() == POTION)
 			playing.getPlayer().changeHealth(POTION_VALUE);
@@ -73,7 +79,7 @@ public class ObjectManager {
 	
 	public void checkObjectHit(Rectangle2D.Float area) {
 		for(Container c : containers)
-			if(c.isActive()) {
+			if(c.isActive() && c.doAnimation) {
 				if(c.getArea().intersects(area)) {
 					c.setAnimation(true);
 					//potions = HelpMethods.po.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), CONTAINER));
@@ -84,19 +90,20 @@ public class ObjectManager {
 	}
 	
 	public void loadObjects(Level newLevel) {
-		potions = newLevel.getPotions();
-		containers = newLevel.getContainers();
-		gems = newLevel.getGems();
+		potions = new ArrayList<>(newLevel.getPotions());
+		containers = new ArrayList<>(newLevel.getContainers());
+		gems = new ArrayList<>(newLevel.getGems());
+		traps = newLevel.getTraps();
 	}   
 	
-	public void trapTouched(Player player) {
-		for(Trap t : traps) {
-			if(t.getArea().intersects(player.getCollision())) {
-				//panggil fungsi yg ngurangin health/bunuh player
-				player.die();
-			}
-		}
-	}
+//	public void trapTouched(Player player) {
+//		for(Trap t : traps) {
+//			if(t.getArea().intersects(player.getCollision())) {
+//				//panggil fungsi yg ngurangin health/bunuh player
+//				player.die();
+//			}
+//		}
+//	}
 	
 //	private void addObjects() {
 //		potions = HelpMethods.GetPotions();
@@ -157,10 +164,10 @@ public class ObjectManager {
 		
 	}
 	
-	private void addTraps() {
-		traps = HelpMethods.GetTraps();
-		System.out.println("size of trap = " + traps.size());
-	}
+//	private void addTraps() {
+//		traps = HelpMethods.GetTraps();
+//		System.out.println("size of trap = " + traps.size());
+//	}
 	
 	private void loadTrapImgs() {
 		trapImage = LoadSave.GetSpriteAtlas(LoadSave.TRAP_IMAGE);
@@ -228,7 +235,7 @@ public class ObjectManager {
 
 	private void drawTrap(Graphics graphic, int xLvlOffset) {
 		for(Trap t : traps) {
-			graphic.drawImage(trapImage, (int)(t.getArea().x), (int)(t.getArea().y), TRAP_WIDTH, TRAP_HEIGHT, null);
+			graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y + 0.25 * t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
 			//graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y - t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
 		
 		}
@@ -247,6 +254,9 @@ public class ObjectManager {
 	}
 
 	public void resetAllObjects() {
+		
+		loadObjects(playing.getLevelManager().getCurrentLevel());
+		
 		for (Potion p : potions)
 			p.resetObject();
 		

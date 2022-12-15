@@ -287,6 +287,7 @@ public class Player extends Entity{
 		if(move) {
 			checkPotionTouched();
 			checkGemTouched();
+			checkTrapTouched();
 		}
 		
 		updateAnimationTick();
@@ -315,6 +316,11 @@ public class Player extends Entity{
 	private void checkGemTouched() {
 		playing.checkGemTouched(collision);
 	}
+	
+	private void checkTrapTouched() {
+		playing.trapTouched(this);
+	}
+
 	
 	private void updateHealthBar() {
 		healthWidth = (int) ((currentHealth / (float) maxHealth) * healthBarWidth);
@@ -380,13 +386,9 @@ public class Player extends Entity{
 	
 	public void die() {
 		System.out.println("trap touched");
-		// currentHealth = 0;
+		currentHealth = 0;
 	}
 	
-	private void checkTrapTouched() {
-		playing.trapTouched(this);
-	}
-
 	public boolean isLeft() {return left;}
 	public void setLeft(boolean left) {this.left = left;}
 	public boolean isRight() {return right;}

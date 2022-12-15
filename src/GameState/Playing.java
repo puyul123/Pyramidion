@@ -34,7 +34,7 @@ public class Playing extends State implements StateMethods{
 	private int border = (int) (Game.WIDTH/2);
 	private int maxLvlOffsetX;
 	
-	private boolean paused = true;
+	private boolean paused = false;
 	private boolean gameOver = false;
 	private boolean isLvlCompleted = false;
 	
@@ -139,6 +139,10 @@ public class Playing extends State implements StateMethods{
 	
 	public void checkGemTouched(Rectangle2D.Float area) {
 		objMan.checkObjectTouched(area);
+	}
+	
+	public void checkTrapTouched(Player player) {
+		objMan.checkTrapTouched(player);
 	}
 	
 	private void checkCloseToBorder() {
@@ -267,10 +271,19 @@ public class Playing extends State implements StateMethods{
 	}
 
 	public void trapTouched(Player player) {
-		objMan.trapTouched(player);
+		objMan.checkTrapTouched(player);
 	}
 	
-	public ObjectManager getObjectManager() {return objMan;}
-	public EnemyManager getEnemyManager() {return enemyMan;}
-	public LevelManager getLevelManager() {return lvlManager;}
+	public ObjectManager getObjectManager() {
+		return objMan;
+	}
+	
+	public EnemyManager getEnemyManager() {
+		return enemyMan;
+	}
+	
+	public LevelManager getLevelManager() {
+		return lvlManager;
+	}
+	
 }

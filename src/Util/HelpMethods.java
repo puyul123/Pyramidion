@@ -192,8 +192,8 @@ public class HelpMethods {
 	}
 	
 	
-	public static ArrayList<Trap> GetTraps(){
-		BufferedReader br = GetMapTxt(LEVEL_0);
+	public static ArrayList<Trap> GetTraps(String txt){
+		BufferedReader br = GetMapTxt(txt);
 		ArrayList<Trap> tr = new ArrayList<>();
 		
 		try {

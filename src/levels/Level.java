@@ -62,7 +62,7 @@ public class Level{
 	}
 
 	private void createTraps() {
-		traps = HelpMethods.GetTraps();	
+		traps = HelpMethods.GetTraps(txt);	
 	}//DEBUG
 	
 	private void createPotions() {
