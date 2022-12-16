@@ -10,6 +10,7 @@ import Entity.Player;
 import GameState.Playing;
 
 import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.Event.*;
 
 import Util.HelpMethods;
@@ -31,6 +32,11 @@ public class ObjectManager {
 	private ArrayList<Potion> potions;
 	private ArrayList<Gem> gems;
 	private ArrayList<Container> containers;
+	private BufferedImage[] doorImage;
+	private ArrayList<Door> doors;
+	
+	boolean command = false;
+	boolean interact = true;
 	
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
@@ -89,11 +95,36 @@ public class ObjectManager {
 			}
 	}
 	
+	public void doorTouched (Player player) {
+		for(Door d : doors) {
+			if(d.isActive()) {
+				if(d.getArea().intersects(player.getCollision())) {
+					command = true;
+					if(d.isInteract()) {
+						if(interact) {
+							System.out.println("Touched and ready to interact!!!");
+						}
+						else {
+							d.setAnimation(true);
+							System.out.println("Has been interact");
+							
+						}
+					}
+					else System.out.println("Has been Touched");
+				}
+				else {
+					command = false;
+				}
+			}
+		}
+	}
+	
 	public void loadObjects(Level newLevel) {
 		potions = new ArrayList<>(newLevel.getPotions());
 		containers = new ArrayList<>(newLevel.getContainers());
 		gems = new ArrayList<>(newLevel.getGems());
 		traps = newLevel.getTraps();
+		doors = newLevel.getDoor();
 	}   
 	
 //	public void trapTouched(Player player) {
@@ -120,6 +151,7 @@ public class ObjectManager {
 		potionImage = new BufferedImage[7];
 		gemImage = new BufferedImage[3][4];
 		containerImage = new BufferedImage[8];
+		doorImage = new BufferedImage[5];
 		
 		try {
 		  	potionImage[0] = ImageIO.read(getClass().getResourceAsStream("/potion/01.png"));
@@ -144,6 +176,12 @@ public class ObjectManager {
 		  	gemImage[2][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/02.png"));
 		  	gemImage[2][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/03.png"));
 		  	gemImage[2][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/04.png"));
+		  	
+		  	doorImage[0] = ImageIO.read(getClass().getResourceAsStream("/objects/door_1.png"));
+		  	doorImage[1] = ImageIO.read(getClass().getResourceAsStream("/objects/door_2.png"));
+		  	doorImage[2] = ImageIO.read(getClass().getResourceAsStream("/objects/door_3.png"));
+		  	doorImage[3] = ImageIO.read(getClass().getResourceAsStream("/objects/door_4.png"));
+		  	doorImage[4] = ImageIO.read(getClass().getResourceAsStream("/objects/door_5.png"));
 		  	
 			BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE);
 			potionImage = new BufferedImage[7];
@@ -178,8 +216,22 @@ public class ObjectManager {
 		drawPotions(graphic, xLvlOffset);
 		drawGems(graphic, xLvlOffset);
 		drawContainers(graphic, xLvlOffset);
+		drawDoor(graphic, xLvlOffset);
 	}
 	
+	private void drawDoor(Graphics graphic, int xLvlOffset) {
+		for(Door d : doors) {
+			if(!interact)
+				graphic.drawImage(doorImage[4], (int)(d.getArea().x - xLvlOffset-25), (int)(d.getArea().y - d.getyDrawOffset()), (int)(DOOR_WIDTH * 2), (int)(DOOR_HEIGHT * 2), null);
+			graphic.drawImage(doorImage[d.getAniIndex()], (int)(d.getArea().x - xLvlOffset-25), (int)(d.getArea().y - d.getyDrawOffset()), (int)(DOOR_WIDTH * 2), (int)(DOOR_HEIGHT * 2), null);
+			if(command) {
+				graphic.setColor(Color.BLACK);
+				graphic.drawString("Click E to interact",  300, 300);
+			}
+		}
+		
+	}
+
 	private void drawContainers(Graphics graphic, int xLvlOffset) {
 		for(Container c : containers)
 			if(c.isActive()) {
@@ -251,6 +303,9 @@ public class ObjectManager {
 		for(Container c : containers)
 			if(c.isActive())
 				c.updateObject();
+		for(Door d : doors)
+			if(d.isActive())
+				d.updateDoor();
 	}
 
 	public void resetAllObjects() {
@@ -266,9 +321,18 @@ public class ObjectManager {
 		for (Container c : containers)
 			c.resetObject();
 		
+		for (Door d : doors)
+			d.resetObject();
+		
 	}
 
-	
-	
-	
+	public boolean getInteract() {
+		return interact;
+	}
+	public boolean getCommand() {
+		return command;
+	}
+	public void setInteract(boolean interact) {
+		this.interact = interact;
+	}
 }

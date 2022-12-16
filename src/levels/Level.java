@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 
 import Object.Container;
+import Object.Door;
 import Object.Gem;
 import Object.Potion;
 import Object.Trap;
@@ -28,6 +29,7 @@ public class Level{
 	ArrayList<Potion> potions;
 	ArrayList<Container> containers;
 	ArrayList<Gem> gems;
+	ArrayList<Door> doors;
 	private int lvlTilesWide;
 	private int maxTilesOffset; 
 	private int maxLvlOffsetX;
@@ -44,6 +46,7 @@ public class Level{
 		createPotions();
 		createGems();
 		createContainers();
+		createDoor();
 	}
 	
 	private void calcLvlOffsets() {
@@ -60,7 +63,12 @@ public class Level{
 	private void createLevelData() {
 		lvlData = GetLevelData(txt);
 	}
-
+	
+	private void createDoor() {
+		doors = HelpMethods.GetDoors(txt);
+		
+	}
+	
 	private void createTraps() {
 		traps = HelpMethods.GetTraps(txt);	
 	}//DEBUG
@@ -91,6 +99,10 @@ public class Level{
 	
 	public ArrayList<Container> getContainers() {
 		return containers;
+	}
+	
+	public ArrayList<Door> getDoor(){
+		return doors;
 	}
 
 	public int getSpriteIndex(int x, int y){

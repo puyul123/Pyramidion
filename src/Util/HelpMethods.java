@@ -13,6 +13,7 @@ import java.io.IOException;
 
 import Main.Game;
 import Object.Container;
+import Object.Door;
 import Object.Gem;
 import Object.Potion;
 import Object.Trap;
@@ -55,7 +56,7 @@ public class HelpMethods {
 		int value = lvlData[yTile][xTile];
 
 		if (value >= 247 || value < 0 || value != 0 && value != 1 && value != 45 && value != 46 &&
-				value!=POTION && value != RED_GEM && value != GREEN_GEM 
+				value != DOOR && value!=POTION && value != RED_GEM && value != GREEN_GEM 
 				&& value != BLUE_GEM && value != CONTAINER)
 			return true;
 		return false;
@@ -316,6 +317,36 @@ public class HelpMethods {
 			e.printStackTrace();
 		}
 		return con;
+	}
+
+	public static ArrayList<Door> GetDoors(String txt) {
+		BufferedReader br = GetMapTxt(txt);
+		ArrayList<Door> door = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == DOOR) 
+						door.add(new Door((int)(col * Game.TILES_SIZE), (int)(row * Game.TILES_SIZE), DOOR));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return door;
 	}
 	
 //	public static ArrayList<Potion> getPotion(){

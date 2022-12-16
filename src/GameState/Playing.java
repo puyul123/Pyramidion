@@ -93,8 +93,8 @@ public class Playing extends State implements StateMethods{
 	public void draw(Graphics g) {
 		lvlManager.draw(g, xLvlOffset);
 		enemyMan.draw(g, xLvlOffset);
-		player.render(g, xLvlOffset);
 		objMan.draw(g, xLvlOffset);
+		player.render(g, xLvlOffset);
 		
 		if(paused)
 			pauseOverlay.draw(g);
@@ -131,6 +131,11 @@ public class Playing extends State implements StateMethods{
 	public void checkObjectHit(Rectangle2D.Float attackCol) {
 		System.out.println("mukul kotak");
 		objMan.checkObjectHit(attackCol);
+	}
+	
+	public void checkDoorTouched(Player player) {       
+		objMan.doorTouched(player);
+		
 	}
 	
 	public void checkPotionTouched(Rectangle2D.Float area) {
@@ -187,6 +192,12 @@ public class Playing extends State implements StateMethods{
 				case KeyEvent.VK_ENTER ->{
 					if(player.isOnSword() == true) player.setOnSword(false);
 					else player.setOnSword(true);
+				}
+				case KeyEvent.VK_E ->{				
+					if(objMan.getCommand())
+						objMan.setInteract(false);	
+//					if(!objMan.getInteract())
+//						setLevelCompleted(true);
 				}
 				case KeyEvent.VK_ESCAPE ->{
 					paused = !paused;
