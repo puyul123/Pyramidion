@@ -28,7 +28,7 @@ public class MenuButton {
 	}
 
 	private void initBounds() {
-		bounds = new Rectangle(xPos - xOffsetCenter, yPos, B_WIDTH, B_HEIGHT);
+		bounds = new Rectangle((xPos - xOffsetCenter)/5, yPos-140, B_WIDTH, B_HEIGHT);
 
 	}
 	
@@ -40,7 +40,7 @@ public class MenuButton {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(imgs[index], xPos - xOffsetCenter, yPos, B_WIDTH, B_HEIGHT, null);
+		g.drawImage(imgs[index], (xPos - xOffsetCenter)/5, yPos-140, B_WIDTH, B_HEIGHT, null);
 	}
 
 	public void update() {

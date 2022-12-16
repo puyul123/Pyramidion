@@ -32,7 +32,7 @@ public class MainMenu extends State implements StateMethods{
 		menuW = (int) (bgImage.getWidth() * Game.SCALE);
 		menuH = (int) (bgImage.getHeight() * Game.SCALE);
 		menuX = Game.WIDTH / 2 - menuW / 2;
-		menuY = (int) (45 * Game.SCALE);
+		menuY = (int) (Game.SCALE);
 	}
 	
 
