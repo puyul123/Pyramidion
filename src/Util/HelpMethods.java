@@ -55,7 +55,7 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != 1 && value != 45 && value != 46 &&
+		if (value >= 247 || value < 0 || value != 0 && value != 1 && value != 45 && value != 46 && value != 101 &&
 				value != DOOR && value!=POTION && value != RED_GEM && value != GREEN_GEM 
 				&& value != BLUE_GEM && value != CONTAINER)
 			return true;
@@ -208,7 +208,7 @@ public class HelpMethods {
 					String numbers[] = line.split(" ");
 					int num = Integer.parseInt(numbers[col]);
 					if(num == TRAP) 
-						tr.add(new Trap((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), TRAP));
+						tr.add(new Trap((int)(col * Game.TILES_SIZE), (int)(row * Game.TILES_SIZE), TRAP));
 					col++;
 				}
 				if(col == Game.TILES_HEIGHT);

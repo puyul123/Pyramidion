@@ -43,7 +43,6 @@ public class Player extends Entity{
 	private float jumpSpeed = -2.75f * Game.SCALE;
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
-	private boolean changed = false; 
 	
 	private Playing playing;
 	
@@ -72,14 +71,14 @@ public class Player extends Entity{
 	private int currentHealth = maxHealth;
 	private int healthWidth = healthBarWidth;
 	
-	private int pointBarWidth = (int) (150 * Game.SCALE);
-	private int pointBarHeight = (int) (4 * Game.SCALE);
-	private int pointBarXStart = (int) (34 * Game.SCALE);
-	private int pointBarYStart = (int) (14 * Game.SCALE);
+//	private int pointBarWidth = (int) (150 * Game.SCALE);
+//	private int pointBarHeight = (int) (4 * Game.SCALE);
+//	private int pointBarXStart = (int) (34 * Game.SCALE);
+//	private int pointBarYStart = (int) (14 * Game.SCALE);
 
 	private int minPoint = 0;
 	private int currentPoint = minPoint;
-	private int pointWidth = pointBarWidth;
+//	private int pointWidth = pointBarWidth;
 	
 	//COMBAT
 	private boolean attackChecked;
@@ -390,9 +389,8 @@ public class Player extends Entity{
 		right = false;
 	}
 	
-	public void die() {
-		System.out.println("trap touched");
-		currentHealth = 0;
+	public void hurt() {
+		currentHealth -= 2;
 	}
 	
 	public boolean isLeft() {return left;}

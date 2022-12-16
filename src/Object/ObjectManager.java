@@ -5,19 +5,16 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import Entity.Mummy;
 import Entity.Player;
 import GameState.Playing;
 
 import java.awt.Graphics;
 import java.awt.Color;
-import java.awt.Event.*;
 
-import Util.HelpMethods;
 import Util.LoadSave;
 import static Util.Constants.ObjectConstants.*;
 import levels.Level;
-import Entity.Player;
+
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -66,7 +63,7 @@ public class ObjectManager {
 	public void checkTrapTouched(Player player) {
 		for(Trap t : traps)
 			if(t.getArea().intersects(player.getCollision()))
-				player.die();
+				player.hurt();
 	}
 	
 	public void applyPotionToPlayer(Potion p) {
@@ -100,17 +97,13 @@ public class ObjectManager {
 			if(d.isActive()) {
 				if(d.getArea().intersects(player.getCollision())) {
 					command = true;
-					if(d.isInteract()) {
-						if(interact) {
-							System.out.println("Touched and ready to interact!!!");
-						}
-						else {
-							d.setAnimation(true);
-							System.out.println("Has been interact");
-							
-						}
+					if(d.isDoorClosed()) {
+						System.out.println("Touched and ready to interact!!!");
 					}
-					else System.out.println("Has been Touched");
+					else{
+						d.setAnimation(true);
+						System.out.println("Has been interact");	
+					}
 				}
 				else {
 					command = false;
@@ -126,26 +119,6 @@ public class ObjectManager {
 		traps = newLevel.getTraps();
 		doors = newLevel.getDoor();
 	}   
-	
-//	public void trapTouched(Player player) {
-//		for(Trap t : traps) {
-//			if(t.getArea().intersects(player.getCollision())) {
-//				//panggil fungsi yg ngurangin health/bunuh player
-//				player.die();
-//			}
-//		}
-//	}
-	
-//	private void addObjects() {
-//		potions = HelpMethods.GetPotions();
-//		System.out.println("size of potion = " + potions.size());		
-//		
-//		gems = HelpMethods.GetGems();
-//		//System.out.println("size of gems = " + gems.size());
-//		
-//		containers = HelpMethods.GetContainers();
-//		System.out.println("size of container = " + containers.size());
-//	}
 	
 	private void loadObjectImgs() {
 		potionImage = new BufferedImage[7];
@@ -201,11 +174,6 @@ public class ObjectManager {
 			}
 		
 	}
-	
-//	private void addTraps() {
-//		traps = HelpMethods.GetTraps();
-//		System.out.println("size of trap = " + traps.size());
-//	}
 	
 	private void loadTrapImgs() {
 		trapImage = LoadSave.GetSpriteAtlas(LoadSave.TRAP_IMAGE);
@@ -287,9 +255,8 @@ public class ObjectManager {
 
 	private void drawTrap(Graphics graphic, int xLvlOffset) {
 		for(Trap t : traps) {
-			graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y + 0.25 * t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
+			graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y - t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
 			//graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y - t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
-		
 		}
 	}
 	
@@ -334,5 +301,9 @@ public class ObjectManager {
 	}
 	public void setInteract(boolean interact) {
 		this.interact = interact;
+	}
+	public void setDoorClosed(boolean setDoorClosed) {
+		for (Door d : doors)
+			d.setDoorClosed(setDoorClosed);
 	}
 }

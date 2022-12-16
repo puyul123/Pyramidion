@@ -195,7 +195,7 @@ public class Playing extends State implements StateMethods{
 				}
 				case KeyEvent.VK_E ->{				
 					if(objMan.getCommand())
-						objMan.setInteract(false);	
+						objMan.setDoorClosed(false);
 //					if(!objMan.getInteract())
 //						setLevelCompleted(true);
 				}

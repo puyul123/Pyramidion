@@ -12,5 +12,6 @@ public class Trap extends GameObject{
 		yDrawOffset = (int)(Game.SCALE * 16);
 		area.y += yDrawOffset;
 	}
+	
 
 }
