@@ -1,6 +1,7 @@
 package Entity;
 
 import java.awt.Graphics;
+
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -13,13 +14,18 @@ import Main.Game;
 import Util.LoadSave;
 import levels.Level;
 
+
 import static Util.Constants.EnemyConstants.*;
 
 public class EnemyManager {
 	
 	private Playing playing;
 	private BufferedImage[][] mummy;
+	private BufferedImage[][] spider;
+	private BufferedImage[][] rat;
 	private ArrayList<Mummy> mummies = new ArrayList<>();
+	private ArrayList<Spider> spiders = new ArrayList<>();
+	private ArrayList<Rat> rats = new ArrayList<>();
 	
 	public EnemyManager(Playing playing) {
 		this.playing = playing;
@@ -29,12 +35,19 @@ public class EnemyManager {
 	public void loadEnemies(Level level) {
 		mummies = level.getMummy();
 		System.out.println("size of mum = " + mummies.size());
+		spiders = level.getSpider();
+		System.out.println("size of spider = " + spiders.size());
+		rats = level.getRat();
+		System.out.println("size of rat = " + rats.size());
 	}
 
 	private void loadEnemyImgs() {
 		mummy = new BufferedImage[5][6];
+		spider = new BufferedImage[5][6];
+		rat = new BufferedImage[5][6];
 		
 		try {
+		///////////////////////////// MUMMY ////////////////////////////////	
 			//IDLE
 			mummy[0][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
 			//RUNNING
@@ -56,8 +69,58 @@ public class EnemyManager {
 				if(i % 2 == 0) mummy[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
 				else mummy[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
 			}
-//			mummy[4][0] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
-//			mummy[4][1] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
+			
+		///////////////////////////// SPIDER ////////////////////////////////
+			
+			//IDLE
+			spider[0][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_1.png"));
+			
+			//RUNNING
+			spider[1][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_2.png"));
+			spider[1][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_1.png"));
+			
+			//ATTACK
+			spider[2][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at1.png"));
+			spider[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at2.png"));
+			spider[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at3.png"));
+			spider[2][3] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at4.png"));
+			spider[2][4] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at5.png"));
+
+			
+			//HIT
+			spider[3][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_dead.png"));
+			
+			//DEAD
+			for(int i = 0; i < 6; i++) {
+				if(i % 2 == 0) spider[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_dead.png"));
+				else spider[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_2.png"));
+			}
+			
+		///////////////////////////// RAT ////////////////////////////////
+			
+			//IDLE
+			rat[0][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_2.png"));
+			
+			//RUNNING
+			rat[1][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_1.png"));
+			rat[1][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_2.png"));
+			
+			//ATTACK
+			rat[2][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_1.png"));
+			rat[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_2.png"));
+			rat[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_3.png"));
+			rat[2][3] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_4.png"));
+
+			
+			//HIT
+			rat[3][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_dead.png"));
+			
+			//DEAD
+			for(int i = 0; i < 6; i++) {
+				if(i % 2 == 0) rat[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_dead.png"));
+				else rat[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_2.png"));
+			}
+			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -67,17 +130,54 @@ public class EnemyManager {
 	public void update(int[][] lvlData, Player player) {
 		boolean isAnyActive = false;
 		
-		for(Mummy m : mummies) 
+		for(Mummy m : mummies) {
 			if(m.isActive()) {
 				m.update(lvlData, player);
 				isAnyActive = true;
 			}
+		}
+		for(Spider s : spiders) {
+			if(s.isActive()) {
+				s.update(lvlData, player);
+			}
+		}
+		for(Rat r : rats) {
+			if(r.isActive()) {
+				r.update(lvlData, player);
+			}
+		}
 		if(!isAnyActive)
 			playing.setLevelCompleted(true);
 	}
 	
 	public void draw(Graphics g, int xLvlOffset) {
 		drawMummy(g, xLvlOffset);
+		drawRat(g, xLvlOffset);
+		drawSpider(g, xLvlOffset);
+	}
+
+	private void drawSpider(Graphics g, int xLvlOffset) {
+		for(Spider s : spiders) {
+			if(s.isActive()) {
+				g.drawImage(spider[s.getEnemyState()][s.getAniIndex()],
+						(int) (s.getCollision().x - 55) - xLvlOffset + s.flipX(), 
+						(int) (s.getCollision().y-15),
+						(int) (100 * Game.SCALE) / s.flipW(),(int) (64 *Game.SCALE), null);
+				s.draw(g, xLvlOffset);
+			}
+		}
+	}
+
+	private void drawRat(Graphics g, int xLvlOffset) {
+		for(Rat r : rats) {
+			if(r.isActive()) {
+				g.drawImage(rat[r.getEnemyState()][r.getAniIndex()],
+						(int) (r.getCollision().x - 45) - xLvlOffset + r.flipX(), 
+						(int) (r.getCollision().y - 15),
+						(int) (100 * Game.SCALE) / r.flipW(),(int) (64 *Game.SCALE), null);
+				r.draw(g, xLvlOffset);
+			}
+		}
 	}
 
 	private void drawMummy(Graphics g, int xLvlOffset) {
@@ -99,11 +199,27 @@ public class EnemyManager {
 					m.hurt(10);
 					return;
 				}
+		for (Rat r : rats)
+			if (r.isActive())
+				if (attackBox.intersects(r.getCollision())) {
+					r.hurt(10);
+					return;
+				}
+		for (Spider s : spiders)
+			if (s.isActive())
+				if (attackBox.intersects(s.getCollision())) {
+					s.hurt(10);
+					return;
+				}
 	}
 
 	public void resetAllEnemies() {
 		for(Mummy m: mummies)
 			m.resetEnemy();
+		for(Rat r : rats)
+			r.resetEnemy();
+		for(Spider s : spiders)
+			s.resetEnemy();
 	}
 	
 }

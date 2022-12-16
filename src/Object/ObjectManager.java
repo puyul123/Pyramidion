@@ -82,7 +82,7 @@ public class ObjectManager {
 	
 	public void checkObjectHit(Rectangle2D.Float area) {
 		for(Container c : containers)
-			if(c.isActive() && c.doAnimation) {
+			if(c.isActive()) {
 				if(c.getArea().intersects(area)) {
 					c.setAnimation(true);
 					//potions = HelpMethods.po.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), CONTAINER));

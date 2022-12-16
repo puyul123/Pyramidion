@@ -2,10 +2,13 @@ package Util;
 
 import java.awt.geom.Rectangle2D;
 
+
 import java.awt.Color;
 import java.util.ArrayList;
 
 import Entity.Mummy;
+import Entity.Rat;
+import Entity.Spider;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -23,6 +26,8 @@ import static Util.LoadSave.LEVEL_0;
 import static Util.LoadSave.LEVEL_1;
 import static Util.LoadSave.LEVEL_2;
 import static Util.Constants.EnemyConstants.MUMMY;
+import static Util.Constants.EnemyConstants.SPIDER;
+import static Util.Constants.EnemyConstants.RAT;
 import static Util.Constants.ObjectConstants.*;
 
 
@@ -55,7 +60,8 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != 1 && value != 45 && value != 46 && value != 101 &&
+		if (value >= 247 || value < 0 || value != 0 && value != MUMMY && value != SPIDER && value != RAT &&
+				value != 45 && value != 46 && value != 101 &&
 				value != DOOR && value!=POTION && value != RED_GEM && value != GREEN_GEM 
 				&& value != BLUE_GEM && value != CONTAINER)
 			return true;
@@ -161,9 +167,6 @@ public class HelpMethods {
 	
 	public static ArrayList<Mummy> GetMummy(String txt){
 		
-//		if(lvlIndex == 0) br = GetMapTxt(LEVEL_0);
-//		else if(lvlIndex == 1) br = GetMapTxt(LEVEL_1);
-//		else if(lvlIndex == 2) br = GetMapTxt(LEVEL_2);
 		BufferedReader br = GetMapTxt(txt);
 		ArrayList<Mummy> mummy = new ArrayList<>();
 		
@@ -190,6 +193,66 @@ public class HelpMethods {
 			e.printStackTrace();
 		}
 		return mummy;
+	}
+	
+	public static ArrayList<Spider> GetSpider(String txt){
+		
+		BufferedReader br = GetMapTxt(txt);
+		ArrayList<Spider> spider = new ArrayList<>();
+		
+		try {
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == SPIDER) 
+						spider.add(new Spider((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30)));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return spider;
+	}
+	
+	public static ArrayList<Rat> GetRat(String txt){
+		
+		BufferedReader br = GetMapTxt(txt);
+		ArrayList<Rat> rat = new ArrayList<>();
+		
+		try {
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == RAT) 
+						rat.add(new Rat((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30)));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return rat;
 	}
 	
 	
