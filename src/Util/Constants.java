@@ -124,12 +124,12 @@ public class Constants {
 		
 		public static class PauseButtons {
 			public static final int SOUND_SIZE_DEFAULT = 42;
-			public static final int SOUND_SIZE = (int) (SOUND_SIZE_DEFAULT * Game.SCALE);
+			public static final int SOUND_SIZE = (int) (SOUND_SIZE_DEFAULT / 1.5 * Game.SCALE);
 		}
 
 		public static class URMButtons {
 			public static final int URM_DEFAULT_SIZE = 56;
-			public static final int URM_SIZE = (int) (URM_DEFAULT_SIZE * Game.SCALE);
+			public static final int URM_SIZE = (int) (URM_DEFAULT_SIZE / 1.2 * Game.SCALE);
 
 		}
 

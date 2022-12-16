@@ -38,7 +38,7 @@ public class PauseOverlay {
 		int menuX = (int) (313 * Game.SCALE);
 		int replayX = (int) (387 * Game.SCALE);
 		int unpauseX = (int) (462 * Game.SCALE);
-		int bY = (int) (325 * Game.SCALE);
+		int bY = (int) (300 * Game.SCALE);
 
 		menuB = new UrmButton(menuX, bY, URM_SIZE, URM_SIZE, 2);
 		replayB = new UrmButton(replayX, bY, URM_SIZE, URM_SIZE, 1);
@@ -48,10 +48,10 @@ public class PauseOverlay {
 
 	private void loadBackground() {
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PAUSE_BACKGROUND);
-		bgW = (int) (backgroundImg.getWidth() * Game.SCALE);
-		bgH = (int) (backgroundImg.getHeight() * Game.SCALE);
+		bgW = (int) (backgroundImg.getWidth() / 2 * Game.SCALE);
+		bgH = (int) (backgroundImg.getHeight() / 2 * Game.SCALE);
 		bgX = Game.WIDTH / 2 - bgW / 2;
-		bgY = (int) (25 * Game.SCALE);
+		bgY = (int) (33 * Game.SCALE);
 
 	}
 

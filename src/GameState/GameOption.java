@@ -28,18 +28,18 @@ public class GameOption extends State implements StateMethods{
 	}
 	
 	private void loadImages() {
-		bgImage = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND);
+		bgImage = LoadSave.GetSpriteAtlas(LoadSave.PAUSE_BACK);
 		optionBgImage = LoadSave.GetSpriteAtlas(LoadSave.PAUSE_BACKGROUND);
 	
-		bgW = (int)(optionBgImage.getWidth() * Game.SCALE);
-		bgH = (int)(optionBgImage.getHeight() * Game.SCALE);
+		bgW = (int)(optionBgImage.getWidth() / 2 * Game.SCALE);
+		bgH = (int)(optionBgImage.getHeight() / 2 * Game.SCALE);
 		bgX = Game.WIDTH / 2 - bgW / 2;
 		bgY = (int) (33 * Game.SCALE);
 	}
 	
 	private void loadButtons() {
 		int menuX = (int)(387 * Game.SCALE);
-		int menuY = (int)(325 * Game.SCALE);
+		int menuY = (int)(300 * Game.SCALE);
 		
 		menuB = new UrmButton(menuX, menuY, URM_SIZE, URM_SIZE, 2);
 	}
