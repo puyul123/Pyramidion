@@ -87,7 +87,10 @@ public class Playing extends State implements StateMethods{
 		else if(isLvlCompleted) {
 			lvlCompletedOverlay.update();
 		}
-		else if(!gameOver){
+		else if(gameOver) {
+			gameoverOverlay.update();
+		}
+		else{
 			lvlManager.Update();
 			player.Update();
 			objMan.update();
@@ -195,9 +198,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(gameOver)
-			gameoverOverlay.keyPressed(e);
-		else {
+		if(!gameOver) {
+			//gameoverOverlay.keyPressed(e);
+		//else {
 			int key = e.getKeyCode();
 			switch(key) {
 				case KeyEvent.VK_W -> {
@@ -256,7 +259,9 @@ public class Playing extends State implements StateMethods{
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(!gameOver) {
+		if(gameOver)
+			gameoverOverlay.mousePressed(e);
+		else {
 			if (paused)
 				pauseOverlay.mousePressed(e);
 			else if(isLvlCompleted)
@@ -266,7 +271,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(!gameOver) {
+		if(gameOver)
+			gameoverOverlay.mouseReleased(e);
+		else {
 			if (paused)
 				pauseOverlay.mouseReleased(e);
 			else if(isLvlCompleted)
@@ -276,7 +283,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(!gameOver) {
+		if(gameOver)
+			gameoverOverlay.mouseMoved(e);
+		else {
 			if (paused)
 				pauseOverlay.mouseMoved(e);
 			else if(isLvlCompleted)

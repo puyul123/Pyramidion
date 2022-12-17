@@ -14,7 +14,7 @@ import static Util.Constants.UI.URMButtons.*;
 public class LevelCompletedOverlay {
 
 	private Playing playing;
-	private UrmButton menu, next;
+	private UrmButton menu, next, retry;
 	private BufferedImage img;
 	private int bgX, bgY, bgW, bgH;
 
@@ -25,10 +25,12 @@ public class LevelCompletedOverlay {
 	}
 
 	private void initButtons() {
-		int menuX = (int) (330 * Game.SCALE);
-		int nextX = (int) (445 * Game.SCALE);
+		int menuX = (int) (340 * Game.SCALE);
+		int retryX = (int) (393 * Game.SCALE);
+		int nextX = (int) (446 * Game.SCALE);
 		int y = (int) (195 * Game.SCALE);
 		next = new UrmButton(nextX, y, URM_SIZE, URM_SIZE, 0);
+		retry = new UrmButton(retryX, y, URM_SIZE, URM_SIZE, 1);
 		menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
 	}
 
@@ -47,11 +49,13 @@ public class LevelCompletedOverlay {
 		g.drawImage(img, bgX, bgY, bgW, bgH, null);
 		next.draw(g);
 		menu.draw(g);
+		retry.draw(g);
 	}
 
 	public void update() {
 		next.update();
 		menu.update();
+		retry.update();
 	}
 
 	private boolean isIn(UrmButton b, MouseEvent e) {
@@ -61,11 +65,14 @@ public class LevelCompletedOverlay {
 	public void mouseMoved(MouseEvent e) {
 		next.setMouseOver(false);
 		menu.setMouseOver(false);
+		retry.setMouseOver(false);
 
 		if (isIn(menu, e))
 			menu.setMouseOver(true);
 		else if (isIn(next, e))
 			next.setMouseOver(true);
+		else if (isIn(retry, e))
+			retry.setMouseOver(true);
 	}
 
 	public void mouseReleased(MouseEvent e) {
@@ -74,13 +81,19 @@ public class LevelCompletedOverlay {
 				playing.resetAll();
 				playing.setGameState(Gamestate.MENU);
 			}
-		} else if (isIn(next, e))
+		} else if (isIn(next, e)) {
 			if (next.isMousePressed()) {
 				playing.loadNextLevel();
 				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
 			}
+		}
+		else if (isIn(retry, e)) {
+			playing.resetAll();
+			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());	
+		}
 		menu.resetBools();
 		next.resetBools();
+		retry.resetBools();
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -88,6 +101,9 @@ public class LevelCompletedOverlay {
 			menu.setMousePressed(true);
 		else if (isIn(next, e))
 			next.setMousePressed(true);
+		else if (isIn(retry, e))
+			retry.setMousePressed(true);
 	}
+
 
 }
