@@ -7,16 +7,13 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import Entity.EnemyManager;
-import Entity.Mummy;
 import Entity.Player;
 import Main.Game;
-import Util.LoadSave;
 import levels.LevelManager;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import Object.ObjectManager;
-import Object.Trap;
 import Object.Lever;
 import Object.Door;
 
@@ -25,13 +22,10 @@ public class Playing extends State implements StateMethods{
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay lvlCompletedOverlay;
 	private GameOverOverlay gameoverOverlay;
-	//private ObjectManager objectManager;
 	private Player player;
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
 	private ObjectManager objMan;
-	private Trap trap;
-	
 	
 	//CAMERA
 	public int xLvlOffset = 0;
@@ -41,6 +35,7 @@ public class Playing extends State implements StateMethods{
 	private boolean paused = false;
 	private boolean gameOver = false;
 	private boolean isLvlCompleted = false;
+	private boolean pressed;
 	
 	public Playing(Game game) {
 		super(game);
@@ -201,7 +196,8 @@ public class Playing extends State implements StateMethods{
 					if(player.isOnSword() == true) player.setOnSword(false);
 					else player.setOnSword(true);
 				}
-				case KeyEvent.VK_E ->{				
+				case KeyEvent.VK_E ->{		
+					pressed = true;
 					for(Lever l : objMan.getLeverObject())
 						if(l.getArea().intersects(player.getCollision()))
 							if(l.isInteract())
@@ -307,6 +303,15 @@ public class Playing extends State implements StateMethods{
 	
 	public LevelManager getLevelManager() {
 		return lvlManager;
+	}
+	
+	public boolean pressed() {
+		return pressed;
+	}
+
+	public void setPressed(boolean pressed) {
+		this.pressed = pressed;
+		
 	}
 	
 }

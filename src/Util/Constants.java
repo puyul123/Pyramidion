@@ -181,6 +181,30 @@ public class Constants {
 			public static final int VOLUME_HEIGHT = (int) (VOLUME_DEFAULT_HEIGHT * Game.SCALE);
 			public static final int SLIDER_WIDTH = (int) (SLIDER_DEFAULT_WIDTH * Game.SCALE);
 		}
+		
+		public static class PlayingUI{
+			public static final int statusBarWidth = (int) (192 * Game.SCALE);
+			public static final int statusBarHeight = (int) (58 * Game.SCALE);
+			public static final int statusBarX = (int) (10 * Game.SCALE);
+			public static final int statusBarY = (int) (10 * Game.SCALE);
+
+			public static final int healthBarWidth = (int) (150 * Game.SCALE);
+			public static final int healthBarHeight = (int) (4 * Game.SCALE);
+			public static final int healthBarXStart = (int) (34 * Game.SCALE);
+			public static final int healthBarYStart = (int) (14 * Game.SCALE);
+			
+			public static final int ScoreWidth = 300;
+			public static final int ScoreHeight = 125;
+			public static final int ScoreX = 1000;
+			public static final int ScoreY = -15;
+			
+			public static final int ScoreStringX = 1050;
+			public static final int ScoreStringY1 = 40;
+			public static final int ScoreStringY2 = 80;
+			
+			
+			
+		}
 	}
 	
 	public static class Direction{

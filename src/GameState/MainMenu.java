@@ -1,9 +1,18 @@
 package GameState;
 
+import static Util.Constants.UI.PlayingUI.ScoreStringX;
+import static Util.Constants.UI.PlayingUI.ScoreStringY1;
+import static Util.Constants.UI.PlayingUI.ScoreStringY2;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import Main.Game;
 import ui.MenuButton;
@@ -14,9 +23,12 @@ public class MainMenu extends State implements StateMethods{
 	private MenuButton[] buttons = new MenuButton[3];
 	private BufferedImage bgImage;
 	private int menuX, menuY, menuW, menuH;
+	private int highScore;
+	Font font;
 	
 	public MainMenu(Game game) {
 		super(game);
+		importFont();
 		loadMenuButton();
 		loadMenuBackground();
 	}
@@ -51,6 +63,13 @@ public class MainMenu extends State implements StateMethods{
 		for (MenuButton mb : buttons)
 			mb.draw(g);
 		
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setFont(font); 
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
+		
+		g2.setColor(Color.WHITE);
+		g2.drawString("Score:", 15, 607);
+		g2.drawString(""+highScore  , 15, 647);
 		//g.setColor(Color.BLACK);
 		//g.drawString("MAIN MENU", Game.WIDTH/2, Game.HEIGHT/2);
 	}
@@ -126,4 +145,18 @@ public class MainMenu extends State implements StateMethods{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public int getHighScore() {
+		return highScore;
+	}
+
+	public void setHighScore(int highScore) {
+		this.highScore = highScore;
+	}
+	private void importFont() {
+		try {this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/egypt1.ttf"));} 
+		catch (FontFormatException e) {e.printStackTrace();} 
+		catch (IOException e) {e.printStackTrace();}
+	}
+	
 }

@@ -1,18 +1,18 @@
 package Entity;
 
-import static Util.Constants.Direction.DOWN;
 import static Util.HelpMethods.*;
-import static Util.Constants.*;
 
 import static Util.Constants.Direction.LEFT;
 import static Util.Constants.Direction.RIGHT;
-import static Util.Constants.Direction.UP;
 import static Util.Constants.PlayerConstants.*;
 
 import static Util.HelpMethods.CanMoveHere;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,9 +22,11 @@ import javax.imageio.ImageIO;
 import GameState.Playing;
 import Main.Game;
 import Util.LoadSave;
+import static Util.Constants.UI.PlayingUI.*;
 
 public class Player extends Entity{
 	
+	Graphics2D g2;
 	private BufferedImage[][] anim;
 	private int aniTick, aniIndex, aniSpeed = 10;
 	private int playerAction = IDLE;
@@ -55,33 +57,19 @@ public class Player extends Entity{
 	private int flipW = 1;
 	
 	//StatusBarUI
-	private BufferedImage statusBarImg;
-
-	private int statusBarWidth = (int) (192 * Game.SCALE);
-	private int statusBarHeight = (int) (58 * Game.SCALE);
-	private int statusBarX = (int) (10 * Game.SCALE);
-	private int statusBarY = (int) (10 * Game.SCALE);
-
-	private int healthBarWidth = (int) (150 * Game.SCALE);
-	private int healthBarHeight = (int) (4 * Game.SCALE);
-	private int healthBarXStart = (int) (34 * Game.SCALE);
-	private int healthBarYStart = (int) (14 * Game.SCALE);
+	private BufferedImage statusBarImg, scoreImg;
 
 	private int maxHealth = 100;
 	private int currentHealth = maxHealth;
 	private int healthWidth = healthBarWidth;
-	
-//	private int pointBarWidth = (int) (150 * Game.SCALE);
-//	private int pointBarHeight = (int) (4 * Game.SCALE);
-//	private int pointBarXStart = (int) (34 * Game.SCALE);
-//	private int pointBarYStart = (int) (14 * Game.SCALE);
 
 	private int minPoint = 0;
 	private int currentPoint = minPoint;
-//	private int pointWidth = pointBarWidth;
 	
 	//COMBAT
 	private boolean attackChecked;
+	
+	public Font font;
 	
 	public Player(float x, float y, int height, int width, Playing playing) {
 		super(x, y, height, width);
@@ -89,6 +77,7 @@ public class Player extends Entity{
 		
 		//Player Image Import
 		importImg();
+		importFont();
 		initCollision(x, y, 2 * 14 * Game.SCALE-5, 2 * 20 * Game.SCALE);
 		initAttackColl();
 	}
@@ -101,7 +90,7 @@ public class Player extends Entity{
 	private void importImg() {	
 		try {
 			anim = new BufferedImage[8][5];
-			
+						
 			//IDLE NO SWORD
 			anim[0][0] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
 			
@@ -129,10 +118,19 @@ public class Player extends Entity{
 			//STATUSBAR
 			statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.STATUS_BAR);
 			
+			//SCORE
+			scoreImg = LoadSave.GetSpriteAtlas("score_bg.png"); 
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void importFont() {
+		try {this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/egypt1.ttf"));} 
+		catch (FontFormatException e) {e.printStackTrace();} 
+		catch (IOException e) {e.printStackTrace();}
 	}
 	
 	private void updateAnimationTick() {
@@ -268,8 +266,8 @@ public class Player extends Entity{
 	}
 	
 	public void changePoint(int value) {
-		//currentPoint += value;
-		System.out.println("Added point");
+		currentPoint += value;
+		playing.getGame().getMenu().setHighScore(currentPoint);
 	}
 	
 	public void Update() {
@@ -380,8 +378,17 @@ public class Player extends Entity{
 	
 	private void drawUI(Graphics g) {
 		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
+		g.drawImage(scoreImg, ScoreX, ScoreY, ScoreWidth, ScoreHeight, null);
 		g.setColor(Color.red);
 		g.fillRect(healthBarXStart + statusBarX, healthBarYStart + statusBarY, healthWidth, healthBarHeight);
+		
+		this.g2 = (Graphics2D)g;
+		g2.setFont(font); 
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30));
+		
+		g2.setColor(Color.white);
+		g2.drawString("Score:", ScoreStringX, ScoreStringY1);
+		g2.drawString(""+currentPoint  , ScoreStringX, ScoreStringY2);
 	}
 
 	private void drawAttackBox(Graphics g, int lvlOffset) {
@@ -417,7 +424,7 @@ public class Player extends Entity{
 		move = false;
 		playerAction = IDLE;
 		currentHealth = maxHealth;
-		currentPoint = minPoint;
+//		currentPoint = minPoint;
 		
 		collision.x = x;
 		collision.y = y;
