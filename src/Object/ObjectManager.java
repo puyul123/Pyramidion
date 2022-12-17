@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import Entity.Mummy;
 import Entity.Player;
 import GameState.Playing;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 
 import Util.LoadSave;
 import static Util.Constants.ObjectConstants.*;
@@ -37,9 +39,11 @@ public class ObjectManager {
 	private ArrayList<Lever> levers;
 	
 	boolean isDoorClosed = false;
+	public Font font;
 	
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
+		importFont();
 		loadTrapImgs();
 		loadObjectImgs();
 
@@ -88,6 +92,7 @@ public class ObjectManager {
 				if(c.getArea().intersects(area)) {
 					c.setAnimation(true);
 					potions.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), POTION));
+					gems.add(new Gem((int)(c.getArea().x + c.getArea().width/2 + 10), (int)(c.getArea().y), GREEN_GEM));
 					return;
 				}
 			}
@@ -100,7 +105,10 @@ public class ObjectManager {
 					d.setAnimation(true);	
 				if(d.getArea().intersects(player.getCollision())) 
 					d.command = true;
-				else d.command = false;
+				else {
+					d.command = false;
+					playing.setPressed(false);
+				}
 			}
 		}
 	}
@@ -208,8 +216,11 @@ public class ObjectManager {
 						LEVER_WIDTH, LEVER_HEIGHT, null);
 			}
 			if(l.command) {
-				graphic.setColor(Color.BLACK);
-				graphic.drawString("Click E to interact",  300, 300); //FIX TEXT POS
+				Graphics2D g2 = (Graphics2D)graphic;
+				g2.setFont(font); 
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 17));
+				g2.setColor(Color.white);
+				g2.drawString("Press E to pull the lever",  465, 550); //FIX TEXT POS
 			}
 		}
 	}
@@ -220,8 +231,15 @@ public class ObjectManager {
 				graphic.drawImage(doorImage[4], (int)(d.getArea().x - xLvlOffset-25), (int)(d.getArea().y - d.getyDrawOffset()), (int)(DOOR_WIDTH * 2), (int)(DOOR_HEIGHT * 2), null);
 			graphic.drawImage(doorImage[d.getAniIndex()], (int)(d.getArea().x - xLvlOffset-25), (int)(d.getArea().y - d.getyDrawOffset()), (int)(DOOR_WIDTH * 2), (int)(DOOR_HEIGHT * 2), null);
 			if(d.command) {
-				graphic.setColor(Color.BLACK);
-				graphic.drawString("Click E to interact",  300, 300);
+				Graphics2D g2 = (Graphics2D)graphic;
+				g2.setFont(font); 
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 17));
+				g2.setColor(Color.WHITE);
+				g2.drawString("Press E to interact",  500, 550);
+				if(playing.pressed()) {
+					g2.setColor(Color.RED);
+					g2.drawString("Find a way to open the door",  430, 200);
+				}
 			}
 		}
 		
@@ -316,6 +334,12 @@ public class ObjectManager {
 		if(!isDoorClosed) {
 			setDoorClosed(false);
 		}
+	}
+	
+	private void importFont() {
+		try {this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/egypt1.ttf"));} 
+		catch (FontFormatException e) {e.printStackTrace();} 
+		catch (IOException e) {e.printStackTrace();}
 	}
 
 	public void resetAllObjects() {

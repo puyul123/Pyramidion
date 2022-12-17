@@ -61,10 +61,12 @@ public class HelpMethods {
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 247 || value < 0 || value != 0 && value != MUMMY && value != SPIDER && value != RAT &&
-				value != 45 && value != 46 && value != 101 &&
-				value != DOOR && value!=POTION && value != RED_GEM && value != GREEN_GEM  && value != LEVER
-				&& value != BLUE_GEM && value != CONTAINER)
+		if (value>=247||value<0||value!=0&&value!=MUMMY&&value!=SPIDER&&value!=RAT&&
+				value!=45&&value!= 46&&value!=101&&value!=102&&value!=105&&value!=52&& 
+				value!=108&&value!=111&&value!=49&&value!=30&&value!=32&&value!=51&&
+				value!=29&&value!=33&&value!=35&&value!=55&&value!=103&&value!=106&&value!=109&&value!=112
+				&&value!=DOOR&&value!=POTION&&value!=RED_GEM&&value!=GREEN_GEM&&value != LEVER
+				&&value!=BLUE_GEM&&value!=CONTAINER)
 			return true;
 		return false;
 	}
