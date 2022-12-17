@@ -2,7 +2,14 @@ package Util;
 
 import Main.Game;
 
-public class Constants {	
+public class Constants {
+	
+	public static class PlayingBackground {
+		public static final int PLAYINGBG_WIDTH_DEFAULT = 382;
+		public static final int PLAYINGBG_HEIGHT_DEFAULT = 128;
+		public static final int PLAYINGBG_WIDTH = (int) (Game.SCALE * PLAYINGBG_WIDTH_DEFAULT);
+		public static final int PLAYINGBG_HEIGHT = (int) (Game.SCALE * PLAYINGBG_WIDTH_DEFAULT);
+	}
 	
 	public static final int aniSpeed = 20;
 	 
