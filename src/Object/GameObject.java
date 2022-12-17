@@ -20,8 +20,9 @@ public class GameObject {
 	protected int x, y, objType;
 	protected Rectangle2D.Float area;
 	protected boolean doAnimation, active = true;
-//	protected boolean interact = true; 
+	protected boolean interact = true; 
 	protected boolean doorClosed = true;
+	protected boolean command;
 	protected int aniTick, aniIndex;
 	protected int xDrawOffset, yDrawOffset;
 
@@ -51,6 +52,7 @@ public class GameObject {
 		aniTick = 0;
 		active = true;
 		doorClosed = true;
+		interact = true;
 
 		if(objType == CONTAINER) {
 			doAnimation = false;
@@ -80,10 +82,10 @@ public class GameObject {
 	public int getObjType() {return objType;}
 	public Rectangle2D.Float getArea() {return area;}
 	public boolean isActive() {return active;}
-//	public boolean isInteract() {return interact;}
+	public boolean isInteract() {return interact;}
 	public boolean isDoorClosed() {return doorClosed;}
 	public void setActive(boolean active) {this.active = active;}
-//	public void setInteract(boolean interact) {this.interact = interact;}
+	public void setInteract(boolean interact) {this.interact = interact;}
 	public void setDoorClosed(boolean doorClosed) {this.doorClosed = doorClosed;}
 	public void setAnimation(boolean doAnimation) {this.doAnimation = doAnimation;}
 	public int getxDrawOffset() {return xDrawOffset;}

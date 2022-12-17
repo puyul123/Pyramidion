@@ -1,10 +1,12 @@
 package Object;
 
 import java.awt.geom.Rectangle2D;
+
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import Entity.Mummy;
 import Entity.Player;
 import GameState.Playing;
 
@@ -31,16 +33,16 @@ public class ObjectManager {
 	private ArrayList<Container> containers;
 	private BufferedImage[] doorImage;
 	private ArrayList<Door> doors;
+	private BufferedImage[] leverImage;
+	private ArrayList<Lever> levers;
 	
-	boolean command = false;
-	boolean interact = true;
+	boolean isDoorClosed = false;
 	
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
 		loadTrapImgs();
-//		addTraps();
 		loadObjectImgs();
-//		addObjects();
+
 	}
 	
 	public void checkObjectTouched(Rectangle2D.Float area) {
@@ -82,10 +84,9 @@ public class ObjectManager {
 	
 	public void checkObjectHit(Rectangle2D.Float area) {
 		for(Container c : containers)
-			if(c.isActive() && c.doAnimation) {
+			if(c.isActive()) {
 				if(c.getArea().intersects(area)) {
 					c.setAnimation(true);
-					//potions = HelpMethods.po.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), CONTAINER));
 					potions.add(new Potion((int)(c.getArea().x + c.getArea().width/2), (int)(c.getArea().y), POTION));
 					return;
 				}
@@ -95,19 +96,24 @@ public class ObjectManager {
 	public void doorTouched (Player player) {
 		for(Door d : doors) {
 			if(d.isActive()) {
-				if(d.getArea().intersects(player.getCollision())) {
-					command = true;
-					if(d.isDoorClosed()) {
-						System.out.println("Touched and ready to interact!!!");
-					}
-					else{
-						d.setAnimation(true);
-						System.out.println("Has been interact");	
-					}
+				if(!d.isDoorClosed())
+					d.setAnimation(true);	
+				if(d.getArea().intersects(player.getCollision())) 
+					d.command = true;
+				else d.command = false;
+			}
+		}
+	}
+	
+	public void leverTouched (Player player) {
+		for(Lever l : levers) {
+			if(l.isActive()) {
+				if(l.getArea().intersects(player.getCollision())) {
+					l.command = true;
+					if(!l.isInteract())
+						l.setAnimation(true);	
 				}
-				else {
-					command = false;
-				}
+				else l.command = false;
 			}
 		}
 	}
@@ -118,6 +124,7 @@ public class ObjectManager {
 		gems = new ArrayList<>(newLevel.getGems());
 		traps = newLevel.getTraps();
 		doors = newLevel.getDoor();
+		levers = newLevel.getLever();
 	}   
 	
 	private void loadObjectImgs() {
@@ -125,6 +132,7 @@ public class ObjectManager {
 		gemImage = new BufferedImage[3][4];
 		containerImage = new BufferedImage[8];
 		doorImage = new BufferedImage[5];
+		leverImage = new BufferedImage[2];
 		
 		try {
 		  	potionImage[0] = ImageIO.read(getClass().getResourceAsStream("/potion/01.png"));
@@ -156,6 +164,9 @@ public class ObjectManager {
 		  	doorImage[3] = ImageIO.read(getClass().getResourceAsStream("/objects/door_4.png"));
 		  	doorImage[4] = ImageIO.read(getClass().getResourceAsStream("/objects/door_5.png"));
 		  	
+		  	leverImage[0] = ImageIO.read(getClass().getResourceAsStream("/handle/handle_1.png"));
+		  	leverImage[1] = ImageIO.read(getClass().getResourceAsStream("/handle/handle_2.png"));
+		  	
 			BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE);
 			potionImage = new BufferedImage[7];
 			for(int i = 0; i < potionImage.length; i++) {
@@ -185,14 +196,30 @@ public class ObjectManager {
 		drawGems(graphic, xLvlOffset);
 		drawContainers(graphic, xLvlOffset);
 		drawDoor(graphic, xLvlOffset);
+		drawLever(graphic, xLvlOffset);
 	}
 	
+	private void drawLever(Graphics graphic, int xLvlOffset) {
+		for(Lever l : levers) {
+			if(l.isActive()) {
+				graphic.drawImage(leverImage[l.getAniIndex()], 
+						(int)(l.getArea().x - l.getxDrawOffset() - xLvlOffset), 
+						(int)(l.getArea().y - l.getxDrawOffset()), 
+						LEVER_WIDTH, LEVER_HEIGHT, null);
+			}
+			if(l.command) {
+				graphic.setColor(Color.BLACK);
+				graphic.drawString("Click E to interact",  300, 300); //FIX TEXT POS
+			}
+		}
+	}
+
 	private void drawDoor(Graphics graphic, int xLvlOffset) {
 		for(Door d : doors) {
-			if(!interact)
+			if(!d.interact)
 				graphic.drawImage(doorImage[4], (int)(d.getArea().x - xLvlOffset-25), (int)(d.getArea().y - d.getyDrawOffset()), (int)(DOOR_WIDTH * 2), (int)(DOOR_HEIGHT * 2), null);
 			graphic.drawImage(doorImage[d.getAniIndex()], (int)(d.getArea().x - xLvlOffset-25), (int)(d.getArea().y - d.getyDrawOffset()), (int)(DOOR_WIDTH * 2), (int)(DOOR_HEIGHT * 2), null);
-			if(command) {
+			if(d.command) {
 				graphic.setColor(Color.BLACK);
 				graphic.drawString("Click E to interact",  300, 300);
 			}
@@ -256,11 +283,12 @@ public class ObjectManager {
 	private void drawTrap(Graphics graphic, int xLvlOffset) {
 		for(Trap t : traps) {
 			graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y - t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
-			//graphic.drawImage(trapImage, (int)(t.getArea().x - xLvlOffset), (int)(t.getArea().y - t.getyDrawOffset()), TRAP_WIDTH, TRAP_HEIGHT, null);
 		}
 	}
 	
 	public void update() {
+		isDoorClosed = false;
+		
 		for(Potion p : potions)
 			if(p.isActive())
 				p.updatePotion();
@@ -271,8 +299,23 @@ public class ObjectManager {
 			if(c.isActive())
 				c.updateObject();
 		for(Door d : doors)
-			if(d.isActive())
+			if(d.isActive()) {
 				d.updateDoor();
+				
+			}
+		for(Lever l : levers)
+			if(l.isActive()) {
+				if(!l.isInteract()) {
+					l.updateLever();
+				}
+				if(l.isInteract()) {
+					isDoorClosed = true;
+				}
+			}
+				
+		if(!isDoorClosed) {
+			setDoorClosed(false);
+		}
 	}
 
 	public void resetAllObjects() {
@@ -291,19 +334,28 @@ public class ObjectManager {
 		for (Door d : doors)
 			d.resetObject();
 		
+		for (Lever d : levers)
+			d.resetObject();
 	}
-
-	public boolean getInteract() {
-		return interact;
+	
+	public boolean isDoorClosed() {
+		return isDoorClosed;
 	}
-	public boolean getCommand() {
-		return command;
-	}
-	public void setInteract(boolean interact) {
-		this.interact = interact;
+	
+	public void setInteract(boolean setInteract, Player player) {  //debug disini
+		for (Lever l : levers)
+			if(l.getArea().intersects(player.getCollision()))
+				l.setInteract(setInteract);
 	}
 	public void setDoorClosed(boolean setDoorClosed) {
 		for (Door d : doors)
 			d.setDoorClosed(setDoorClosed);
+	}
+	
+	public ArrayList<Door> getDoorObject(){
+		return doors;
+	}
+	public ArrayList<Lever> getLeverObject(){
+		return levers;
 	}
 }

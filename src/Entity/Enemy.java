@@ -19,7 +19,7 @@ public abstract class Enemy extends Entity{
 	protected boolean firstUpdate = true;
 	protected boolean inAir;
 	protected float fallSpeed;
-	protected float mummySpeed = 0.3f * Game.SCALE;
+	protected float speed;
 	protected int walkDir = LEFT;
 	protected int tileY;
 	protected float attackDistance = Game.TILES_SIZE;
@@ -93,9 +93,9 @@ public abstract class Enemy extends Entity{
 	protected void move(int[][]lvlData) {
 		float xSpeed = 0;
 		if(walkDir == LEFT) 
-			xSpeed = -mummySpeed;
+			xSpeed = -speed;
 		else 
-			xSpeed = mummySpeed;
+			xSpeed = speed;
 		
 		if(CanMoveHere(collision.x, collision.y, collision.width, collision.height, lvlData)) 
 			if(IsFloor(collision, xSpeed, lvlData)) {
@@ -164,6 +164,10 @@ public abstract class Enemy extends Entity{
 		newState(IDLE);
 		active = true;
 		fallSpeed = 0;
+	}
+	
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 	
 }

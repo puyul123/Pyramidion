@@ -44,6 +44,12 @@ public class Constants {
 		public static final int DOOR_HEIGHT_DEFAULT = 96;
 		public static final int DOOR_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);
 		public static final int DOOR_HEIGHT = (int) (Game.SCALE * TRAP_HEIGHT_DEFAULT);
+		
+		public static final int LEVER = 15;
+		public static final int LEVER_WIDTH_DEFAULT = 35;
+		public static final int LEVER_HEIGHT_DEFAULT = 29;
+		public static final int LEVER_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);
+		public static final int LEVER_HEIGHT = (int) (Game.SCALE * TRAP_HEIGHT_DEFAULT);
 	
 		public static int GetSpriteAmount(int objectType) {
 			switch (objectType) {
@@ -55,6 +61,8 @@ public class Constants {
 				return 8;
 			case DOOR:
 				return 5;
+			case LEVER:
+				return 2;
 			}
 			return 0;
 		}
@@ -63,9 +71,12 @@ public class Constants {
 	
 	public static class EnemyConstants {
 		public static final int MUMMY = 1;
+		public static final int SPIDER = 2;
+		public static final int RAT = 3;
 		
 		public static final int MUMMY_SIZE = 64;
-		
+		public static final int SPIDER_SIZE = 64;
+		public static final int RAT_SIZE = 64;
 		//DEVELOP
 		
 		public static final int IDLE = 0;
@@ -88,6 +99,26 @@ public class Constants {
 					default: return 1;
 					}
 				}
+				case RAT ->{
+					switch(enemyState) {
+					case IDLE: return 1;
+					case RUNNING: return 2;
+					case ATTACK: return 4;
+					case HIT: return 1;
+					case DEAD: return 5;
+					default: return 1;
+					}
+				}
+				case SPIDER ->{
+					switch(enemyState) {
+					case IDLE: return 1;
+					case RUNNING: return 2;
+					case ATTACK: return 5;
+					case HIT: return 1;
+					case DEAD: return 5;
+					default: return 1;
+					}
+				}
 			}
 			
 			return 0;
@@ -97,7 +128,11 @@ public class Constants {
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
 			case MUMMY:
+				return 30;
+			case RAT:
 				return 20;
+			case SPIDER:
+				return 10;
 			default:
 				return 1;
 			}
@@ -106,6 +141,10 @@ public class Constants {
 		public static int GetEnemyDmg(int enemy_type) {
 			switch (enemy_type) {
 			case MUMMY:
+				return 16;
+			case RAT:
+				return 8;
+			case SPIDER:
 				return 10;
 			default:
 				return 0;
