@@ -288,6 +288,7 @@ public class Player extends Entity{
 			checkGemTouched();
 			checkTrapTouched();
 			checkDoorTouched();
+			checkLeverTouched();
 		}
 		
 		updateAnimationTick();
@@ -307,6 +308,11 @@ public class Player extends Entity{
 		attackChecked = true;
 		playing.checkEnemyHit(attackCol);
 		playing.checkObjectHit(attackCol);
+	}
+	
+	private void checkLeverTouched() {
+		playing.checkLeverTouched(this);
+		
 	}
 	
 	private void checkDoorTouched() {

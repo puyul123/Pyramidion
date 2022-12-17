@@ -128,12 +128,12 @@ public class EnemyManager {
 	}
 	
 	public void update(int[][] lvlData, Player player) {
-		boolean isAnyActive = false;
+//		boolean isAnyActive = false;
 		
 		for(Mummy m : mummies) {
 			if(m.isActive()) {
 				m.update(lvlData, player);
-				isAnyActive = true;
+//				isAnyActive = true;
 			}
 		}
 		for(Spider s : spiders) {
@@ -146,8 +146,8 @@ public class EnemyManager {
 				r.update(lvlData, player);
 			}
 		}
-		if(!isAnyActive)
-			playing.setLevelCompleted(true);
+//		if(!isAnyActive)
+//			playing.setLevelCompleted(true);
 	}
 	
 	public void draw(Graphics g, int xLvlOffset) {

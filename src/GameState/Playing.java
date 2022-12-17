@@ -1,6 +1,7 @@
 package GameState;
 
 import java.awt.Graphics;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -16,6 +17,8 @@ import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import Object.ObjectManager;
 import Object.Trap;
+import Object.Lever;
+import Object.Door;
 
 public class Playing extends State implements StateMethods{
 	
@@ -28,6 +31,7 @@ public class Playing extends State implements StateMethods{
 	private EnemyManager enemyMan;
 	private ObjectManager objMan;
 	private Trap trap;
+	
 	
 	//CAMERA
 	public int xLvlOffset = 0;
@@ -133,6 +137,10 @@ public class Playing extends State implements StateMethods{
 		objMan.checkObjectHit(attackCol);
 	}
 	
+	public void checkLeverTouched(Player player){
+		objMan.leverTouched(player);
+	}
+	
 	public void checkDoorTouched(Player player) {       
 		objMan.doorTouched(player);
 		
@@ -194,10 +202,14 @@ public class Playing extends State implements StateMethods{
 					else player.setOnSword(true);
 				}
 				case KeyEvent.VK_E ->{				
-					if(objMan.getCommand())
-						objMan.setDoorClosed(false);
-//					if(!objMan.getInteract())
-//						setLevelCompleted(true);
+					for(Lever l : objMan.getLeverObject())
+						if(l.getArea().intersects(player.getCollision()))
+							if(l.isInteract())
+								l.setInteract(false); 
+					for(Door d : objMan.getDoorObject())
+						if(d.getArea().intersects(player.getCollision()))
+							if(!objMan.isDoorClosed())
+								setLevelCompleted(true);
 				}
 				case KeyEvent.VK_ESCAPE ->{
 					paused = !paused;

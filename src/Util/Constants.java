@@ -44,6 +44,12 @@ public class Constants {
 		public static final int DOOR_HEIGHT_DEFAULT = 96;
 		public static final int DOOR_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);
 		public static final int DOOR_HEIGHT = (int) (Game.SCALE * TRAP_HEIGHT_DEFAULT);
+		
+		public static final int LEVER = 15;
+		public static final int LEVER_WIDTH_DEFAULT = 35;
+		public static final int LEVER_HEIGHT_DEFAULT = 29;
+		public static final int LEVER_WIDTH = (int) (Game.SCALE * TRAP_WIDTH_DEFAULT);
+		public static final int LEVER_HEIGHT = (int) (Game.SCALE * TRAP_HEIGHT_DEFAULT);
 	
 		public static int GetSpriteAmount(int objectType) {
 			switch (objectType) {
@@ -55,6 +61,8 @@ public class Constants {
 				return 8;
 			case DOOR:
 				return 5;
+			case LEVER:
+				return 2;
 			}
 			return 0;
 		}

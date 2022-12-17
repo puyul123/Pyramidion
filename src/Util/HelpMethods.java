@@ -18,6 +18,7 @@ import Main.Game;
 import Object.Container;
 import Object.Door;
 import Object.Gem;
+import Object.Lever;
 import Object.Potion;
 import Object.Trap;
 import static Util.LoadSave.GetMapTxt;
@@ -62,7 +63,7 @@ public class HelpMethods {
 
 		if (value >= 247 || value < 0 || value != 0 && value != MUMMY && value != SPIDER && value != RAT &&
 				value != 45 && value != 46 && value != 101 &&
-				value != DOOR && value!=POTION && value != RED_GEM && value != GREEN_GEM 
+				value != DOOR && value!=POTION && value != RED_GEM && value != GREEN_GEM  && value != LEVER
 				&& value != BLUE_GEM && value != CONTAINER)
 			return true;
 		return false;
@@ -410,6 +411,36 @@ public class HelpMethods {
 			e.printStackTrace();
 		}
 		return door;
+	}
+	
+	public static ArrayList<Lever> GetLever(String txt) {
+		BufferedReader br = GetMapTxt(txt);
+		ArrayList<Lever> lever = new ArrayList<>();
+		
+		try {
+			
+			int col = 0;
+			int row = 0;
+			while(col < 60 && row < Game.TILES_HEIGHT) {
+				String line = br.readLine();
+				
+				while(col < 60) {
+					String numbers[] = line.split(" ");
+					int num = Integer.parseInt(numbers[col]);
+					if(num == LEVER) 
+						lever.add(new Lever((int)(col * Game.TILES_SIZE), (int)(row * Game.TILES_SIZE)+9, DOOR));
+					col++;
+				}
+				if(col == Game.TILES_HEIGHT);
+					col = 0;
+					row++;
+			}
+			br.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		return lever;
 	}
 	
 //	public static ArrayList<Potion> getPotion(){

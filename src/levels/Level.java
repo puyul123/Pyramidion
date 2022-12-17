@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import Object.Container;
 import Object.Door;
 import Object.Gem;
+import Object.Lever;
 import Object.Potion;
 import Object.Trap;
 import Util.HelpMethods;
@@ -37,6 +38,7 @@ public class Level{
 	ArrayList<Container> containers;
 	ArrayList<Gem> gems;
 	ArrayList<Door> doors;
+	private ArrayList<Lever> levers;
 	
 	private int lvlTilesWide;
 	private int maxTilesOffset; 
@@ -55,6 +57,7 @@ public class Level{
 		createGems();
 		createContainers();
 		createDoor();
+		createLever();
 	}
 	
 	private void calcLvlOffsets() {
@@ -76,7 +79,10 @@ public class Level{
 	
 	private void createDoor() {
 		doors = HelpMethods.GetDoors(txt);
-		
+	}
+	
+	private void createLever() {
+		levers = HelpMethods.GetLever(txt);
 	}
 	
 	private void createTraps() {
@@ -113,6 +119,10 @@ public class Level{
 	
 	public ArrayList<Door> getDoor(){
 		return doors;
+	}
+	
+	public ArrayList<Lever> getLever(){
+		return levers;
 	}
 
 	public int getSpriteIndex(int x, int y){
