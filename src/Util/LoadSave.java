@@ -38,7 +38,8 @@ public class LoadSave {
 	public static final String VOLUME_BUTTONS = "volume_buttons.png";
 	public static final String COMPLETED_IMG = "winPanel.png";
 	public static final String GAMEOVER_IMG = "losePanel.png";
-	public static final String PLAYING_BACKGROUND = "playingBackground3.png";
+	public static final String GAMECOMPLETED_IMG = "gameWinPanel.png";	
+	public static final String PLAYING_BACKGROUND = "playingBackground2.png";
 	
 	public static final String TEST_MAP = "test_outside_sprite_2.png";
 	public static final String LEVEL_0 = "level0.txt";
@@ -46,7 +47,7 @@ public class LoadSave {
 	public static final String LEVEL_2 = "level2.txt";	
 	
 	public static final String TRAP_IMAGE = "trap_2.png";
-	public static final String STATUS_BAR = "health_power_bar.png";
+	public static final String STATUS_BAR = "health_bar.png";
 	
 	public static final String POTION_IMAGE = "potions_sprites.png";
 	public static final String CONTAINER_IMAGE = "objects_sprites.png";

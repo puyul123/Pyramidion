@@ -13,6 +13,7 @@ import Entity.Player;
 import Main.Game;
 import levels.LevelManager;
 import ui.GameOverOverlay;
+import ui.GameWinOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import Object.ObjectManager;
@@ -26,6 +27,7 @@ public class Playing extends State implements StateMethods{
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay lvlCompletedOverlay;
+	private GameWinOverlay gameWinOverlay;
 	private GameOverOverlay gameoverOverlay;
 	private Player player;
 	private LevelManager lvlManager;
@@ -42,6 +44,7 @@ public class Playing extends State implements StateMethods{
 	private boolean paused = false;
 	private boolean gameOver = false;
 	private boolean isLvlCompleted = false;
+	private boolean isGameWin = false;
 	private boolean pressed;
 	
 	public Playing(Game game) {
@@ -69,6 +72,7 @@ public class Playing extends State implements StateMethods{
 
 	private void init() {
 		pauseOverlay = new PauseOverlay(this);
+		gameWinOverlay = new GameWinOverlay(this);
 		lvlCompletedOverlay = new LevelCompletedOverlay(this);
 		gameoverOverlay = new GameOverOverlay(this);
 		lvlManager = new LevelManager(game);
@@ -83,6 +87,9 @@ public class Playing extends State implements StateMethods{
 		
 		if(paused) {
 			pauseOverlay.update();
+		}
+		else if(isGameWin) {
+			gameWinOverlay.update();
 		}
 		else if(isLvlCompleted) {
 			lvlCompletedOverlay.update();
@@ -103,6 +110,7 @@ public class Playing extends State implements StateMethods{
 	public void draw(Graphics g) {
 		//g.drawImage(bgImage, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		drawBackground(g);
+		int levelIndex = lvlManager.getLevelIndex();
 		
 		lvlManager.draw(g, xLvlOffset);
 		objMan.draw(g, xLvlOffset);
@@ -114,7 +122,10 @@ public class Playing extends State implements StateMethods{
 		else if(gameOver) {
 			gameoverOverlay.draw(g);
 		}
-		else if(isLvlCompleted) {
+		else if(isLvlCompleted && levelIndex == 2) {
+			gameWinOverlay.draw(g);
+		}
+		else if(isLvlCompleted && levelIndex != 2) {
 			lvlCompletedOverlay.draw(g);
 		}
 		
@@ -132,6 +143,7 @@ public class Playing extends State implements StateMethods{
 	public void resetAll() {
 		gameOver = false;
 		paused = false;
+		isGameWin = false;
 		isLvlCompleted = false;
 		player.resetAll();
 		enemyMan.resetAllEnemies();
@@ -265,6 +277,8 @@ public class Playing extends State implements StateMethods{
 		else {
 			if (paused)
 				pauseOverlay.mousePressed(e);
+			else if (isGameWin)
+				gameWinOverlay.mousePressed(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mousePressed(e);
 		}
@@ -277,6 +291,8 @@ public class Playing extends State implements StateMethods{
 		else {
 			if (paused)
 				pauseOverlay.mouseReleased(e);
+			else if (isGameWin)
+				gameWinOverlay.mouseReleased(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mouseReleased(e);
 		}
@@ -289,9 +305,15 @@ public class Playing extends State implements StateMethods{
 		else {
 			if (paused)
 				pauseOverlay.mouseMoved(e);
+			else if (isGameWin)
+				gameWinOverlay.mouseMoved(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mouseMoved(e);
 		}
+	}
+	
+	public void setGameWin(boolean gameWin) {
+		this.isGameWin = gameWin;
 	}
 	
 	public void setLevelCompleted(boolean levelCompleted) {
