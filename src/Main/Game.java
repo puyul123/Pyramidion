@@ -48,7 +48,7 @@ public class Game implements Runnable{
 	}
 	
 	protected void init() {
-		audioOption = new AudioOption();
+		audioOption = new AudioOption(this);
 		menu = new MainMenu(this);
 		playing = new Playing(this);
 		audioPlayer = new AudioPlayer();

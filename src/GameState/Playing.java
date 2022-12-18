@@ -1,6 +1,7 @@
 package GameState;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,7 @@ import Object.ObjectManager;
 import Object.Trap;
 import Object.Lever;
 import Object.Door;
+import static Util.Constants.PlayingBackground.*;
 
 public class Playing extends State implements StateMethods{
 	
@@ -47,6 +49,7 @@ public class Playing extends State implements StateMethods{
 		
 		calcLvlOffset();
 		loadStartLevel();
+		bgImage = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
 	}
 	
 	public void loadNextLevel() {
@@ -83,7 +86,10 @@ public class Playing extends State implements StateMethods{
 		else if(isLvlCompleted) {
 			lvlCompletedOverlay.update();
 		}
-		else if(!gameOver){
+		else if(gameOver) {
+			gameoverOverlay.update();
+		}
+		else{
 			lvlManager.Update();
 			player.Update();
 			objMan.update();
@@ -94,6 +100,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void draw(Graphics g) {
+		//g.drawImage(bgImage, 0, 0, Game.WIDTH, Game.HEIGHT, null);
+		drawBackground(g);
+		
 		lvlManager.draw(g, xLvlOffset);
 		enemyMan.draw(g, xLvlOffset);
 		objMan.draw(g, xLvlOffset);
@@ -113,6 +122,12 @@ public class Playing extends State implements StateMethods{
 		
 	}
 	
+	private void drawBackground(Graphics g) {
+		for(int i=0; i<5; i++)
+			g.drawImage(bgImage, i * PLAYINGBG_WIDTH - (int)(xLvlOffset), 0, Game.WIDTH, Game.HEIGHT, null);
+		
+	}
+
 	public void resetAll() {
 		gameOver = false;
 		paused = false;
@@ -182,9 +197,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(gameOver)
-			gameoverOverlay.keyPressed(e);
-		else {
+		if(!gameOver) {
+			//gameoverOverlay.keyPressed(e);
+		//else {
 			int key = e.getKeyCode();
 			switch(key) {
 				case KeyEvent.VK_W -> {
@@ -244,7 +259,9 @@ public class Playing extends State implements StateMethods{
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(!gameOver) {
+		if(gameOver)
+			gameoverOverlay.mousePressed(e);
+		else {
 			if (paused)
 				pauseOverlay.mousePressed(e);
 			else if(isLvlCompleted)
@@ -254,7 +271,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(!gameOver) {
+		if(gameOver)
+			gameoverOverlay.mouseReleased(e);
+		else {
 			if (paused)
 				pauseOverlay.mouseReleased(e);
 			else if(isLvlCompleted)
@@ -264,7 +283,9 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(!gameOver) {
+		if(gameOver)
+			gameoverOverlay.mouseMoved(e);
+		else {
 			if (paused)
 				pauseOverlay.mouseMoved(e);
 			else if(isLvlCompleted)
