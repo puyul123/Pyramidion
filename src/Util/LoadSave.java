@@ -38,7 +38,7 @@ public class LoadSave {
 	public static final String VOLUME_BUTTONS = "volume_buttons.png";
 	public static final String COMPLETED_IMG = "winPanel.png";
 	public static final String GAMEOVER_IMG = "losePanel.png";
-	public static final String PLAYING_BACKGROUND = "playingBackground.png";
+	public static final String PLAYING_BACKGROUND = "playingBackground3.png";
 	
 	public static final String TEST_MAP = "test_outside_sprite_2.png";
 	public static final String LEVEL_0 = "level0.txt";
