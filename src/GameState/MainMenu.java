@@ -23,7 +23,7 @@ public class MainMenu extends State implements StateMethods{
 	private MenuButton[] buttons = new MenuButton[3];
 	private BufferedImage bgImage;
 	private int menuX, menuY, menuW, menuH;
-	private int highScore;
+	private int highScore = 0;
 	Font font;
 	
 	public MainMenu(Game game) {
@@ -68,10 +68,8 @@ public class MainMenu extends State implements StateMethods{
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40));
 		
 		g2.setColor(Color.WHITE);
-		g2.drawString("Score:", 15, 607);
-		g2.drawString(""+highScore  , 15, 647);
-		//g.setColor(Color.BLACK);
-		//g.drawString("MAIN MENU", Game.WIDTH/2, Game.HEIGHT/2);
+		g2.drawString("High Score:", 15, 607);
+		g2.drawString(""+highScore  , 15, 650);
 	}
 
 

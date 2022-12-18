@@ -84,7 +84,8 @@ public class LevelCompletedOverlay {
 		} else if (isIn(next, e)) {
 			if (next.isMousePressed()) {
 				playing.loadNextLevel();
-				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+//				if(!playing.getLevelManager().isWin())  //DEBUG
+//					playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
 			}
 		}
 		else if (isIn(retry, e)) {

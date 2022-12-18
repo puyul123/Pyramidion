@@ -28,7 +28,6 @@ public class AudioPlayer {
 	private int currentSongId;
 	private float volume = 1f;
 	private boolean songMute, effectMute;
-	private Random rand = new Random();
 
 	public AudioPlayer() {
 		loadSongs();
@@ -144,5 +143,5 @@ public class AudioPlayer {
 			gainControl.setValue(gain);
 		}
 	}
-
+	
 }

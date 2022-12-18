@@ -382,4 +382,10 @@ public class ObjectManager {
 	public ArrayList<Lever> getLeverObject(){
 		return levers;
 	}
+	public ArrayList<Potion> getPotionObject(){
+		return potions;
+	}
+	public ArrayList<Gem> getGemObject(){
+		return gems;
+	}
 }
