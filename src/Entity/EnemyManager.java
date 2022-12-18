@@ -2,6 +2,7 @@ package Entity;
 
 import java.awt.Graphics;
 
+
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -11,11 +12,13 @@ import javax.imageio.ImageIO;
 
 import GameState.Playing;
 import Main.Game;
+import Object.Gem;
 import Util.LoadSave;
 import levels.Level;
 
 
 import static Util.Constants.EnemyConstants.*;
+import static Util.Constants.ObjectConstants.*;
 
 public class EnemyManager {
 	
@@ -128,13 +131,12 @@ public class EnemyManager {
 	}
 	
 	public void update(int[][] lvlData, Player player) {
-//		boolean isAnyActive = false;
 		
 		for(Mummy m : mummies) {
 			if(m.isActive()) {
 				m.update(lvlData, player);
-//				isAnyActive = true;
 			}
+
 		}
 		for(Spider s : spiders) {
 			if(s.isActive()) {
@@ -146,8 +148,7 @@ public class EnemyManager {
 				r.update(lvlData, player);
 			}
 		}
-//		if(!isAnyActive)
-//			playing.setLevelCompleted(true);
+
 	}
 	
 	public void draw(Graphics g, int xLvlOffset) {
@@ -196,18 +197,24 @@ public class EnemyManager {
 		for (Mummy m : mummies)
 			if (m.isActive())
 				if (attackBox.intersects(m.getCollision())) {
+					if(m.getEnemyState()== DEAD)
+						playing.getObjectManager().getGemObject().add(new Gem((int)(m.collision.x + m.collision.width/2 + 10), (int)(m.collision.y), RED_GEM));
 					m.hurt(10);
 					return;
 				}
 		for (Rat r : rats)
 			if (r.isActive())
 				if (attackBox.intersects(r.getCollision())) {
+					if(r.getEnemyState()== DEAD)
+						playing.getObjectManager().getGemObject().add(new Gem((int)(r.collision.x + r.collision.width/2 + 10), (int)(r.collision.y), BLUE_GEM));
 					r.hurt(10);
 					return;
 				}
 		for (Spider s : spiders)
 			if (s.isActive())
 				if (attackBox.intersects(s.getCollision())) {
+					if(s.getEnemyState()== DEAD)
+						playing.getObjectManager().getGemObject().add(new Gem((int)(s.collision.x + s.collision.width/2 + 10), (int)(s.collision.y), GREEN_GEM));
 					s.hurt(10);
 					return;
 				}

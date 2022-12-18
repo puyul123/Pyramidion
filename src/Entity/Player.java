@@ -267,7 +267,10 @@ public class Player extends Entity{
 	
 	public void changePoint(int value) {
 		currentPoint += value;
-		playing.getGame().getMenu().setHighScore(currentPoint);
+//		if(playing.getLevelManager().isWin() && playing.getGame().getMenu().getHighScore() < currentPoint) {
+//			playing.getGame().getMenu().setHighScore(currentPoint);
+//			playing.getLevelManager().setWin(false);
+//		}
 	}
 	
 	public void Update() {
@@ -416,6 +419,15 @@ public class Player extends Entity{
 	public void setAttack(boolean attack) {this.attack = attack;}
 	public boolean isOnSword() {return onSword;}
 	public void setOnSword(boolean onSword) {this.onSword = onSword;}
+	
+
+	public int getCurrentPoint() {
+		return currentPoint;
+	}
+
+	public void setCurrentPoint(int currentPoint) {
+		this.currentPoint = currentPoint;
+	}
 
 	public void resetAll() {
 		resetDirBool();

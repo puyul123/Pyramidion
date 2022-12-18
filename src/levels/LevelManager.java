@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
+import Audio.AudioPlayer;
 import GameState.Gamestate;
 import Main.Game;
 import Util.LoadSave;
@@ -16,28 +17,42 @@ public class LevelManager {
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
 	private int lvlIndex = 0;
+	boolean win;
 	
 	public LevelManager(Game game) {
 		this.game = game;
 		importOutsideSprites();
 		levels = new ArrayList<>();
 		buildAllLevels();
+	//	checkWin();
 	}
 	
 	public void loadNextLevel() {
 		lvlIndex++;
 		if(lvlIndex >= levels.size()) {
+			if(game.getPlaying().getPlayer().getCurrentPoint() > game.getMenu().getHighScore()){
+				game.getMenu().setHighScore(game.getPlaying().getPlayer().getCurrentPoint());
+			}
+			game.getAudioPlayer().playSong(0);
+			
+			game.getPlaying().getPlayer().setCurrentPoint(0);
 			lvlIndex = 0;
-			System.out.println("No more lvlssss");
 			Gamestate.state = Gamestate.MENU;
 		}
 		Level newLevel = levels.get(lvlIndex);
-//		System.out.println(lvlIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
 		game.getPlaying().getPlayer().loadLvlData(newLevel.getLevelData());
 		game.getPlaying().setMaxLvlOffset(newLevel.getLvlOffset());
 		game.getPlaying().getObjectManager().loadObjects(newLevel);
 	}
+	
+//	public void checkWin() {
+//		if(win){
+//				game.getMenu().setHighScore(game.getPlaying().getPlayer().getCurrentPoint());
+//				game.getPlaying().getPlayer().setCurrentPoint(0);
+//				win = false;
+//			}
+//	}
 	
 	private void buildAllLevels() {
 		String[] allLevels = LoadSave.importAllMap();
@@ -91,5 +106,14 @@ public class LevelManager {
 	public void setLevelIndex(int lvlIndex) {
 		this.lvlIndex = lvlIndex;
 	}
+
+	public boolean isWin() {
+		return win;
+	}
+
+	public void setWin(boolean win) {
+		this.win = win;
+	}
+	
 	
 }

@@ -8,6 +8,7 @@ import GameState.GameOption;
 import GameState.Gamestate;
 import GameState.MainMenu;
 import GameState.Playing;
+import GameState.State;
 import Util.LoadSave;
 import ui.AudioOption;
 import GameState.Gamestate;
@@ -25,6 +26,7 @@ public class Game implements Runnable{
 	private GameOption gameOption;
 	private AudioPlayer audioPlayer;
 	private AudioOption audioOption;
+	private State state;
 	
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 1.5f;
@@ -53,6 +55,7 @@ public class Game implements Runnable{
 		playing = new Playing(this);
 		audioPlayer = new AudioPlayer();
 		gameOption = new GameOption(this);
+		state = new State(this);
 	}
 
 	public void startGameThread() {
@@ -151,6 +154,9 @@ public class Game implements Runnable{
 
 	public AudioOption getAudioOption() {
 		return audioOption;
+	}
+	public State getState() {
+		return state;
 	}
 }
 
