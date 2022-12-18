@@ -104,6 +104,8 @@ public class MainMenu extends State implements StateMethods{
 				}
 				if(mb.getState() == Gamestate.PLAYING)
 					game.getAudioPlayer().setLevelSong(game.getPlaying().getLevelManager().getLevelIndex());
+				else if(mb.getState() == Gamestate.QUIT)
+					System.exit(0);
 				break;
 			}
 		}

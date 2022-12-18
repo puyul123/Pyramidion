@@ -105,8 +105,8 @@ public class Playing extends State implements StateMethods{
 		drawBackground(g);
 		
 		lvlManager.draw(g, xLvlOffset);
-		enemyMan.draw(g, xLvlOffset);
 		objMan.draw(g, xLvlOffset);
+		enemyMan.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		
 		if(paused)
