@@ -17,6 +17,7 @@ import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import Object.ObjectManager;
 import Object.Trap;
+import Util.LoadSave;
 import Object.Lever;
 import Object.Door;
 import static Util.Constants.PlayingBackground.*;
