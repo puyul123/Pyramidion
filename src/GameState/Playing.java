@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import Entity.EnemyManager;
 import Entity.Player;
@@ -14,6 +15,7 @@ import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import Object.ObjectManager;
+import Object.Trap;
 import Object.Lever;
 import Object.Door;
 
@@ -26,6 +28,8 @@ public class Playing extends State implements StateMethods{
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
 	private ObjectManager objMan;
+	private Trap trap;
+	private BufferedImage bgImage;
 	
 	//CAMERA
 	public int xLvlOffset = 0;
