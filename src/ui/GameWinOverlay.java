@@ -66,14 +66,21 @@ public class GameWinOverlay {
 			if (menu.isMousePressed()) {
 				playing.resetAll();
 				playing.setGameState(Gamestate.MENU);
+				playing.loadNextLevel();
 			}
 		}
 		menu.resetBools();
 	}
 
 	public void mousePressed(MouseEvent e) {
-		if (isIn(menu, e))
+		if (isIn(menu, e)) {
 			menu.setMousePressed(true);
+			if(playing.getPlayer().getCurrentPoint() > playing.getGame().getMenu().getHighScore()){
+				playing.getGame().getMenu().setHighScore(playing.getPlayer().getCurrentPoint());
+			}
+			playing.getPlayer().setCurrentPoint(0);
+			playing.getLevelManager().setWin(true);
+		}
 	}
 
 //	public void draw(Graphics g) {
