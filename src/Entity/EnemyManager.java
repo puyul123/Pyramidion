@@ -194,27 +194,34 @@ public class EnemyManager {
 		for (Mummy m : mummies)
 			if (m.isActive())
 				if (attackBox.intersects(m.getCollision())) {
-					if(m.getEnemyState()== DEAD)
+					if(m.getEnemyState()== DEAD && m.objDrop) {
 						playing.getObjectManager().getGemObject().add(new Gem((int)(m.collision.x + m.collision.width/2 + 10), (int)(m.collision.y), RED_GEM));
+						m.objDrop = false;
+					}
 					m.hurt(10);
 					return;
 				}
 		for (Rat r : rats)
 			if (r.isActive())
 				if (attackBox.intersects(r.getCollision())) {
-					if(r.getEnemyState()== DEAD)
+					if(r.getEnemyState()== DEAD && r.objDrop) {
 						playing.getObjectManager().getGemObject().add(new Gem((int)(r.collision.x + r.collision.width/2 + 10), (int)(r.collision.y), BLUE_GEM));
+						r.objDrop = false;
+					}
 					r.hurt(10);
 					return;
 				}
 		for (Spider s : spiders)
-			if (s.isActive())
+			if (s.isActive()) {
 				if (attackBox.intersects(s.getCollision())) {
-					if(s.getEnemyState()== DEAD)
+					if(s.getEnemyState()== DEAD && s.objDrop) {
 						playing.getObjectManager().getGemObject().add(new Gem((int)(s.collision.x + s.collision.width/2 + 10), (int)(s.collision.y), GREEN_GEM));
+						s.objDrop = false;
+					}
 					s.hurt(10);
 					return;
 				}
+			}
 	}
 
 	public void resetAllEnemies() {
