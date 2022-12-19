@@ -50,7 +50,8 @@ public class Player extends Entity{
 	
 	
 	//ATTACK COLLISION
-	private Rectangle2D.Float attackCol;
+	private Rectangle2D.Float attackCol, sword_on, sword_off;
+	
 	
 	//mirror
 	private int flipX = 0;
@@ -84,7 +85,8 @@ public class Player extends Entity{
 	
 	private void initAttackColl() {
 		attackCol = new Rectangle2D.Float(x, y, (int) (20*Game.SCALE), (int) (27*Game.SCALE));
-		
+		sword_on = attackCol;	
+		sword_off = new Rectangle2D.Float(0, 0, 0, 0);
 	}
 
 	private void importImg() {	
@@ -151,6 +153,7 @@ public class Player extends Entity{
 	private void setAnimation() {
 		int startAni = playerAction;
 		if(onSword) {
+			attackCol = sword_on;
 			if(move) {
 				playerAction = RUNNING_SWORD;
 			}else {
@@ -166,6 +169,7 @@ public class Player extends Entity{
 			}
 		}
 		else {
+			attackCol = sword_off;
 			if(move) {
 				playerAction = RUNNING;
 			}else {
