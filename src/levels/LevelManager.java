@@ -16,7 +16,7 @@ public class LevelManager {
 	private Game game;
 	private BufferedImage[] levelSprite;
 	private ArrayList<Level> levels;
-	private int lvlIndex = 1;
+	private int lvlIndex = 0;
 	boolean win;
 	
 	public LevelManager(Game game) {
@@ -28,7 +28,10 @@ public class LevelManager {
 	}
 	
 	public void loadNextLevel() {
-		lvlIndex++;
+		if(lvlIndex == 2)
+			lvlIndex = 0;
+		else	
+			lvlIndex++;
 		if(lvlIndex >= levels.size()) {
 			if(game.getPlaying().getPlayer().getCurrentPoint() > game.getMenu().getHighScore()){
 				game.getMenu().setHighScore(game.getPlaying().getPlayer().getCurrentPoint());

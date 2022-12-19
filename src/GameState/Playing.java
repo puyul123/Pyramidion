@@ -54,6 +54,7 @@ public class Playing extends State implements StateMethods{
 		calcLvlOffset();
 		loadStartLevel();
 		bgImage = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
+
 	}
 	
 	public void loadNextLevel() {
@@ -80,15 +81,17 @@ public class Playing extends State implements StateMethods{
 		objMan = new ObjectManager(this);
 		player = new Player(150, 200, (int)(64*Game.SCALE), (int)(64*Game.SCALE), this);
 		player.loadLvlData(lvlManager.getCurrentLevel().getLevelData());
+		
 	}
 
 	@Override
 	public void update() {
+		int levelIndex = lvlManager.getLevelIndex();
 		
 		if(paused) {
 			pauseOverlay.update();
 		}
-		else if(isGameWin) {
+		else if(isLvlCompleted && levelIndex == 2) {
 			gameWinOverlay.update();
 		}
 		else if(isLvlCompleted) {
@@ -125,7 +128,7 @@ public class Playing extends State implements StateMethods{
 		else if(isLvlCompleted && levelIndex == 2) {
 			gameWinOverlay.draw(g);
 		}
-		else if(isLvlCompleted && levelIndex != 2) {
+		else if(isLvlCompleted) {
 			lvlCompletedOverlay.draw(g);
 		}
 		
@@ -272,12 +275,13 @@ public class Playing extends State implements StateMethods{
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
+		int levelIndex = lvlManager.getLevelIndex();
 		if(gameOver)
 			gameoverOverlay.mousePressed(e);
 		else {
 			if (paused)
 				pauseOverlay.mousePressed(e);
-			else if (isGameWin)
+			else if (isLvlCompleted && levelIndex == 2)
 				gameWinOverlay.mousePressed(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mousePressed(e);
@@ -286,12 +290,13 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		int levelIndex = lvlManager.getLevelIndex();
 		if(gameOver)
 			gameoverOverlay.mouseReleased(e);
 		else {
 			if (paused)
 				pauseOverlay.mouseReleased(e);
-			else if (isGameWin)
+			else if (isLvlCompleted && levelIndex == 2)
 				gameWinOverlay.mouseReleased(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mouseReleased(e);
@@ -300,20 +305,17 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		int levelIndex = lvlManager.getLevelIndex();
 		if(gameOver)
 			gameoverOverlay.mouseMoved(e);
 		else {
 			if (paused)
 				pauseOverlay.mouseMoved(e);
-			else if (isGameWin)
+			else if (isLvlCompleted && levelIndex == 2)
 				gameWinOverlay.mouseMoved(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mouseMoved(e);
 		}
-	}
-	
-	public void setGameWin(boolean gameWin) {
-		this.isGameWin = gameWin;
 	}
 	
 	public void setLevelCompleted(boolean levelCompleted) {

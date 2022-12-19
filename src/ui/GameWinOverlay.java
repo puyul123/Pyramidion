@@ -39,8 +39,8 @@ public class GameWinOverlay {
 	}
 	
 	public void draw(Graphics g) {
-		//g.setColor(new Color(0, 0, 0, 200));
-		//g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
+		g.setColor(new Color(0, 0, 0, 200));
+		g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
 		g.drawImage(img, bgX, bgY, bgW, bgH, null);
 		menu.draw(g);
@@ -56,7 +56,7 @@ public class GameWinOverlay {
 
 	public void mouseMoved(MouseEvent e) {
 		menu.setMouseOver(false);
-
+		
 		if (isIn(menu, e))
 			menu.setMouseOver(true);
 	}

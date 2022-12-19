@@ -278,6 +278,8 @@ public class ObjectManager {
 						GEM_HEIGHT, 
 						null);
 				
+				g.drawArea(graphic, xLvlOffset);
+				
 			}
 		}
 		
