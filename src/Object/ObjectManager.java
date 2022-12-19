@@ -236,7 +236,7 @@ public class ObjectManager {
 				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 17));
 				g2.setColor(Color.WHITE);
 				g2.drawString("Press E to interact",  500, 550);
-				if(playing.pressed()) {
+				if(playing.pressed() && isDoorClosed) {
 					g2.setColor(Color.RED);
 					g2.drawString("Find a way to open the door",  430, 200);
 				}
