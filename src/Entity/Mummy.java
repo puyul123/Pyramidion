@@ -83,7 +83,6 @@ public class Mummy extends Enemy{
 			case HIT:
 				break;
 			case DEAD:
-				
 			}
 		}
 		

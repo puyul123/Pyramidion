@@ -37,11 +37,8 @@ public class EnemyManager {
 
 	public void loadEnemies(Level level) {
 		mummies = level.getMummy();
-		System.out.println("size of mum = " + mummies.size());
 		spiders = level.getSpider();
-		System.out.println("size of spider = " + spiders.size());
 		rats = level.getRat();
-		System.out.println("size of rat = " + rats.size());
 	}
 
 	private void loadEnemyImgs() {
@@ -49,85 +46,81 @@ public class EnemyManager {
 		spider = new BufferedImage[5][6];
 		rat = new BufferedImage[5][6];
 		
-		try {
 		///////////////////////////// MUMMY ////////////////////////////////	
 			//IDLE
-			mummy[0][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
+			mummy[0][0] =  LoadSave.GetSpriteAtlas("mob/mummy/mummy_1.png");
 			//RUNNING
-			mummy[1][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_3.png"));
-			mummy[1][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
-			mummy[1][2] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_2.png"));
-			mummy[1][3] =  ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
+			mummy[1][0] =  LoadSave.GetSpriteAtlas("mob/mummy/mummy_3.png");
+			mummy[1][1] =  LoadSave.GetSpriteAtlas("mob/mummy/mummy_1.png");
+			mummy[1][2] =  LoadSave.GetSpriteAtlas("mob/mummy/mummy_2.png");
+			mummy[1][3] =  LoadSave.GetSpriteAtlas("mob/mummy/mummy_1.png");
 			
 			//ATTACK
-			mummy[2][0] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_1.png"));
-			mummy[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_2.png"));
-			mummy[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mummy_attack_3.png"));
+			mummy[2][0] =  LoadSave.GetSpriteAtlas("mummy_attack_1.png");
+			mummy[2][1] =  LoadSave.GetSpriteAtlas("mummy_attack_2.png");
+			mummy[2][2] =  LoadSave.GetSpriteAtlas("mummy_attack_3.png");
 			
 			//HIT
-			mummy[3][0] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
+			mummy[3][0] = LoadSave.GetSpriteAtlas("mob/mummy/mummy_dead.png");
 			
 			//DEADD
 			for(int i = 0; i < 6; i++) {
-				if(i % 2 == 0) mummy[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_dead.png"));
-				else mummy[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/mummy/mummy_1.png"));
+				if(i % 2 == 0) mummy[4][i] = LoadSave.GetSpriteAtlas("mob/mummy/mummy_dead.png");
+				else mummy[4][i] = LoadSave.GetSpriteAtlas("mob/mummy/mummy_1.png");
 			}
 			
 		///////////////////////////// SPIDER ////////////////////////////////
 			
 			//IDLE
-			spider[0][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_1.png"));
+			spider[0][0] =  LoadSave.GetSpriteAtlas("mob/spider/spider_move_1.png");
 			
 			//RUNNING
-			spider[1][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_2.png"));
-			spider[1][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_1.png"));
+			spider[1][0] =  LoadSave.GetSpriteAtlas("mob/spider/spider_move_2.png");
+			spider[1][1] =  LoadSave.GetSpriteAtlas("mob/spider/spider_move_1.png");
 			
 			//ATTACK
-			spider[2][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at1.png"));
-			spider[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at2.png"));
-			spider[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at3.png"));
-			spider[2][3] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at4.png"));
-			spider[2][4] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_at5.png"));
+			spider[2][0] =  LoadSave.GetSpriteAtlas("mob/spider/spider_at1.png");
+			spider[2][1] =  LoadSave.GetSpriteAtlas("mob/spider/spider_at2.png");
+			spider[2][2] =  LoadSave.GetSpriteAtlas("mob/spider/spider_at3.png");
+			spider[2][3] =  LoadSave.GetSpriteAtlas("mob/spider/spider_at4.png");
+			spider[2][4] =  LoadSave.GetSpriteAtlas("mob/spider/spider_at5.png");
 
 			
 			//HIT
-			spider[3][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_dead.png"));
+			spider[3][0] =  LoadSave.GetSpriteAtlas("mob/spider/spider_dead.png");
 			
 			//DEAD
 			for(int i = 0; i < 6; i++) {
-				if(i % 2 == 0) spider[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_dead.png"));
-				else spider[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/spider/spider_move_2.png"));
+				if(i % 2 == 0) spider[4][i] = LoadSave.GetSpriteAtlas("mob/spider/spider_dead.png");
+				else spider[4][i] = LoadSave.GetSpriteAtlas("mob/spider/spider_move_2.png");
 			}
 			
 		///////////////////////////// RAT ////////////////////////////////
 			
 			//IDLE
-			rat[0][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_2.png"));
+			rat[0][0] =  LoadSave.GetSpriteAtlas("mob/rat/rat_move_2.png");
 			
 			//RUNNING
-			rat[1][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_1.png"));
-			rat[1][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_2.png"));
+			rat[1][0] =  LoadSave.GetSpriteAtlas("mob/rat/rat_move_1.png");
+			rat[1][1] =  LoadSave.GetSpriteAtlas("mob/rat/rat_move_2.png");
 			
 			//ATTACK
-			rat[2][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_1.png"));
-			rat[2][1] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_2.png"));
-			rat[2][2] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_3.png"));
-			rat[2][3] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_attack_4.png"));
+			rat[2][0] =  LoadSave.GetSpriteAtlas("mob/rat/rat_attack_1.png");
+			rat[2][1] =  LoadSave.GetSpriteAtlas("mob/rat/rat_attack_2.png");
+			rat[2][2] =  LoadSave.GetSpriteAtlas("mob/rat/rat_attack_3.png");
+			rat[2][3] =  LoadSave.GetSpriteAtlas("mob/rat/rat_attack_4.png");
 
 			
 			//HIT
-			rat[3][0] =  ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_dead.png"));
+			rat[3][0] =  LoadSave.GetSpriteAtlas("mob/rat/rat_dead.png");
 			
 			//DEAD
 			for(int i = 0; i < 6; i++) {
-				if(i % 2 == 0) rat[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_dead.png"));
-				else rat[4][i] = ImageIO.read(getClass().getResourceAsStream("/mob/rat/rat_move_2.png"));
+				if(i % 2 == 0) rat[4][i] = LoadSave.GetSpriteAtlas("mob/rat/rat_dead.png");
+				else rat[4][i] = LoadSave.GetSpriteAtlas("mob/rat/rat_move_2.png");
 			}
 			
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
+
 	}
 	
 	public void update(int[][] lvlData, Player player) {
@@ -197,27 +190,34 @@ public class EnemyManager {
 		for (Mummy m : mummies)
 			if (m.isActive())
 				if (attackBox.intersects(m.getCollision())) {
-					if(m.getEnemyState()== DEAD)
+					if(m.getEnemyState()== DEAD && m.objDrop) {
 						playing.getObjectManager().getGemObject().add(new Gem((int)(m.collision.x + m.collision.width/2 + 10), (int)(m.collision.y), RED_GEM));
+						m.objDrop = false;
+					}
 					m.hurt(10);
 					return;
 				}
 		for (Rat r : rats)
 			if (r.isActive())
 				if (attackBox.intersects(r.getCollision())) {
-					if(r.getEnemyState()== DEAD)
+					if(r.getEnemyState()== DEAD && r.objDrop) {
 						playing.getObjectManager().getGemObject().add(new Gem((int)(r.collision.x + r.collision.width/2 + 10), (int)(r.collision.y), BLUE_GEM));
+						r.objDrop = false;
+					}
 					r.hurt(10);
 					return;
 				}
 		for (Spider s : spiders)
-			if (s.isActive())
+			if (s.isActive()) {
 				if (attackBox.intersects(s.getCollision())) {
-					if(s.getEnemyState()== DEAD)
+					if(s.getEnemyState()== DEAD && s.objDrop) {
 						playing.getObjectManager().getGemObject().add(new Gem((int)(s.collision.x + s.collision.width/2 + 10), (int)(s.collision.y), GREEN_GEM));
+						s.objDrop = false;
+					}
 					s.hurt(10);
 					return;
 				}
+			}
 	}
 
 	public void resetAllEnemies() {
