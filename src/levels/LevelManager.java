@@ -28,7 +28,10 @@ public class LevelManager {
 	}
 	
 	public void loadNextLevel() {
-		lvlIndex++;
+		if(lvlIndex == 2)
+			lvlIndex = 0;
+		else	
+			lvlIndex++;
 		if(lvlIndex >= levels.size()) {
 			if(game.getPlaying().getPlayer().getCurrentPoint() > game.getMenu().getHighScore()){
 				game.getMenu().setHighScore(game.getPlaying().getPlayer().getCurrentPoint());

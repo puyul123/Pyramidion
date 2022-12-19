@@ -13,6 +13,7 @@ import Entity.Player;
 import Main.Game;
 import levels.LevelManager;
 import ui.GameOverOverlay;
+import ui.GameWinOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import Object.ObjectManager;
@@ -26,6 +27,7 @@ public class Playing extends State implements StateMethods{
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay lvlCompletedOverlay;
+	private GameWinOverlay gameWinOverlay;
 	private GameOverOverlay gameoverOverlay;
 	private Player player;
 	private LevelManager lvlManager;
@@ -42,6 +44,7 @@ public class Playing extends State implements StateMethods{
 	private boolean paused = false;
 	private boolean gameOver = false;
 	private boolean isLvlCompleted = false;
+	private boolean isGameWin = false;
 	private boolean pressed;
 	
 	public Playing(Game game) {
@@ -51,6 +54,7 @@ public class Playing extends State implements StateMethods{
 		calcLvlOffset();
 		loadStartLevel();
 		bgImage = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
+
 	}
 	
 	public void loadNextLevel() {
@@ -69,6 +73,7 @@ public class Playing extends State implements StateMethods{
 
 	private void init() {
 		pauseOverlay = new PauseOverlay(this);
+		gameWinOverlay = new GameWinOverlay(this);
 		lvlCompletedOverlay = new LevelCompletedOverlay(this);
 		gameoverOverlay = new GameOverOverlay(this);
 		lvlManager = new LevelManager(game);
@@ -76,13 +81,18 @@ public class Playing extends State implements StateMethods{
 		objMan = new ObjectManager(this);
 		player = new Player(150, 200, (int)(64*Game.SCALE), (int)(64*Game.SCALE), this);
 		player.loadLvlData(lvlManager.getCurrentLevel().getLevelData());
+		
 	}
 
 	@Override
 	public void update() {
+		int levelIndex = lvlManager.getLevelIndex();
 		
 		if(paused) {
 			pauseOverlay.update();
+		}
+		else if(isLvlCompleted && levelIndex == 2) {
+			gameWinOverlay.update();
 		}
 		else if(isLvlCompleted) {
 			lvlCompletedOverlay.update();
@@ -103,6 +113,7 @@ public class Playing extends State implements StateMethods{
 	public void draw(Graphics g) {
 		//g.drawImage(bgImage, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 		drawBackground(g);
+		int levelIndex = lvlManager.getLevelIndex();
 		
 		lvlManager.draw(g, xLvlOffset);
 		objMan.draw(g, xLvlOffset);
@@ -113,6 +124,9 @@ public class Playing extends State implements StateMethods{
 			pauseOverlay.draw(g);
 		else if(gameOver) {
 			gameoverOverlay.draw(g);
+		}
+		else if(isLvlCompleted && levelIndex == 2) {
+			gameWinOverlay.draw(g);
 		}
 		else if(isLvlCompleted) {
 			lvlCompletedOverlay.draw(g);
@@ -132,6 +146,7 @@ public class Playing extends State implements StateMethods{
 	public void resetAll() {
 		gameOver = false;
 		paused = false;
+		isGameWin = false;
 		isLvlCompleted = false;
 		player.resetAll();
 		enemyMan.resetAllEnemies();
@@ -260,11 +275,14 @@ public class Playing extends State implements StateMethods{
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
+		int levelIndex = lvlManager.getLevelIndex();
 		if(gameOver)
 			gameoverOverlay.mousePressed(e);
 		else {
 			if (paused)
 				pauseOverlay.mousePressed(e);
+			else if (isLvlCompleted && levelIndex == 2)
+				gameWinOverlay.mousePressed(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mousePressed(e);
 		}
@@ -272,11 +290,14 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		int levelIndex = lvlManager.getLevelIndex();
 		if(gameOver)
 			gameoverOverlay.mouseReleased(e);
 		else {
 			if (paused)
 				pauseOverlay.mouseReleased(e);
+			else if (isLvlCompleted && levelIndex == 2)
+				gameWinOverlay.mouseReleased(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mouseReleased(e);
 		}
@@ -284,11 +305,14 @@ public class Playing extends State implements StateMethods{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		int levelIndex = lvlManager.getLevelIndex();
 		if(gameOver)
 			gameoverOverlay.mouseMoved(e);
 		else {
 			if (paused)
 				pauseOverlay.mouseMoved(e);
+			else if (isLvlCompleted && levelIndex == 2)
+				gameWinOverlay.mouseMoved(e);
 			else if(isLvlCompleted)
 				lvlCompletedOverlay.mouseMoved(e);
 		}

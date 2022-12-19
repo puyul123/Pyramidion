@@ -250,7 +250,7 @@ public class ObjectManager {
 			if(c.isActive()) {
 				if(c.getObjType() == CONTAINER) {
 					graphic.drawImage(containerImage[c.getAniIndex()], 
-							(int)(c.getArea().x - c.getxDrawOffset() - xLvlOffset), 
+							(int)(c.getArea().x - c.getxDrawOffset() + 15 - xLvlOffset), 
 							(int)(c.getArea().y - c.getxDrawOffset()), 
 							CONTAINER_WIDTH, 
 							CONTAINER_HEIGHT, 
@@ -272,11 +272,13 @@ public class ObjectManager {
 					type = 2;
 				
 				graphic.drawImage(gemImage[type][g.getAniIndex()], 
-						(int)(g.getArea().x - g.getxDrawOffset() - xLvlOffset), 
-						(int)(g.getArea().y - g.getxDrawOffset()), 
+						(int)(g.getArea().x + 30 - xLvlOffset), 
+						(int)(g.getArea().y + 25 - g.getyDrawOffset()), 
 						GEM_WIDTH, 
 						GEM_HEIGHT, 
 						null);
+				
+				g.drawArea(graphic, xLvlOffset);
 				
 			}
 		}
