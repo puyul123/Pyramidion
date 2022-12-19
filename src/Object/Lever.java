@@ -10,7 +10,7 @@ public class Lever extends GameObject{
 		
 		initArea(32, 32);
 		xDrawOffset = 0;
-		yDrawOffset = (int)(Game.SCALE * 29);
+		yDrawOffset = (int)(Game.SCALE * 28);
 		area.y += yDrawOffset;
 		//PERLU DI RE-CHECK
 	}
