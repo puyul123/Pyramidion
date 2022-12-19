@@ -312,11 +312,11 @@ public class HelpMethods {
 					String numbers[] = line.split(" ");
 					int num = Integer.parseInt(numbers[col]);
 					if(num == RED_GEM) 
-						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), RED_GEM));
+						gem.add(new Gem((int)(col * Game.TILES_SIZE + 18), (int)(row * Game.TILES_SIZE), RED_GEM));
 					else if(num == BLUE_GEM)
-						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), BLUE_GEM));
+						gem.add(new Gem((int)(col * Game.TILES_SIZE + 18), (int)(row * Game.TILES_SIZE), BLUE_GEM));
 					else if(num == GREEN_GEM)
-						gem.add(new Gem((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), GREEN_GEM));
+						gem.add(new Gem((int)(col * Game.TILES_SIZE + 18), (int)(row * Game.TILES_SIZE), GREEN_GEM));
 					
 					col++;
 				}
@@ -347,7 +347,7 @@ public class HelpMethods {
 					String numbers[] = line.split(" ");
 					int num = Integer.parseInt(numbers[col]);
 					if(num == CONTAINER) 
-						con.add(new Container((int)(col * Game.TILES_SIZE - 15), (int)(row * Game.TILES_SIZE - 30), CONTAINER));
+						con.add(new Container((int)(col * Game.TILES_SIZE + 1), (int)(row * Game.TILES_SIZE - 30), CONTAINER));
 					col++;
 				}
 				if(col == Game.TILES_HEIGHT);

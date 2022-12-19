@@ -33,7 +33,6 @@ public class Playing extends State implements StateMethods{
 	private LevelManager lvlManager;
 	private EnemyManager enemyMan;
 	private ObjectManager objMan;
-	private Trap trap;
 	private BufferedImage bgImage;
 	
 	//CAMERA
@@ -131,9 +130,7 @@ public class Playing extends State implements StateMethods{
 		else if(isLvlCompleted) {
 			lvlCompletedOverlay.draw(g);
 		}
-		
-	//	lvlCompletedOverlay.draw(g);
-	//	mummy.draw(g);
+	
 		
 	}
 	
@@ -158,12 +155,10 @@ public class Playing extends State implements StateMethods{
 	}
 	
 	public void checkEnemyHit(Rectangle2D.Float attackCol) {
-//		System.out.println("Yes Hit");
 		enemyMan.checkEnemyHit(attackCol);
 	}
 	
 	public void checkObjectHit(Rectangle2D.Float attackCol) {
-		System.out.println("mukul kotak");
 		objMan.checkObjectHit(attackCol);
 	}
 	

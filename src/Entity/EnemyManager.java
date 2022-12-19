@@ -37,11 +37,8 @@ public class EnemyManager {
 
 	public void loadEnemies(Level level) {
 		mummies = level.getMummy();
-		System.out.println("size of mum = " + mummies.size());
 		spiders = level.getSpider();
-		System.out.println("size of spider = " + spiders.size());
 		rats = level.getRat();
-		System.out.println("size of rat = " + rats.size());
 	}
 
 	private void loadEnemyImgs() {
