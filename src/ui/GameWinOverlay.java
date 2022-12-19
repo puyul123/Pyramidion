@@ -79,6 +79,7 @@ public class GameWinOverlay {
 				playing.getGame().getMenu().setHighScore(playing.getPlayer().getCurrentPoint());
 			}
 			playing.getPlayer().setCurrentPoint(0);
+			playing.getPlayer().setCurrentPointLevel(0);
 			playing.getLevelManager().setWin(true);
 		}
 	}

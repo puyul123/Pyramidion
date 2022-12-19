@@ -64,8 +64,9 @@ public class Player extends Entity{
 	private int currentHealth = maxHealth;
 	private int healthWidth = healthBarWidth;
 
-	private int minPoint = 0;
-	private int currentPoint = minPoint;
+//	private int minPoint = 0;
+	private int currentPoint = 0;
+	private int currentPointLevel = 0;
 	
 	//COMBAT
 	private boolean attackChecked;
@@ -429,6 +430,14 @@ public class Player extends Entity{
 		this.currentPoint = currentPoint;
 	}
 
+	public int getCurrentPointLevel() {
+		return currentPointLevel;
+	}
+
+	public void setCurrentPointLevel(int currentPointLevel) {
+		this.currentPointLevel = currentPointLevel;
+	}
+
 	public void resetAll() {
 		resetDirBool();
 		inAir = false;
@@ -436,7 +445,6 @@ public class Player extends Entity{
 		move = false;
 		playerAction = IDLE;
 		currentHealth = maxHealth;
-//		currentPoint = minPoint;
 		
 		collision.x = x;
 		collision.y = y;
