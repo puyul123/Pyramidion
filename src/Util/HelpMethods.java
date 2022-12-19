@@ -112,28 +112,6 @@ public class HelpMethods {
 		return IsSolid(collision.x + xSpeed, collision.y + collision.height + 1, lvlData);
 	}
 	
-//	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
-//		for (int i = 0; i < xEnd - xStart; i++) {
-//			if (IsTileSolid(xStart + i, y, lvlData))
-//				return false;
-//			if (!IsTileSolid(xStart + i, y + 5, lvlData))
-//				return false;
-//		}
-//
-//		return true;
-//	}
-
-//	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstCollision, Rectangle2D.Float secondCollision, int yTile) {
-//		int firstXTile = (int) (firstCollision.x / Game.TILES_SIZE);
-//		int secondXTile = (int) (secondCollision.x / Game.TILES_SIZE);
-//
-//		if (firstXTile > secondXTile)
-//			return IsAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
-//		else
-//			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
-//
-//	}
-	
 	
 	public static int[][] GetLevelData(String txt) {
 		BufferedReader br = GetMapTxt(txt);
@@ -291,7 +269,6 @@ public class HelpMethods {
 	
 	public static ArrayList<Potion> GetPotions(String txt){
 		BufferedReader br = GetMapTxt(txt);
-		//po = new ArrayList<>();
 		ArrayList<Potion> po = new ArrayList<>();
 		
 		try {
@@ -444,9 +421,5 @@ public class HelpMethods {
 		}
 		return lever;
 	}
-	
-//	public static ArrayList<Potion> getPotion(){
-//		return po;
-//	}
 	
 } 

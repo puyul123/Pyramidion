@@ -271,10 +271,6 @@ public class Player extends Entity{
 	
 	public void changePoint(int value) {
 		currentPoint += value;
-//		if(playing.getLevelManager().isWin() && playing.getGame().getMenu().getHighScore() < currentPoint) {
-//			playing.getGame().getMenu().setHighScore(currentPoint);
-//			playing.getLevelManager().setWin(false);
-//		}
 	}
 	
 	public void Update() {

@@ -220,7 +220,7 @@ public class ObjectManager {
 				g2.setFont(font); 
 				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 17));
 				g2.setColor(Color.white);
-				g2.drawString("Press E to pull the lever",  465, 550); //FIX TEXT POS
+				g2.drawString("Press E to pull the lever",  465, 550); 
 			}
 		}
 	}

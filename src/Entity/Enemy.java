@@ -117,10 +117,7 @@ public abstract class Enemy extends Entity{
 		int playerTileY = (int) (player.getCollision().y / Game.TILES_SIZE);
 		if (playerTileY == tileY)
 			if (isPlayerInRange(player)) 
-				return true;
-//				if (IsSightClear(lvlData, collision, player.collision, tileY))
-//					return true;
-			
+				return true;			
 
 		return false;
 	}

@@ -27,30 +27,20 @@ public class AudioPlayer {
 	private Clip[] songs, effects;
 	private int currentSongId;
 	private float volume = 1f;
-	private boolean songMute, effectMute;
+	private boolean songMute;
 
 	public AudioPlayer() {
 		loadSongs();
-		loadEffects();
 		playSong(MAIN_MENU);
 	}
 
 	private void loadSongs() {
-		String[] names = { "main_menu", "level_1", "level_2" };
+		String[] names = { "main_menu", "playing" };
 		songs = new Clip[names.length];
 		for (int i = 0; i < songs.length; i++)
 			songs[i] = getClip(names[i]);
 	}
 
-	private void loadEffects() {
-		String[] effectNames = { "LosePanelSound", "WinPanelSound" };
-		effects = new Clip[effectNames.length];
-		for (int i = 0; i < effects.length; i++)
-			effects[i] = getClip(effectNames[i]);
-		
-		updateEffectsVolume();
-		
-	}
 
 	private Clip getClip(String name) {
 		URL url = getClass().getResource("/audios/" + name + ".wav");
@@ -74,7 +64,6 @@ public class AudioPlayer {
 	public void setVolume(float volume) {
 		this.volume = volume;
 		updateSongVolume();
-		updateEffectsVolume();
 	}
 
 	public void stopSong() {
@@ -83,10 +72,7 @@ public class AudioPlayer {
 	}
 
 	public void setLevelSong(int lvlIndex) {
-		if (lvlIndex % 2 == 0)
-			playSong(LEVEL_1);
-		else
-			playSong(LEVEL_2);
+		playSong(LEVEL_1);
 	}
 
 	public void lvlCompleted() {
@@ -116,15 +102,6 @@ public class AudioPlayer {
 		}
 	}
 
-	public void toggleEffectMute() {
-		this.effectMute = !effectMute;
-		for (Clip c : effects) {
-			BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
-			booleanControl.setValue(effectMute);
-		}
-//		if (!effectMute)
-//			playEffect(JUMP);
-	}
 
 	private void updateSongVolume() {
 
@@ -134,14 +111,4 @@ public class AudioPlayer {
 		gainControl.setValue(gain);
 
 	}
-
-	private void updateEffectsVolume() {
-		for (Clip c : effects) {
-			FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
-			float range = gainControl.getMaximum() - gainControl.getMinimum();
-			float gain = (range * volume) + gainControl.getMinimum();
-			gainControl.setValue(gain);
-		}
-	}
-	
 }
