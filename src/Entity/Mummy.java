@@ -35,11 +35,11 @@ public class Mummy extends Enemy{
 	}
 
 
-	public void draw(Graphics g, int xLvlOffset) {
-		drawCollision(g, xLvlOffset);
-		g.setColor(Color.RED);
-		g.drawRect((int)(attackBox.x - xLvlOffset), (int)attackBox.y, (int)attackBox.width, (int)attackBox.height);
-	}
+//	public void draw(Graphics g, int xLvlOffset) {
+//		drawCollision(g, xLvlOffset);
+//		g.setColor(Color.RED);
+//		g.drawRect((int)(attackBox.x - xLvlOffset), (int)attackBox.y, (int)attackBox.width, (int)attackBox.height);
+//	}
 	
 	public void update(int[][] lvlData, Player player) {
 		updateBehavior(lvlData, player);
@@ -83,7 +83,6 @@ public class Mummy extends Enemy{
 			case HIT:
 				break;
 			case DEAD:
-				
 			}
 		}
 		

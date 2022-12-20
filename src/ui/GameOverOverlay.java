@@ -72,12 +72,14 @@ public class GameOverOverlay {
 		if (isIn(menu, e)) {
 			if (menu.isMousePressed()) {
 				playing.resetAll();
+				playing.getPlayer().setCurrentPoint(playing.getPlayer().getCurrentPointLevel());
 				playing.setGameState(Gamestate.MENU);
 			}
 		}
 		else if (isIn(retry, e)) {
 			playing.resetAll();
-			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());	
+			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+			playing.getPlayer().setCurrentPoint(playing.getPlayer().getCurrentPointLevel());
 		}
 		menu.resetBools();
 		retry.resetBools();

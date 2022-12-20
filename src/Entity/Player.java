@@ -64,8 +64,9 @@ public class Player extends Entity{
 	private int currentHealth = maxHealth;
 	private int healthWidth = healthBarWidth;
 
-	private int minPoint = 0;
-	private int currentPoint = minPoint;
+//	private int minPoint = 0;
+	private int currentPoint = 0;
+	private int currentPointLevel = 0;
 	
 	//COMBAT
 	private boolean attackChecked;
@@ -90,31 +91,30 @@ public class Player extends Entity{
 	}
 
 	private void importImg() {	
-		try {
 			anim = new BufferedImage[8][5];
 						
 			//IDLE NO SWORD
-			anim[0][0] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
-			
+			anim[0][0] =  LoadSave.GetSpriteAtlas("Char/char_1.png");
+	
 			//RUNNING NO SWORD
-			anim[1][0] = ImageIO.read(getClass().getResourceAsStream("/char_3.png"));
-			anim[1][1] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
-			anim[1][2] = ImageIO.read(getClass().getResourceAsStream("/char_2.png"));
-			anim[1][3] = ImageIO.read(getClass().getResourceAsStream("/char_1.png"));
+			anim[1][0] = LoadSave.GetSpriteAtlas("Char/char_3.png");
+			anim[1][1] = LoadSave.GetSpriteAtlas("Char/char_1.png");
+			anim[1][2] = LoadSave.GetSpriteAtlas("Char/char_2.png");
+			anim[1][3] = LoadSave.GetSpriteAtlas("Char/char_1.png");
 			
 			//ATTACK WITH SWORD
-			anim[3][0] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Attack_1.png"));
-			anim[3][1] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Attack_2.png"));
-			anim[3][2] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Attack_3.png"));
+			anim[3][0] = LoadSave.GetSpriteAtlas("Char/char_Attack_1.png");
+			anim[3][1] = LoadSave.GetSpriteAtlas("Char/char_Attack_2.png");
+			anim[3][2] = LoadSave.GetSpriteAtlas("Char/char_Attack_3.png");
 			
 			//IDLE WITH SWORD
-			anim[4][0] = ImageIO.read(getClass().getResourceAsStream("/Char/char_Sword_1.png"));
+			anim[4][0] = LoadSave.GetSpriteAtlas("Char/char_Sword_1.png");
 			
 			//RUNNING WITH SWORD
-			anim[5][0] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_3.png"));
-			anim[5][1] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_1.png"));
-			anim[5][2] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_2.png"));
-			anim[5][3] = ImageIO.read(getClass().getResourceAsStream("/Char/char_sword_1.png"));
+			anim[5][0] = LoadSave.GetSpriteAtlas("Char/char_sword_3.png");
+			anim[5][1] = LoadSave.GetSpriteAtlas("Char/char_sword_1.png");
+			anim[5][2] = LoadSave.GetSpriteAtlas("Char/char_sword_2.png");
+			anim[5][3] = LoadSave.GetSpriteAtlas("Char/char_sword_1.png");
 			
 			
 			//STATUSBAR
@@ -122,11 +122,6 @@ public class Player extends Entity{
 			
 			//SCORE
 			scoreImg = LoadSave.GetSpriteAtlas("score_bg.png"); 
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	private void importFont() {
@@ -357,7 +352,6 @@ public class Player extends Entity{
 	
 	public void render(Graphics g, int lvlOffset) {
 
-		drawCollision(g, lvlOffset);
 		if(playerAction == 0 || playerAction == 1)
 		g.drawImage(anim[playerAction][aniIndex], 
 				(int)(collision.x - xDrawOffset)-lvlOffset + flipX, 
@@ -375,7 +369,6 @@ public class Player extends Entity{
 						(int)(collision.y - yDrawOffset), 
 						(width + 50) * flipW, height ,null);
 		}
-		drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
 	
@@ -429,6 +422,14 @@ public class Player extends Entity{
 		this.currentPoint = currentPoint;
 	}
 
+	public int getCurrentPointLevel() {
+		return currentPointLevel;
+	}
+
+	public void setCurrentPointLevel(int currentPointLevel) {
+		this.currentPointLevel = currentPointLevel;
+	}
+
 	public void resetAll() {
 		resetDirBool();
 		inAir = false;
@@ -436,7 +437,6 @@ public class Player extends Entity{
 		move = false;
 		playerAction = IDLE;
 		currentHealth = maxHealth;
-//		currentPoint = minPoint;
 		
 		collision.x = x;
 		collision.y = y;

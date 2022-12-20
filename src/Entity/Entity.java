@@ -20,10 +20,10 @@ public abstract class Entity {
 		this.height = height;
 	}
 	
-	protected void drawCollision(Graphics g, int xLvlOffset) {
-		g.setColor(Color.BLUE);
-		g.drawRect((int)collision.x - xLvlOffset, (int)collision.y, (int)collision.width, (int)collision.height);
-	}
+//	protected void drawCollision(Graphics g, int xLvlOffset) {
+//		//g.setColor(Color.BLUE);
+//		//g.drawRect((int)collision.x - xLvlOffset, (int)collision.y, (int)collision.width, (int)collision.height);
+//	}
 
 	protected void initCollision(float x, float y, float width, float height) {
 		collision = new Rectangle2D.Float(x, y, width, height);

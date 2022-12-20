@@ -28,6 +28,7 @@ public abstract class Enemy extends Entity{
 	protected int currentHealth;
 	protected boolean active = true;
 	protected boolean attackChecked;
+	protected boolean objDrop = true;
 	
 	public Enemy(float x, float y, int height, int width, int enemyType) {
 		super(x, y, height, width);
@@ -154,6 +155,7 @@ public abstract class Enemy extends Entity{
 	public void setActive(boolean active) {this.active = active;}
 	
 	public void resetEnemy() {
+		objDrop = true;
 		inAir = true;
 		collision.x = x;
 		collision.y = y;

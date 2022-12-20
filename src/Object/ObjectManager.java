@@ -142,38 +142,37 @@ public class ObjectManager {
 		doorImage = new BufferedImage[5];
 		leverImage = new BufferedImage[2];
 		
-		try {
-		  	potionImage[0] = ImageIO.read(getClass().getResourceAsStream("/potion/01.png"));
-		  	potionImage[1] = ImageIO.read(getClass().getResourceAsStream("/potion/02.png"));
-		  	potionImage[2] = ImageIO.read(getClass().getResourceAsStream("/potion/03.png"));
-		  	potionImage[3] = ImageIO.read(getClass().getResourceAsStream("/potion/04.png"));
-		  	potionImage[4] = ImageIO.read(getClass().getResourceAsStream("/potion/05.png"));
-		  	potionImage[5] = ImageIO.read(getClass().getResourceAsStream("/potion/06.png"));
-		  	potionImage[6] = ImageIO.read(getClass().getResourceAsStream("/potion/07.png"));
+		  	potionImage[0] = LoadSave.GetSpriteAtlas("potion/01.png");
+		  	potionImage[1] = LoadSave.GetSpriteAtlas("potion/02.png");
+		  	potionImage[2] = LoadSave.GetSpriteAtlas("potion/03.png");
+		  	potionImage[3] = LoadSave.GetSpriteAtlas("potion/04.png");
+		  	potionImage[4] = LoadSave.GetSpriteAtlas("potion/05.png");
+		  	potionImage[5] = LoadSave.GetSpriteAtlas("potion/06.png");
+		  	potionImage[6] = LoadSave.GetSpriteAtlas("potion/07.png");
 		
-		  	gemImage[0][0] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/01.png"));
-		  	gemImage[0][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/02.png"));
-		  	gemImage[0][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/03.png"));
-		  	gemImage[0][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/common/04.png"));
+		  	gemImage[0][0] = LoadSave.GetSpriteAtlas("treasure/common/01.png");
+		  	gemImage[0][1] = LoadSave.GetSpriteAtlas("treasure/common/02.png");
+		  	gemImage[0][2] = LoadSave.GetSpriteAtlas("treasure/common/03.png");
+		  	gemImage[0][3] = LoadSave.GetSpriteAtlas("treasure/common/04.png");
 		  	
-		  	gemImage[1][0] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/01.png"));
-		  	gemImage[1][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/02.png"));
-		  	gemImage[1][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/03.png"));
-		  	gemImage[1][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/uncommon/04.png"));
+		  	gemImage[1][0] = LoadSave.GetSpriteAtlas("treasure/uncommon/01.png");
+		  	gemImage[1][1] = LoadSave.GetSpriteAtlas("treasure/uncommon/02.png");
+		  	gemImage[1][2] = LoadSave.GetSpriteAtlas("treasure/uncommon/03.png");
+		  	gemImage[1][3] = LoadSave.GetSpriteAtlas("treasure/uncommon/04.png");
 		  	
-		  	gemImage[2][0] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/01.png"));
-		  	gemImage[2][1] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/02.png"));
-		  	gemImage[2][2] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/03.png"));
-		  	gemImage[2][3] = ImageIO.read(getClass().getResourceAsStream("/treasure/rare/04.png"));
+		  	gemImage[2][0] = LoadSave.GetSpriteAtlas("treasure/rare/01.png");
+		  	gemImage[2][1] = LoadSave.GetSpriteAtlas("treasure/rare/02.png");
+		  	gemImage[2][2] = LoadSave.GetSpriteAtlas("treasure/rare/03.png");
+		  	gemImage[2][3] = LoadSave.GetSpriteAtlas("treasure/rare/04.png");
 		  	
-		  	doorImage[0] = ImageIO.read(getClass().getResourceAsStream("/objects/door_1.png"));
-		  	doorImage[1] = ImageIO.read(getClass().getResourceAsStream("/objects/door_2.png"));
-		  	doorImage[2] = ImageIO.read(getClass().getResourceAsStream("/objects/door_3.png"));
-		  	doorImage[3] = ImageIO.read(getClass().getResourceAsStream("/objects/door_4.png"));
-		  	doorImage[4] = ImageIO.read(getClass().getResourceAsStream("/objects/door_5.png"));
+		  	doorImage[0] = LoadSave.GetSpriteAtlas("objects/door_1.png");
+		  	doorImage[1] = LoadSave.GetSpriteAtlas("objects/door_2.png");
+		  	doorImage[2] = LoadSave.GetSpriteAtlas("objects/door_3.png");
+		  	doorImage[3] = LoadSave.GetSpriteAtlas("objects/door_4.png");
+		  	doorImage[4] = LoadSave.GetSpriteAtlas("objects/door_5.png");
 		  	
-		  	leverImage[0] = ImageIO.read(getClass().getResourceAsStream("/handle/handle_1.png"));
-		  	leverImage[1] = ImageIO.read(getClass().getResourceAsStream("/handle/handle_2.png"));
+		  	leverImage[0] = LoadSave.GetSpriteAtlas("handle/handle_1.png");
+		  	leverImage[1] = LoadSave.GetSpriteAtlas("handle/handle_2.png");
 		  	
 			BufferedImage potionSprite = LoadSave.GetSpriteAtlas(LoadSave.POTION_IMAGE);
 			potionImage = new BufferedImage[7];
@@ -185,11 +184,6 @@ public class ObjectManager {
 			containerImage = new BufferedImage[8];
 			for(int i = 0; i < containerImage.length; i++) {
 				containerImage[i] = containerSprite.getSubimage(40*i, 0, 40, 30);
-			}
-			
-			}
-			catch (IOException e) {
-				e.printStackTrace();
 			}
 		
 	}
@@ -246,17 +240,18 @@ public class ObjectManager {
 	}
 
 	private void drawContainers(Graphics graphic, int xLvlOffset) {
-		for(Container c : containers)
+		for(Container c : containers) {
 			if(c.isActive()) {
 				if(c.getObjType() == CONTAINER) {
 					graphic.drawImage(containerImage[c.getAniIndex()], 
-							(int)(c.getArea().x - c.getxDrawOffset() + 15 - xLvlOffset), 
+							(int)(c.getArea().x - c.getxDrawOffset() - xLvlOffset), 
 							(int)(c.getArea().y - c.getxDrawOffset()), 
 							CONTAINER_WIDTH, 
 							CONTAINER_HEIGHT, 
 							null);
 				}
 			}
+		}
 		
 	}
 
@@ -272,13 +267,12 @@ public class ObjectManager {
 					type = 2;
 				
 				graphic.drawImage(gemImage[type][g.getAniIndex()], 
-						(int)(g.getArea().x + 30 - xLvlOffset), 
-						(int)(g.getArea().y + 25 - g.getyDrawOffset()), 
+						(int)(g.getArea().x - 4 - xLvlOffset), 
+						(int)(g.getArea().y - g.getyDrawOffset()), 
 						GEM_WIDTH, 
 						GEM_HEIGHT, 
 						null);
 				
-				g.drawArea(graphic, xLvlOffset);
 				
 			}
 		}
