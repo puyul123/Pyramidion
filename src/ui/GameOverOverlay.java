@@ -77,7 +77,8 @@ public class GameOverOverlay {
 		}
 		else if (isIn(retry, e)) {
 			playing.resetAll();
-			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());	
+			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+			playing.getPlayer().setCurrentPoint(playing.getPlayer().getCurrentPointLevel());
 		}
 		menu.resetBools();
 		retry.resetBools();

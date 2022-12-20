@@ -92,7 +92,6 @@ public class LevelCompletedOverlay {
 			playing.resetAll();
 			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
 			playing.getPlayer().setCurrentPoint(playing.getPlayer().getCurrentPointLevel());
-			//System.out.println("retry : " +playing.getPlayer().getCurrentPointLevel());
 			
 		}
 		menu.resetBools();
