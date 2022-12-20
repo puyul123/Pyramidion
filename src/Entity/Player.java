@@ -352,7 +352,6 @@ public class Player extends Entity{
 	
 	public void render(Graphics g, int lvlOffset) {
 
-//		drawCollision(g, lvlOffset);
 		if(playerAction == 0 || playerAction == 1)
 		g.drawImage(anim[playerAction][aniIndex], 
 				(int)(collision.x - xDrawOffset)-lvlOffset + flipX, 
@@ -370,7 +369,6 @@ public class Player extends Entity{
 						(int)(collision.y - yDrawOffset), 
 						(width + 50) * flipW, height ,null);
 		}
-		drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
 	
