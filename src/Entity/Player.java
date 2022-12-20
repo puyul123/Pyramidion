@@ -352,7 +352,7 @@ public class Player extends Entity{
 	
 	public void render(Graphics g, int lvlOffset) {
 
-		drawCollision(g, lvlOffset);
+//		drawCollision(g, lvlOffset);
 		if(playerAction == 0 || playerAction == 1)
 		g.drawImage(anim[playerAction][aniIndex], 
 				(int)(collision.x - xDrawOffset)-lvlOffset + flipX, 

@@ -85,14 +85,14 @@ public class LevelCompletedOverlay {
 			if (next.isMousePressed()) {
 				playing.loadNextLevel();
 				playing.getPlayer().setCurrentPointLevel(playing.getPlayer().getCurrentPoint());
-				System.out.println("next: " +playing.getPlayer().getCurrentPointLevel());
+				//System.out.println("next: " +playing.getPlayer().getCurrentPointLevel());
 			}
 		}
 		else if (isIn(retry, e)) {
 			playing.resetAll();
 			playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
 			playing.getPlayer().setCurrentPoint(playing.getPlayer().getCurrentPointLevel());
-			System.out.println("retry : " +playing.getPlayer().getCurrentPointLevel());
+			//System.out.println("retry : " +playing.getPlayer().getCurrentPointLevel());
 			
 		}
 		menu.resetBools();

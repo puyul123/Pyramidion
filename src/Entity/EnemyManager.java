@@ -157,7 +157,7 @@ public class EnemyManager {
 						(int) (s.getCollision().x - 55) - xLvlOffset + s.flipX(), 
 						(int) (s.getCollision().y-15),
 						(int) (100 * Game.SCALE) / s.flipW(),(int) (64 *Game.SCALE), null);
-				s.draw(g, xLvlOffset);
+//				s.draw(g, xLvlOffset);
 			}
 		}
 	}
@@ -169,7 +169,7 @@ public class EnemyManager {
 						(int) (r.getCollision().x - 45) - xLvlOffset + r.flipX(), 
 						(int) (r.getCollision().y - 15),
 						(int) (100 * Game.SCALE) / r.flipW(),(int) (64 *Game.SCALE), null);
-				r.draw(g, xLvlOffset);
+//				r.draw(g, xLvlOffset);
 			}
 		}
 	}
@@ -181,7 +181,7 @@ public class EnemyManager {
 						(int) (m.getCollision().x-25) - xLvlOffset + m.flipX(), 
 						(int) (m.getCollision().y-13),
 						(int) (64 * Game.SCALE) / m.flipW(),(int) (64 *Game.SCALE), null);
-				m.draw(g, xLvlOffset);
+//				m.draw(g, xLvlOffset);
 			}
 		}
 	}
